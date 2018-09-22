@@ -2,8 +2,7 @@ Source: peony-extensions
 Section: x11
 Priority: optional
 Maintainer: Kylin Team <pkg-kylin-devel@lists.alioth.debian.org>
-Uploaders: Aron Xu <aron@debian.org>,
-           handsome_feng <jianfengli@ubuntukylin.com>,
+Uploaders: handsome_feng <jianfengli@ubuntukylin.com>,
 Build-Depends: debhelper (>= 11),
                dpkg-dev (>= 1.16.1.1),
                gettext,
@@ -22,22 +21,22 @@ Build-Depends: debhelper (>= 11),
                mate-common (>= 1.18),
                pkg-config,
                yelp-tools,
-Standards-Version: 4.1.4
+Standards-Version: 4.2.1
 Homepage: http://www.ukui.org/
+Vcs-Git: https://github.com/ukui/peony-extensions.git
+Vcs-Browser: https://github.com/ukui/peony-extensions
 
 Package: peony-admin
 Architecture: all
-Depends:
- ${misc:Depends},
- ${python:Depends},
- python-gi,
- gir1.2-gtk-3.0,
- peony,
- policykit-1,
- python-caja,
-Recommends:
- pluma,
- mate-terminal,
+Depends: ${misc:Depends},
+         ${python:Depends},
+         python-gi,
+         gir1.2-gtk-3.0,
+         peony,
+         policykit-1,
+         python-caja,
+Recommends: pluma,
+            mate-terminal,
 Description: Add administrative actions to Peony's right-click menu
  Peony Admin is a simple Python extension for the Peony file manager that
  adds some administrative actions to the right-click menu:
