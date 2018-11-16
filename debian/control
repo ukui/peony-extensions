@@ -2,8 +2,7 @@ Source: peony-extensions
 Section: x11
 Priority: optional
 Maintainer: Kylin Team <pkg-kylin-devel@lists.alioth.debian.org>
-Uploaders: Aron Xu <aron@debian.org>,
-           handsome_feng <jianfengli@ubuntukylin.com>,
+Uploaders: handsome_feng <jianfengli@ubuntukylin.com>,
 Build-Depends: debhelper (>= 11),
                dpkg-dev (>= 1.16.1.1),
                cmake,
