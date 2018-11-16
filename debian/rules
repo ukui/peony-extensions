@@ -20,6 +20,7 @@ override_dh_installdocs:
 
 override_dh_auto_configure:
 	# upstream tarball is without configure. autogen.sh will create it
+	cmake -Hpeony-admin -Bpeony-admin/
 	NOCONFIGURE=1 ./autogen.sh
 	dh_auto_configure $(DHFLAGS) -- \
 		--disable-silent-rules \
@@ -27,6 +28,3 @@ override_dh_auto_configure:
 		--disable-packagekit \
 		--enable-magic \
 		--libexecdir=/usr/lib/parchives
-
-get-orig-source:
-	uscan --noconf --force-download --rename --download-current-version --destdir=..

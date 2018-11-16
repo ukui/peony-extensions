@@ -22,10 +22,7 @@ Copyright: 2005, Adam Israel
 		   2017, Tianjin KYLIN Information Technology Co., Ltd.
 License: GPL-2+
 
-Files: gksu/Makefile.am
-       gksu/libpeony-gksu.c
-       gksu/libpeony-gksu.peony-extension.in.in
-       image-converter/Makefile.am
+Files: image-converter/Makefile.am
        image-converter/*.ui
        image-converter/libpeony-image-converter.peony-extension.in.in
        open-terminal/Makefile.am
@@ -102,6 +99,25 @@ Copyright: 2018, Liu Peng <liupeng@kylinos.cn>
 License: GPL-2+
 Comment:
  Using license from COPYING file.
+
+Files: peony-admin/AUTHORS
+       peony-admin/CMakeLists.txt
+       peony-admin/CONTRIBUTING.md
+       peony-admin/INSTALL.md
+       peony-admin/LICENSE
+       peony-admin/NEWS
+       peony-admin/NEWS.GNOME
+       peony-admin/README.md
+       peony-admin/cmake.sh
+       peony-admin/cmake/cmake_uninstall.cmake.in
+       peony-admin/extension/peony-admin.py.in
+       peony-admin/generate-pot-file.sh
+       peony-admin/peony-admin.appdata.xml
+       peony-admin/po/*.po
+       peony-admin/po/peony-admin.pot
+       peony-admin/polkit/org.freedesktop.peony-admin.policy.in
+Copyright: 2018, quankang<quankang@kylinos.cn>
+License: GPL-2+
 
 Files: sendto/peony-sendto.1
 Copyright: 2006, Oystein Gisnas
@@ -367,6 +383,12 @@ License: GPL-2+
 Comment:
  Using license from COPYING file.
 
+Files: peony-admin/extension/peony-admin.py.in
+Copyright: 2015-2016 Bruno Nova <brunomb.nova@gmail.com>
+           2016 frmdstryr <frmdstryr@gmail.com>
+           2018, Tianjin KYLIN Information Technology Co., Ltd.
+License: GPL-3+
+
 Files: parchives/help/*
 Copyright: Carles Ferrando Garcia <carles.ferrando@gmail.com>
            Claude Paroz <claude@2xlibre.net>
@@ -440,6 +462,23 @@ License: LGPL-2+
  .
  On Debian systems, the complete text of the GNU General
  Public License version LGPL-2 can be found in "/usr/share/common-licenses/LGPL-2".
+
+License: GPL-3+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General
+ Public License version 3 can be found in `/usr/share/common-licenses/GPL-3'.
 
 License: GFDL-1.1+
  Permission is granted to copy, distribute and/or modify this
