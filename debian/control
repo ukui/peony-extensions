@@ -58,3 +58,16 @@ Description: Peony plugin for opening terminals in arbitrary local paths
  .
  peony-open-terminal is a proof-of-concept Peony extension
  which allows you to open a terminal in arbitrary local folders.
+
+Package: peony-extension-computer-view
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         libpeony2
+Description: Peony plugin for displaying computer:/// with more infomation.
+ Peony is the official file manager for the UKUI desktop. This
+ package adds extended functionality to the Peony file manager.
+ .
+ peony-extionsion-computer-view is a proof-of-concept Peony extension
+ which allows user browsering computer:/// with more infomation, which
+ not provided in icon view and list view.
