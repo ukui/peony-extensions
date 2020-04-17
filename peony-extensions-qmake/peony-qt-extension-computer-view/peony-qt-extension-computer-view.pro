@@ -28,6 +28,8 @@ HEADERS += \
     peony-qt-extension-computer-view_global.h \
     peony-computer-view-plugin.h
 
+DESTDIR += ../../testdir
+
 # Default rules for deployment.
 unix {
     target.path = /usr/lib/peony-qt-extensions
