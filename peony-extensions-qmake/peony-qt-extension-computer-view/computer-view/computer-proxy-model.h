@@ -20,21 +20,28 @@
  *
  */
 
-#include "peony-computer-view-plugin.h"
-#include "computer-view-container.h"
+#ifndef COMPUTERPROXYMODEL_H
+#define COMPUTERPROXYMODEL_H
 
-Peony::PeonyComputerViewPlugin::PeonyComputerViewPlugin(QObject *parent) : QObject(parent)
-{
-}
+#include <QSortFilterProxyModel>
 
-int Peony::PeonyComputerViewPlugin::priority(const QString &directoryUri)
-{
-    if (directoryUri == "computer:///")
-        return 1;
-    return -1;
-}
+class ComputerModel;
+class AbstractComputerItem;
 
-Peony::DirectoryViewWidget *Peony::PeonyComputerViewPlugin::create()
+class ComputerProxyModel : public QSortFilterProxyModel
 {
-    return new ComputerViewContainer;
-}
+    Q_OBJECT
+public:
+    explicit ComputerProxyModel(QObject *parent = nullptr);
+    AbstractComputerItem *itemFromIndex(const QModelIndex &proxyIndex);
+
+signals:
+
+protected:
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+
+private:
+    ComputerModel *m_model;
+};
+
+#endif // COMPUTERPROXYMODEL_H

@@ -20,21 +20,23 @@
  *
  */
 
-#include "peony-computer-view-plugin.h"
-#include "computer-view-container.h"
+#include "abstract-computer-item.h"
+#include <QModelIndex>
 
-Peony::PeonyComputerViewPlugin::PeonyComputerViewPlugin(QObject *parent) : QObject(parent)
+AbstractComputerItem::AbstractComputerItem(ComputerModel *model, AbstractComputerItem *parentNode, QObject *parent)
 {
+    m_model = model;
+    m_parentNode = parentNode;
 }
 
-int Peony::PeonyComputerViewPlugin::priority(const QString &directoryUri)
+AbstractComputerItem::~AbstractComputerItem()
 {
-    if (directoryUri == "computer:///")
-        return 1;
-    return -1;
+    for (auto child : m_children) {
+        child->deleteLater();
+    }
 }
 
-Peony::DirectoryViewWidget *Peony::PeonyComputerViewPlugin::create()
+QModelIndex AbstractComputerItem::itemIndex()
 {
-    return new ComputerViewContainer;
+    return QModelIndex();
 }

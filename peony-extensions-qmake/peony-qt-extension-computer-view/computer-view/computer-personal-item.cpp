@@ -20,21 +20,32 @@
  *
  */
 
-#include "peony-computer-view-plugin.h"
-#include "computer-view-container.h"
+#include "computer-personal-item.h"
+#include "computer-model.h"
 
-Peony::PeonyComputerViewPlugin::PeonyComputerViewPlugin(QObject *parent) : QObject(parent)
+#include <QStandardPaths>
+
+ComputerPersonalItem::ComputerPersonalItem(const QString &uri, ComputerModel *model, AbstractComputerItem *parentNode, QObject *parent) : AbstractComputerItem(model, parentNode, parent)
 {
+    if (!parentNode) {
+        m_uri = "file://" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    } else {
+        m_uri = uri;
+    }
 }
 
-int Peony::PeonyComputerViewPlugin::priority(const QString &directoryUri)
+const QString ComputerPersonalItem::displayName()
 {
-    if (directoryUri == "computer:///")
-        return 1;
-    return -1;
+    //FIXME:
+    return nullptr;
 }
 
-Peony::DirectoryViewWidget *Peony::PeonyComputerViewPlugin::create()
+void ComputerPersonalItem::findChildren()
 {
-    return new ComputerViewContainer;
+    //FIXME:
+}
+
+void ComputerPersonalItem::clearChildren()
+{
+    //FIXME:
 }

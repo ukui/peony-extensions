@@ -1,17 +1,41 @@
-#ifndef COMPUTERVIEW_H
-#define COMPUTERVIEW_H
+/*
+ * Peony-Qt's Library
+ *
+ * Copyright (C) 2020, Tianjin KYLIN Information Technology Co., Ltd.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this library.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * Authors: Yue Lan <lanyue@kylinos.cn>
+ *
+ */
+
+#ifndef COMPUTERVIEWCONTAINER_H
+#define COMPUTERVIEWCONTAINER_H
 
 #include <QWidget>
 #include <peony-qt/directory-view-plugin-iface2.h>
 #include <peony-qt/controls/directory-view/directory-view-widget.h>
 
+class ComputerView;
+
 namespace Peony {
 
-class ComputerView : public DirectoryViewWidget
+class ComputerViewContainer : public DirectoryViewWidget
 {
     Q_OBJECT
 public:
-    explicit ComputerView(QWidget *parent = nullptr);
+    explicit ComputerViewContainer(QWidget *parent = nullptr);
 
     const virtual QString viewId() {return "Computer View";}
 
@@ -68,8 +92,13 @@ public Q_SLOTS:
 
     //zoom
     virtual void setCurrentZoomLevel(int zoomLevel) {}
+
+private:
+    ComputerView *m_view;
+    Peony::FileItemModel *m_model;
+    Peony::FileItemProxyFilterSortModel *m_proxyModel;
 };
 
 }
 
-#endif // COMPUTERVIEW_H
+#endif // COMPUTERVIEWCONTAINER_H

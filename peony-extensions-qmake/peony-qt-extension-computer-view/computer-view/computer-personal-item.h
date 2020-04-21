@@ -20,21 +20,26 @@
  *
  */
 
-#include "peony-computer-view-plugin.h"
-#include "computer-view-container.h"
+#ifndef COMPUTERPERSONALITEM_H
+#define COMPUTERPERSONALITEM_H
 
-Peony::PeonyComputerViewPlugin::PeonyComputerViewPlugin(QObject *parent) : QObject(parent)
-{
-}
+#include "abstract-computer-item.h"
 
-int Peony::PeonyComputerViewPlugin::priority(const QString &directoryUri)
+class ComputerPersonalItem : public AbstractComputerItem
 {
-    if (directoryUri == "computer:///")
-        return 1;
-    return -1;
-}
+    Q_OBJECT
+public:
+    explicit ComputerPersonalItem(const QString &uri, ComputerModel *model, AbstractComputerItem *parentNode, QObject *parent = nullptr);
 
-Peony::DirectoryViewWidget *Peony::PeonyComputerViewPlugin::create()
-{
-    return new ComputerViewContainer;
-}
+    Type itemType() override {return Personal;}
+    const QString uri() override {return m_uri;}
+    const QString displayName() override;
+    bool hasChildren() override {return !m_parentNode;}
+    void findChildren() override;
+    void clearChildren() override;
+
+private:
+    QString m_uri;
+};
+
+#endif // COMPUTERPERSONALITEM_H

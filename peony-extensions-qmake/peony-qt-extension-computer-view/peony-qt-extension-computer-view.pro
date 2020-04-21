@@ -19,12 +19,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+include(computer-view/computer-view.pri)
+
 SOURCES += \
-    computer-view.cpp \
+    computer-view-container.cpp \
     peony-computer-view-plugin.cpp
 
 HEADERS += \
-    computer-view.h \
+    computer-view-container.h \
     peony-qt-extension-computer-view_global.h \
     peony-computer-view-plugin.h
 
