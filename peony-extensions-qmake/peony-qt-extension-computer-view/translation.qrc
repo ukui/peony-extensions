@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>peony-qt-extension-computer-view-zh_CN.qm</file>
+        <file>peony-qt-extension-computer-view-zh_CN.ts</file>
+    </qresource>
+</RCC>

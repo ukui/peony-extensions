@@ -1,3 +1,9 @@
+peony-extensions (2.1.0) unstable; urgency=low
+
+  * add computer view extension.
+
+ -- Yue Lan <lanyue@kylinos.cn>  Wed, 22 Apr 2020 11:56:54 +0800
+
 peony-extensions (2.0.2-1) unstable; urgency=medium
 
   * New upstream bugfix release.
