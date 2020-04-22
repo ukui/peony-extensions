@@ -4,17 +4,17 @@
 <context>
     <name>Peony::EngrampaMenuPlugin</name>
     <message>
-        <location filename="../engrampa-menu-plugin.cpp" line="28"/>
+        <location filename="../engrampa-menu-plugin.cpp" line="60"/>
         <source>compress...</source>
         <translation>压缩...</translation>
     </message>
     <message>
-        <location filename="../engrampa-menu-plugin.cpp" line="43"/>
+        <location filename="../engrampa-menu-plugin.cpp" line="75"/>
         <source>uncompress to current path</source>
         <translation>解压缩到此处</translation>
     </message>
     <message>
-        <location filename="../engrampa-menu-plugin.cpp" line="53"/>
+        <location filename="../engrampa-menu-plugin.cpp" line="85"/>
         <source>uncompress to specific path...</source>
         <translation>解压缩到...</translation>
     </message>
@@ -31,12 +31,12 @@
         <translation type="vanished">压缩菜单扩展。</translation>
     </message>
     <message>
-        <location filename="../engrampa-menu-plugin.h" line="18"/>
+        <location filename="../engrampa-menu-plugin.h" line="40"/>
         <source>Peony-Qt engrampa Extension</source>
         <translation>压缩插件</translation>
     </message>
     <message>
-        <location filename="../engrampa-menu-plugin.h" line="19"/>
+        <location filename="../engrampa-menu-plugin.h" line="41"/>
         <source>engrampa Menu Extension.</source>
         <translation>归档菜单扩展。</translation>
     </message>

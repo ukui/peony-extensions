@@ -23,8 +23,15 @@
 #include "peony-computer-view-plugin.h"
 #include "computer-view-container.h"
 
+#include <QTranslator>
+#include <QLocale>
+#include <QApplication>
+
 Peony::PeonyComputerViewPlugin::PeonyComputerViewPlugin(QObject *parent) : QObject(parent)
 {
+    QTranslator *t = new QTranslator(this);
+    t->load(":/peony-qt-extension-computer-view-"+QLocale::system().name());
+    QApplication::installTranslator(t);
 }
 
 int Peony::PeonyComputerViewPlugin::priority(const QString &directoryUri)
