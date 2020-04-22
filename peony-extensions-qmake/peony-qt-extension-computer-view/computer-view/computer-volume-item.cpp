@@ -64,26 +64,29 @@ void ComputerVolumeItem::updateInfoAsync()
     m_icon = QIcon::fromTheme(m_volume->iconName());
     //qDebug()<<m_displayName;
 
-    m_model->dataChanged(this->itemIndex(), this->itemIndex());
-
     auto mount = g_volume_get_mount(m_volume->getGVolume());
     if (mount) {
         m_mount = std::make_shared<Peony::Mount>(mount, true);
         auto active_root = g_mount_get_root(mount);
         if (active_root) {
             auto uri = g_file_get_uri(active_root);
-            if (uri)
+            if (uri) {
+                m_uri = uri;
                 g_free(uri);
+            }
             g_file_query_filesystem_info_async(active_root, "*",
                                                0, m_cancellable, GAsyncReadyCallback(qeury_info_async_callback), this);
             g_object_unref(active_root);
         }
     } else {
+        //m_mount = nullptr;
         //mount first
         //FIXME: check auto mount
-        this->mount();
+        //this->mount();
     }
 
+    auto index = this->itemIndex();
+    m_model->dataChanged(index, index);
 }
 
 const QString ComputerVolumeItem::displayName()
@@ -157,9 +160,15 @@ void ComputerVolumeItem::mount()
     if (m_mount) {
         auto root = g_mount_get_root(m_mount->getGMount());
         if (root) {
-            QMessageBox::information(0, 0, tr("Volume has been mounted"));
+            auto uri = g_file_get_uri(root);
+            if (uri) {
+                m_uri = uri;
+                g_free(uri);
+            }
+            g_file_query_filesystem_info_async(root, "*",
+                                               0, m_cancellable, GAsyncReadyCallback(qeury_info_async_callback), this);
+            g_object_unref(root);
         }
-        updateInfo();
     } else {
         g_volume_mount(m_volume->getGVolume(),
                        G_MOUNT_MOUNT_NONE,
@@ -181,6 +190,13 @@ QModelIndex ComputerVolumeItem::itemIndex()
 
 void ComputerVolumeItem::volume_changed_callback(GVolume *volume, ComputerVolumeItem *p_this)
 {
+    //QMessageBox::information(0, 0, tr("Volume Changed"));
+    p_this->m_mount = nullptr;
+    p_this->m_uri = nullptr;
+    p_this->m_icon = QIcon();
+    p_this->m_displayName = nullptr;
+    p_this->m_usedSpace = 0;
+    p_this->m_totalSpace = 0;
     p_this->updateInfoAsync();
 }
 
@@ -206,12 +222,14 @@ void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *re
         quint64 used = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_USED);
         p_this->m_totalSpace = total;
         p_this->m_usedSpace = used;
-        p_this->m_model->dataChanged(p_this->itemIndex(), p_this->itemIndex());
+        auto index = p_this->itemIndex();
+        p_this->m_model->dataChanged(index, index);
+        //p_this->m_model->dataChanged(p_this->itemIndex(), p_this->itemIndex());
 
         g_object_unref(info);
     }
     if (err) {
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 }
@@ -225,12 +243,14 @@ void ComputerVolumeItem::query_root_info_async_callback(GFile *file, GAsyncResul
         quint64 used = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_USED);
         p_this->m_totalSpace = total;
         p_this->m_usedSpace = used;
-        p_this->m_model->dataChanged(p_this->itemIndex(), p_this->itemIndex());
+        auto index = p_this->itemIndex();
+        p_this->m_model->dataChanged(index, index);
+        //p_this->m_model->dataChanged(p_this->itemIndex(), p_this->itemIndex());
 
         g_object_unref(info);
     }
     if (err) {
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 }
@@ -240,7 +260,7 @@ void ComputerVolumeItem::mount_async_callback(GVolume *volume, GAsyncResult *res
     GError *err = nullptr;
     bool successed = g_volume_mount_finish(volume, res, &err);
     if (err) {
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 
@@ -254,11 +274,11 @@ void ComputerVolumeItem::unmount_async_callback(GMount *mount, GAsyncResult *res
     GError *err = nullptr;
     bool successed = g_mount_unmount_with_operation_finish(mount, res, &err);
     if (successed) {
-        QMessageBox::information(0, 0, "Volume Umounted");
+        //QMessageBox::information(0, 0, "Volume Umounted");
         p_this->m_mount = nullptr;
     }
     if (err) {
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 }
@@ -268,10 +288,10 @@ void ComputerVolumeItem::eject_async_callback(GMount *mount, GAsyncResult *res, 
     GError *err = nullptr;
     bool successed = g_mount_eject_with_operation_finish(mount, res, &err);
     if (successed) {
-        QMessageBox::information(0, 0, "Volume Ejected");
+        //QMessageBox::information(0, 0, "Volume Ejected");
     }
     if (err) {
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 }

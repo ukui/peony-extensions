@@ -22,6 +22,8 @@
 
 #include "computer-view-container.h"
 #include "computer-view.h"
+#include "computer-proxy-model.h"
+#include "abstract-computer-item.h"
 
 #include <peony-qt/file-item-model.h>
 #include <peony-qt/file-item-proxy-filter-sort-model.h>
@@ -33,11 +35,18 @@
 
 Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : DirectoryViewWidget(parent)
 {
-    m_view = new ComputerView(this);
-    auto layout = new QHBoxLayout;
-    layout->addWidget(m_view);
-    setLayout(layout);
-    Q_EMIT viewDirectoryChanged();
+
+}
+
+const QStringList Peony::ComputerViewContainer::getSelections()
+{
+    QStringList uris;
+    auto model = static_cast<ComputerProxyModel *>(m_view->model());
+    for (auto index : m_view->selectionModel()->selectedIndexes()) {
+        auto item = model->itemFromIndex(index);
+        uris<<item->uri();
+    }
+    return uris;
 }
 
 void Peony::ComputerViewContainer::paintEvent(QPaintEvent *e)
@@ -51,6 +60,30 @@ void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony:
     m_proxyModel = proxyModel;
     model->setRootUri("computer:///");
     connect(model, &Peony::FileItemModel::findChildrenFinished, this, &Peony::DirectoryViewWidget::viewDirectoryChanged);
+
+    if (m_view)
+        m_view->deleteLater();
+
+    m_view = new ComputerView(this);
+    auto layout = new QHBoxLayout;
+    layout->addWidget(m_view);
+    setLayout(layout);
+    Q_EMIT viewDirectoryChanged();
+
+    auto selectionModel = m_view->selectionModel();
+    connect(selectionModel, &QItemSelectionModel::selectionChanged, this, &DirectoryViewWidget::viewSelectionChanged);;
+
+    connect(m_view, &QAbstractItemView::doubleClicked, this, [=](const QModelIndex &index){
+        if (!index.parent().isValid())
+            return;
+
+        auto model = static_cast<ComputerProxyModel *>(m_view->model());
+        auto item = model->itemFromIndex(index);
+        if (!item->uri().isEmpty())
+            this->updateWindowLocationRequest(item->uri());
+        else
+            item->mount();
+    });
 }
 
 void Peony::ComputerViewContainer::beginLocationChange()

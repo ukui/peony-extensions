@@ -33,6 +33,9 @@ class ComputerProxyModel : public QSortFilterProxyModel
     Q_OBJECT
 public:
     explicit ComputerProxyModel(QObject *parent = nullptr);
+
+    static ComputerProxyModel *globalInstance();
+
     AbstractComputerItem *itemFromIndex(const QModelIndex &proxyIndex);
 
 signals:

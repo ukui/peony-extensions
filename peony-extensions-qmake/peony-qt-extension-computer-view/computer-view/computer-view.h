@@ -61,6 +61,8 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
+    void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
+
     void layoutVolumeIndexes(const QModelIndex &volumeParentIndex);
     void layoutRemoteIndexes(const QModelIndex &remoteParentIndex);
     void layoutNetworkIndexes(const QModelIndex &networkParentIndex);

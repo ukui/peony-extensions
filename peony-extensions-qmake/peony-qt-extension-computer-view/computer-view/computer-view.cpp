@@ -37,7 +37,7 @@ ComputerView::ComputerView(QWidget *parent) : QAbstractItemView(parent)
 {
     setItemDelegate(new ComputerItemDelegate(this));
 
-    m_model = new ComputerProxyModel(this);
+    m_model = ComputerProxyModel::globalInstance();
     setModel(m_model);
 
     m_rubberBand = new QRubberBand(QRubberBand::Shape::Rectangle, this);
@@ -60,7 +60,6 @@ bool ComputerView::eventFilter(QObject *object, QEvent *event)
     if (event->type() == QEvent::MouseMove) {
         if (!m_isLeftButtonPressed) {
             auto pos = mapFromGlobal(QCursor::pos());
-            pos += QPoint(horizontalOffset(), verticalOffset());
             auto newIndex = indexAt(pos);
             if (newIndex != m_hoverIndex) {
                 m_hoverIndex = newIndex;
@@ -88,9 +87,10 @@ void ComputerView::scrollTo(const QModelIndex &index, QAbstractItemView::ScrollH
 
 QModelIndex ComputerView::indexAt(const QPoint &point) const
 {
+    auto pos = point + QPoint(horizontalOffset(), verticalOffset());
     for (auto index : m_rect_cache.keys()) {
         auto rect = m_rect_cache.value(index);
-        if (rect.contains(point))
+        if (rect.contains(pos))
             return index;
     }
     return QModelIndex();
@@ -134,7 +134,7 @@ void ComputerView::setSelection(const QRect &rect, QItemSelectionModel::Selectio
             }
         }
     } else {
-        auto pos = rect.center() + QPoint(horizontalOffset(), verticalOffset());
+        auto pos = rect.center();
         auto index = indexAt(pos);
         if (!index.isValid()) {
             clearSelection();
@@ -273,6 +273,12 @@ void ComputerView::mouseReleaseEvent(QMouseEvent *event)
     m_rubberBand->hide();
     m_isLeftButtonPressed = false;
     QAbstractItemView::mouseReleaseEvent(event);
+}
+
+void ComputerView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+{
+    QAbstractItemView::dataChanged(topLeft, bottomRight, roles);
+    this->viewport()->update();
 }
 
 void ComputerView::layoutVolumeIndexes(const QModelIndex &volumeParentIndex)

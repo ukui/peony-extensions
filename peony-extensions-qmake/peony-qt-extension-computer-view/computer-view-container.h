@@ -43,7 +43,7 @@ public:
     const virtual QString getDirectoryUri() {return "computer:///";}
 
     //selections
-    const virtual QStringList getSelections() {return QStringList();}
+    const virtual QStringList getSelections();
 
     //children
     const virtual QStringList getAllFileUris() {return QStringList();}
@@ -94,7 +94,7 @@ public Q_SLOTS:
     virtual void setCurrentZoomLevel(int zoomLevel) {}
 
 private:
-    ComputerView *m_view;
+    ComputerView *m_view = nullptr;
     Peony::FileItemModel *m_model;
     Peony::FileItemProxyFilterSortModel *m_proxyModel;
 };

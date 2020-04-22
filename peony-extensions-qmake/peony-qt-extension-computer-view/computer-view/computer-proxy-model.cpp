@@ -24,11 +24,21 @@
 #include "computer-model.h"
 #include "abstract-computer-item.h"
 
+static ComputerProxyModel *global_instance = nullptr;
+
 ComputerProxyModel::ComputerProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
     auto computerModel = new ComputerModel(this);
     setSourceModel(computerModel);
     m_model = computerModel;
+}
+
+ComputerProxyModel *ComputerProxyModel::globalInstance()
+{
+    if (!global_instance) {
+        global_instance = new ComputerProxyModel;
+    }
+    return global_instance;
 }
 
 AbstractComputerItem *ComputerProxyModel::itemFromIndex(const QModelIndex &proxyIndex)

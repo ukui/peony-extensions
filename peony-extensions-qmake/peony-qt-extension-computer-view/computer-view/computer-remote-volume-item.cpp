@@ -150,7 +150,7 @@ void ComputerRemoteVolumeItem::enumerate_async_callback(GFile *file, GAsyncResul
     }
     if (err) {
         p_this->m_isUnixDevice = true; //hide computer:///
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 }
@@ -191,7 +191,7 @@ void ComputerRemoteVolumeItem::find_children_async_callback(GFileEnumerator *enu
     }
 
     if (err) {
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 }
@@ -214,7 +214,7 @@ void ComputerRemoteVolumeItem::query_info_async_callback(GFile *file, GAsyncResu
     }
 
     if (err) {
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 }

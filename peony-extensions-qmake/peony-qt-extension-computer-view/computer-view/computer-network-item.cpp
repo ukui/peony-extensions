@@ -130,7 +130,7 @@ void ComputerNetworkItem::enumerate_async_callback(GFile *file, GAsyncResult *re
                                            GAsyncReadyCallback(find_children_async_callback), p_this);
     }
     if (err) {
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 }
@@ -171,7 +171,7 @@ void ComputerNetworkItem::find_children_async_callback(GFileEnumerator *enumerat
     }
 
     if (err) {
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 }
@@ -192,7 +192,7 @@ void ComputerNetworkItem::query_info_async_callback(GFile *file, GAsyncResult *r
     }
 
     if (err) {
-        QMessageBox::critical(0, 0, err->message);
+        //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
 }
