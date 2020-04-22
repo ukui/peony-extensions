@@ -64,21 +64,7 @@ void ComputerVolumeItem::updateInfoAsync()
     m_icon = QIcon::fromTheme(m_volume->iconName());
     //qDebug()<<m_displayName;
 
-    auto active_root = g_volume_get_activation_root(m_volume->getGVolume());
-    if (active_root) {
-        auto uri = g_file_get_uri(active_root);
-        auto path = g_file_get_path(active_root);
-        //QMessageBox::information(0, 0, QString("%1 has active root %2").arg(m_displayName).arg(uri));
-        if (uri) {
-            m_uri = uri;
-            g_free(uri);
-        }
-        if (path) {
-            m_uri = QString("file://%1").arg(path);
-            g_free(path);
-        }
-        g_object_unref(active_root);
-    }
+    check();
 
     auto mount = g_volume_get_mount(m_volume->getGVolume());
     if (mount) {
@@ -139,6 +125,32 @@ void ComputerVolumeItem::findChildren()
     //monitor
     auto volumeManager = Peony::VolumeManager::getInstance();
     connect(volumeManager, &Peony::VolumeManager::volumeAdded, this, &ComputerVolumeItem::onVolumeAdded);
+}
+
+void ComputerVolumeItem::check()
+{
+    auto active_root = g_volume_get_activation_root(m_volume->getGVolume());
+    if (active_root) {
+        auto uri = g_file_get_uri(active_root);
+        auto path = g_file_get_path(active_root);
+        //QMessageBox::information(0, 0, QString("%1 has active root %2").arg(m_displayName).arg(uri));
+        if (uri) {
+            /*!
+              \bug
+              when a volume added, it could have active root represond with a uri,
+              such as mtp://, etc...
+              however it could not get the local path of active root correctly at the
+              time. that makes some volumes location changement meet troubles.
+              */
+            m_uri = uri;
+            g_free(uri);
+        }
+        if (path) {
+            m_uri = QString("file://%1").arg(path);
+            g_free(path);
+        }
+        g_object_unref(active_root);
+    }
 }
 
 bool ComputerVolumeItem::canEject()

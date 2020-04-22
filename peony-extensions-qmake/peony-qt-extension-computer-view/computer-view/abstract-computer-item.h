@@ -52,6 +52,7 @@ public:
     virtual void findChildren() {}
     virtual void clearChildren() {}
     virtual void updateInfo() {}
+    virtual void check() {}
 
     //for volumn
     virtual qint64 totalSpace() {return 0;}

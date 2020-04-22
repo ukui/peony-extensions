@@ -143,8 +143,10 @@ void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony:
 
         auto model = static_cast<ComputerProxyModel *>(m_view->model());
         auto item = model->itemFromIndex(index);
-        if (!item->uri().isEmpty())
+        if (!item->uri().isEmpty()) {
+            item->check();
             this->updateWindowLocationRequest(item->uri());
+        }
         else
             item->mount();
     });

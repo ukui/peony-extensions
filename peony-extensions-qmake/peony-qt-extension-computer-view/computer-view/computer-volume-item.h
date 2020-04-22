@@ -43,6 +43,7 @@ public:
     void findChildren() override;
 
     void updateInfo() override {updateInfoAsync();}
+    void check() override;
 
 
     bool canEject() override;
