@@ -64,6 +64,22 @@ void ComputerVolumeItem::updateInfoAsync()
     m_icon = QIcon::fromTheme(m_volume->iconName());
     //qDebug()<<m_displayName;
 
+    auto active_root = g_volume_get_activation_root(m_volume->getGVolume());
+    if (active_root) {
+        auto uri = g_file_get_uri(active_root);
+        auto path = g_file_get_path(active_root);
+        //QMessageBox::information(0, 0, QString("%1 has active root %2").arg(m_displayName).arg(uri));
+        if (uri) {
+            m_uri = uri;
+            g_free(uri);
+        }
+        if (path) {
+            m_uri = QString("file://%1").arg(path);
+            g_free(path);
+        }
+        g_object_unref(active_root);
+    }
+
     auto mount = g_volume_get_mount(m_volume->getGVolume());
     if (mount) {
         m_mount = std::make_shared<Peony::Mount>(mount, true);
