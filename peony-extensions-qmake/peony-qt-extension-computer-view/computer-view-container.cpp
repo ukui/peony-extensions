@@ -33,9 +33,73 @@
 
 #include <QHBoxLayout>
 
+#include <QMenu>
+#include <QInputDialog>
+#include <QProcess>
+#include <QMessageBox>
+
 Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : DirectoryViewWidget(parent)
 {
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, &QWidget::customContextMenuRequested, this, [=](const QPoint &pos){
+        auto selectedIndexes = m_view->selectionModel()->selectedIndexes();
+        auto index = m_view->indexAt(pos);
+        if (!selectedIndexes.contains(index))
+            m_view->clearSelection();
 
+        if (index.isValid()) {
+            m_view->selectionModel()->select(index, QItemSelectionModel::SelectCurrent);
+        }
+
+        QMenu menu;
+        auto model = static_cast<ComputerProxyModel *>(m_view->model());
+        QStringList uris;
+        QList<AbstractComputerItem *> items;
+        for (auto index : m_view->selectionModel()->selectedIndexes()) {
+            auto item = model->itemFromIndex(index);
+            uris<<item->uri();
+            items<<item;
+        }
+
+        if (items.count() == 0) {
+            menu.addAction(tr("Connect a server"), [=](){
+                QInputDialog dlg;
+                //dlg.setOption(QInputDialog::UsePlainTextEditForTextInput);
+                dlg.setLabelText(tr("sftp://, etc..."));
+                if (dlg.exec()) {
+                    auto uri = dlg.textValue();
+                    Q_EMIT this->updateWindowLocationRequest(uri);
+                }
+            });
+        } else if (items.count() == 1) {
+            auto item = items.first();
+            bool unmountable = item->canUnmount();
+            menu.addAction(tr("Unmount"), [=](){
+                item->unmount();
+            });
+            menu.actions().first()->setEnabled(unmountable);
+
+            auto uri = item->uri();
+            auto a = menu.addAction(tr("Property"), [=](){
+                if (uri.isNull()) {
+                    QMessageBox::warning(0, 0, tr("You have to mount this volume first"));
+                } else {
+                    QProcess p;
+                    p.setProgram("peony");
+                    QStringList args;
+                    args<<"-p"<<uri;
+                    p.setArguments(args);
+                    p.startDetached();
+                }
+            });
+            a->setEnabled(!uri.isNull());
+        } else {
+            menu.addAction(tr("Property"));
+            menu.actions().first()->setEnabled(false);
+        }
+
+        menu.exec(QCursor::pos());
+    });
 }
 
 const QStringList Peony::ComputerViewContainer::getSelections()
