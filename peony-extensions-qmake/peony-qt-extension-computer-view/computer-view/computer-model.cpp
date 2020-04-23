@@ -125,7 +125,7 @@ QVariant ComputerModel::data(const QModelIndex &index, int role) const
         return item->icon();
     }
     case Qt::ToolTipRole:
-        return item->totalSpace();
+        return item->displayName();
     default:
         return QVariant();
     }
