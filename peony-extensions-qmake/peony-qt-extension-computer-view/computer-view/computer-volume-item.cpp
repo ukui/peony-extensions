@@ -129,6 +129,9 @@ void ComputerVolumeItem::findChildren()
 
 void ComputerVolumeItem::check()
 {
+    if (!m_volume)
+        return;
+
     auto active_root = g_volume_get_activation_root(m_volume->getGVolume());
     if (active_root) {
         auto uri = g_file_get_uri(active_root);
