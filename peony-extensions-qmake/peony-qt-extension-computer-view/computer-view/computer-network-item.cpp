@@ -184,8 +184,12 @@ void ComputerNetworkItem::query_info_async_callback(GFile *file, GAsyncResult *r
         p_this->m_displayName = g_file_info_get_attribute_string(info, G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME);
         GIcon *icon = g_file_info_get_icon(info);
         const gchar * const * names = g_themed_icon_get_names(G_THEMED_ICON(icon));
-        const char *name = *names;
-        p_this->m_icon = QIcon::fromTheme(name);
+        if (names) {
+            const char *name = *names;
+            if (name) {
+                p_this->m_icon = QIcon::fromTheme(name);
+            }
+        }
         p_this->m_model->dataChanged(p_this->itemIndex(), p_this->itemIndex());
 
         g_object_unref(info);

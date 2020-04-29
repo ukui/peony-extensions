@@ -1,3 +1,9 @@
+peony-extensions (2.1.1+0425.1) focal; urgency=medium
+
+  * rebuild with latest libpeony.
+
+ -- Yue Lan <lanyue@kylinos.cn>  Sat, 25 Apr 2020 19:42:45 +0800
+
 peony-extensions (2.1.0) unstable; urgency=low
 
   * add computer view extension.
