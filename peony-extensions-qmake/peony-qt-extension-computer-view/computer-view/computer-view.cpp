@@ -103,12 +103,12 @@ QModelIndex ComputerView::moveCursor(QAbstractItemView::CursorAction cursorActio
 
 int ComputerView::horizontalOffset() const
 {
-    return horizontalScrollBar()->value();
+    return horizontalScrollBar()->value()*m_scrollStep;
 }
 
 int ComputerView::verticalOffset() const
 {
-    return verticalScrollBar()->value();
+    return verticalScrollBar()->value()*m_scrollStep;
 }
 
 bool ComputerView::isIndexHidden(const QModelIndex &index) const
@@ -186,7 +186,7 @@ void ComputerView::updateEditorGeometries()
     }
 
     horizontalScrollBar()->setRange(0, qMax(0, m_totalWidth - viewport()->width()));
-    verticalScrollBar()->setRange(0, qMax(0, m_totalHeight - viewport()->height()));
+    verticalScrollBar()->setRange(0, qMax(0, (m_totalHeight - viewport()->height() + 200)/m_scrollStep));
 
     //update tab index rect width
     for (auto index : m_rect_cache.keys()) {
@@ -212,7 +212,7 @@ void ComputerView::paintEvent(QPaintEvent *e)
     p.fillRect(this->rect(), palette().base());
     //p.fillRect(QRect(0, 0, m_totalWidth, m_totalHeight), Qt::blue);
     p.save();
-    p.translate(-horizontalScrollBar()->value(), -verticalScrollBar()->value());
+    p.translate(-horizontalOffset(), -verticalOffset());
 
     for (auto rect : m_rect_cache) {
         //qDebug()<<rect;
@@ -237,7 +237,7 @@ void ComputerView::mousePressEvent(QMouseEvent *event)
         m_isLeftButtonPressed = true;
         m_rubberBand->hide();
         m_lastPressedPoint = event->pos();
-        m_lastPressedLogicPoint = event->pos() + QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value());
+        m_lastPressedLogicPoint = event->pos() + QPoint(horizontalOffset(), verticalOffset());
     }
     else
         m_rubberBand->hide();
@@ -299,7 +299,7 @@ void ComputerView::layoutVolumeIndexes(const QModelIndex &volumeParentIndex)
     if (m_totalWidth < 2 * (m_hSpacing + m_volumeItemFixedSize.width())) {
         maxColumnCount = 1;
     } else {
-        maxColumnCount = this->viewport()->width()/(m_hSpacing + m_volumeItemFixedSize.width()) - 1;
+        maxColumnCount = this->viewport()->width()/(m_hSpacing + m_volumeItemFixedSize.width());// - 1;
     }
 
     int cloumn = 0;
@@ -340,7 +340,7 @@ void ComputerView::layoutRemoteIndexes(const QModelIndex &remoteParentIndex)
         //m_totalWidth = m_hSpacing + m_remoteItemFixedSize.width();
         maxColumnCount = 1;
     } else {
-        maxColumnCount = this->viewport()->width()/(m_hSpacing + m_remoteItemFixedSize.width()) - 1;
+        maxColumnCount = this->viewport()->width()/(m_hSpacing + m_remoteItemFixedSize.width());// - 1;
     }
 
     int cloumn = 0;
@@ -380,7 +380,7 @@ void ComputerView::layoutNetworkIndexes(const QModelIndex &networkParentIndex)
     if (m_totalWidth < 2 * (m_hSpacing + m_networkItemFixedSize.width())) {
         maxColumnCount = 1;
     } else {
-        maxColumnCount = this->viewport()->width()/(m_hSpacing + m_networkItemFixedSize.width()) - 1;
+        maxColumnCount = this->viewport()->width()/(m_hSpacing + m_networkItemFixedSize.width());// - 1;
     }
 
     int cloumn = 0;

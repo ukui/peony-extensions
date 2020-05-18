@@ -77,6 +77,8 @@ private:
 
     QModelIndex m_hoverIndex;
 
+    int m_scrollStep = 100;
+
     int m_totalHeight = 0;
     int m_totalWidth = 0;
     int m_hSpacing = 20;
