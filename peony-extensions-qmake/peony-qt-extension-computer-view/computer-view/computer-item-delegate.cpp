@@ -84,10 +84,33 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
     int hue = bg.hue();
     //int s = bg.saturation();
     int v = bg.value();
-    bg.setHsv(hue, 10, v);
+    bg.setHsv(hue, 10, 127);
 
     opt.palette.setColor(QPalette::Highlight, bg);
-    qApp->style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &opt, painter, m_styleIconView);
+    //qApp->style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &opt, painter, m_styleIconView);
+    bool isHover = (option.state & QStyle::State_MouseOver) && (option.state & ~QStyle::State_Selected);
+    bool isSelected = option.state & QStyle::State_Selected;
+    bool enable = option.state & QStyle::State_Enabled;
+    QColor color = option.palette.color(enable? QPalette::Active: QPalette::Disabled,
+                                        QPalette::Highlight);
+
+    color.setAlpha(0);
+    if (isHover && !isSelected) {
+        int h = color.hsvHue();
+        //int s = color.hsvSaturation();
+        auto base = option.palette.base().color();
+        int v = color.value();
+        color.setHsv(h, base.lightness(), v, 64);
+    }
+    if (isSelected) {
+        color.setAlpha(127);
+    }
+    painter->save();
+    painter->setRenderHint(QPainter::Antialiasing);
+    painter->setPen(Qt::transparent);
+    painter->setBrush(color);
+    painter->drawRoundedRect(option.rect, 6, 6);
+    painter->restore();
 
     if (index.parent().isValid()) {
         painter->save();

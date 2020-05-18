@@ -209,7 +209,7 @@ void ComputerView::resizeEvent(QResizeEvent *event)
 void ComputerView::paintEvent(QPaintEvent *e)
 {
     QPainter p(this->viewport());
-    p.fillRect(this->rect(), Qt::white);
+    p.fillRect(this->rect(), palette().base());
     //p.fillRect(QRect(0, 0, m_totalWidth, m_totalHeight), Qt::blue);
     p.save();
     p.translate(-horizontalScrollBar()->value(), -verticalScrollBar()->value());
