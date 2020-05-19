@@ -106,7 +106,7 @@ void MateTerminalMenuPlugin::tryOpenAgain()
 QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString &uri, const QStringList &selectionUris)
 {
     QList<QAction *> actions;
-    if (terminal_cmd.isNull()) {
+    if (terminal_cmd.isNull() || uri.contains("trash://")) {
         return actions;
     }
 
