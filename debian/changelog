@@ -1,4 +1,4 @@
-peony-extensions (2.1.1+0425.1) focal; urgency=medium
+peony-extensions (2.2.0) focal; urgency=medium
 
   * rebuild with latest libpeony.
 
