@@ -25,7 +25,8 @@ Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          libpeony2 (= 2.2.0),
-         samba-common-bin
+         samba-common-bin,
+         samba
 Description: Allows one to quickly share a folder from the Peony file manager
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
