@@ -218,11 +218,15 @@ void ComputerView::paintEvent(QPaintEvent *e)
         //qDebug()<<rect;
         auto opt = viewOptions();
         auto index = m_rect_cache.key(rect);
-        if (selectedIndexes().contains(index))
-            opt.state.setFlag(QStyle::State_Selected);
+        if (selectedIndexes().contains(index)) {
+//            opt.state.setFlag(QStyle::State_Selected);
+            opt.state |= QStyle::State_Selected;
+        }
         //p.drawText(rect.center(), QString::number(m_rect_cache.key(rect).row()));
-        if (index == m_hoverIndex)
-            opt.state.setFlag(QStyle::State_MouseOver);
+        if (index == m_hoverIndex) {
+//            opt.state.setFlag(QStyle::State_MouseOver);
+            opt.state |= QStyle::State_MouseOver;
+        }
 
         opt.rect = rect;
         opt.icon = QIcon::fromTheme("folder");

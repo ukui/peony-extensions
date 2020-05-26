@@ -89,7 +89,8 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                     QStringList args;
                     args<<"-p"<<uri;
                     p.setArguments(args);
-                    p.startDetached();
+//                    p.startDetached();
+                    p.startDetached(p.program(), p.arguments());
                 }
             });
             a->setEnabled(!uri.isNull());

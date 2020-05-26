@@ -57,38 +57,41 @@ QList<QAction*> EngrampaMenuPlugin::menuActions(Types types, const QString &uri,
                 return actions;
 
             QFileInfo file(selectionUris.first());
-            QAction *compress = new QAction(QIcon::fromTheme("application-zip"), tr("compress..."));
+            QAction *compress = new QAction(QIcon::fromTheme("application-zip"), tr("compress..."), nullptr);
             actions<<compress;
             connect(compress, &QAction::triggered, [=](){
                 qDebug()<<"compress file:"<<uri<<selectionUris;
                 QProcess p;
                 p.setProgram("engrampa");
                 p.setArguments(QStringList()<<"-d"<<selectionUris);
-                p.startDetached();
+//                p.startDetached();
+                p.startDetached(p.program(), QStringList()<<"-d"<<selectionUris);
                 p.waitForFinished(-1);
             });
 
             //check is compressed file
-            qDebug()<<"file.suffix"<<file.suffix()<<file.isDir()<<file;
+            //qDebug()<<"file.suffix"<<file.suffix()<<file.isDir()<<file;
             if (!file.isDir() && is_uncompressed_file(selectionUris.first()))
             {
-                QAction *un_compress_default = new QAction(QIcon::fromTheme("application-zip"), tr("uncompress to current path"));
+                QAction *un_compress_default = new QAction(QIcon::fromTheme("application-zip"), tr("uncompress to current path"), nullptr);
                 actions<<un_compress_default;
                 connect(un_compress_default, &QAction::triggered, [=](){
                     QProcess p;
                     p.setProgram("engrampa");
                     p.setArguments(QStringList()<<"-h"<<selectionUris);
-                    p.startDetached();
+//                    p.startDetached();
+                    p.startDetached(p.program(), p.arguments());
                     p.waitForFinished(-1);
                 });
 
-                QAction *un_compress_specific = new QAction(QIcon::fromTheme("application-zip"), tr("uncompress to specific path..."));
+                QAction *un_compress_specific = new QAction(QIcon::fromTheme("application-zip"), tr("uncompress to specific path..."), nullptr);
                 actions<<un_compress_specific;
                 connect(un_compress_specific, &QAction::triggered, [=](){
                     QProcess p;
                     p.setProgram("engrampa");
                     p.setArguments(QStringList()<<"-f"<<selectionUris);
-                    p.startDetached();
+//                    p.startDetached();
+                    p.startDetached(p.program(), p.arguments());
                     p.waitForFinished(-1);
                 });
             }
