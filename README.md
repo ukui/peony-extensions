@@ -13,3 +13,13 @@ make
 - Put the generated libraries into /usr/lib/peony-qt-extensions.
   
 - Test the extension with peony.
+
+## Current extensions
+
+- **terminal**, open terminal with right click menu.
+- **shared**, a share properties page in properties window.
+- **admin**, open a directory or a file as root with menu.
+- **parchives**, compress/uncompress files with menu.
+- **computer view**, a special view for displaying computer:///.
+
+> Note that gtk2-style-enhanced-plugin and create-link is deprecated and will be removed later, they are not recommended to be installed in to plugins directory.
