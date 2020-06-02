@@ -17,7 +17,7 @@
     <message>
         <location filename="../mate-terminal-menu-plugin.h" line="44"/>
         <source>Open Terminal with menu.</source>
-        <translationOtevřít Terminál z nabídky.</translation>
+        <translation>Otevřít Terminál z nabídky.</translation>
     </message>
 </context>
 </TS>
