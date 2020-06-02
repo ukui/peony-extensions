@@ -23,3 +23,12 @@ make
 - **computer view**, a special view for displaying computer:///.
 
 > Note that gtk2-style-enhanced-plugin and create-link is deprecated and will be removed later, they are not recommended to be installed in to plugins directory.
+
+## Translations
+Unlike Peony, Peony Extensions translations job is relatively primitive and crude. The main idea is every plugin translates itself, and compile translations resources with code (qrc).
+
+When you are going to translate peony extensions (I created), here are the mainly steps.
+
+- use lupdate to generate .ts file for your language, the naming rules reference existing files.
+- use lrelease to publish .ts file to .qm file.
+- modify the project's .qrc file, add your .qm file into recources to be compiled.
