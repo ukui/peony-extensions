@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Kylin Team <team+kylin@tracker.debian.org>
 Uploaders: Aron Xu <aron@debian.org>,
            handsome_feng <jianfengli@ubuntukylin.com>,
-Build-Depends: debhelper-compat (= 12),
+Build-Depends: debhelper-compat (>= 12),
                cmake,
                pkg-config,
                libglib2.0-dev,
@@ -24,7 +24,7 @@ Package: peony-share
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         libpeony2 (= 2.2.0),
+         libpeony2 (>= 2.2.0),
          samba-common-bin,
          samba
 Description: Allows one to quickly share a folder from the Peony file manager
@@ -39,7 +39,7 @@ Package: parchives
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         libpeony2 (= 2.2.0),
+         libpeony2 (>= 2.2.0),
          engrampa
 Description: Peony qt plugin for file compress and uncompress
  Parchives is an archive manager for the UKUI environment. You can use
@@ -51,7 +51,7 @@ Package: peony-open-terminal
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         libpeony2 (= 2.2.0),
+         libpeony2 (>= 2.2.0),
          mate-terminal
 Description: Peony plugin for opening terminals in arbitrary local paths
  Peony is the official file manager for the UKUI desktop. This
@@ -64,7 +64,7 @@ Package: peony-extension-computer-view
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         libpeony2 (= 2.2.0)
+         libpeony2 (>= 2.2.0)
 Description: Peony plugin for displaying computer:/// with more infomation.
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
