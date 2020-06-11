@@ -71,7 +71,7 @@ QList<QAction*> EngrampaMenuPlugin::menuActions(Types types, const QString &uri,
 
             //check is compressed file
             //qDebug()<<"file.suffix"<<file.suffix()<<file.isDir()<<file;
-            if (!file.isDir() && is_uncompressed_file(selectionUris.first()))
+            if (!file.isDir() && is_compressed_file(selectionUris.first()))
             {
                 QAction *un_compress_default = new QAction(QIcon::fromTheme("application-zip"), tr("uncompress to current path"), nullptr);
                 actions<<un_compress_default;
@@ -102,11 +102,12 @@ QList<QAction*> EngrampaMenuPlugin::menuActions(Types types, const QString &uri,
     return actions;
 }
 
-bool EngrampaMenuPlugin::is_uncompressed_file(QString file_name)
+bool EngrampaMenuPlugin::is_compressed_file(QString file_name)
 {
     for(auto name: m_file_type_list)
     {
-        if (file_name.endsWith(name))
+        auto suffix = "." + name;
+        if (file_name.endsWith(suffix))
             return true;
     }
 

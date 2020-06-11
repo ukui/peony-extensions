@@ -1,3 +1,9 @@
+peony-extensions (2.2.1) focal; urgency=medium
+
+  * add set wallpaper plugin.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Thu, 11 Jun 2020 17:40:45 +0800
+
 peony-extensions (2.2.0) focal; urgency=medium
 
   * rebuild with latest libpeony.

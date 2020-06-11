@@ -20,40 +20,43 @@
  *
  */
 
-#ifndef ENGRAMPAMENUPLUGIN_H
-#define ENGRAMPAMENUPLUGIN_H
+#ifndef SETWALLPAPERPLUGIN_H
+#define SETWALLPAPERPLUGIN_H
 
-#include "peony-qt-engrampa-menu-plugin_global.h"
+#include "peony-qt-set-wallpaper_global.h"
 #include <menu-plugin-iface.h>
+
+#include <QGSettings>
 
 namespace Peony {
 
-class PEONYQTENGRAMPAMENUPLUGINSHARED_EXPORT EngrampaMenuPlugin: public QObject, public MenuPluginInterface
+class PEONYQTSETWALLPAPERSHARED_EXPORT SetWallPaperPlugin: public QObject, public MenuPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID MenuPluginInterface_iid)
     Q_INTERFACES(Peony::MenuPluginInterface)
 public:
-    explicit EngrampaMenuPlugin(QObject *parent = nullptr);
+    explicit SetWallPaperPlugin(QObject *parent = nullptr);
 
     PluginInterface::PluginType pluginType() override {return PluginInterface::MenuPlugin;}
-    const QString name() override {return tr("Peony-Qt engrampa Extension");}
-    const QString description() override {return tr("engrampa Menu Extension.");}
-    const QIcon icon() override {return QIcon::fromTheme("application-zip");}
+    const QString name() override {return tr("Peony-Qt set wallpaper Extension");}
+    const QString description() override {return tr("set wallpaper Extension.");}
+    const QIcon icon() override {return QIcon::fromTheme("");}
     void setEnable(bool enable) override {m_enable = enable;}
     bool isEnable() override {return m_enable;}
 
-    QString testPlugin() override {return "test compress";}
+    QString testPlugin() override {return "test set wallpaper";}
     QList<QAction *> menuActions(Types types, const QString &uri, const QStringList &selectionUris) override;
 
-    bool is_compressed_file(QString file_name);
+    bool is_picture_file(QString file_name);
 
 private:
     bool m_enable;
-    QStringList m_file_type_list = {"7z","ar","cbz","deb", "ear","exe","jar","tar","tar.7z",
-                                    "tar.bz2","tar.gz","tar.lzma","rar","tar.xz","war","zip"};
+    QStringList m_picture_type_list = {"png", "jpg", "jpeg"};
+
+    QGSettings *m_bg_settings = nullptr;
 };
 
 }
 
-#endif // ENGRAMPAMENUPLUGIN_H
+#endif // SETWALLPAPERPLUGIN_H

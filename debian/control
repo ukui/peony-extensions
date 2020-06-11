@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Kylin Team <team+kylin@tracker.debian.org>
 Uploaders: Aron Xu <aron@debian.org>,
            handsome_feng <jianfengli@ubuntukylin.com>,
-Build-Depends: debhelper-compat (>= 12),
+Build-Depends: debhelper-compat (= 12),
                cmake,
                pkg-config,
                libglib2.0-dev,
@@ -73,6 +73,18 @@ Description: Peony plugin for displaying computer:/// with more infomation.
  which allows user browsering computer:/// with more infomation, which
  not provided in icon view and list view.
 
+Package: peony-set-wallpaper
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         libpeony2 (>= 2.2.0)
+Description: Peony plugin for right click a picture to set as wallpaper.
+ Peony is the official file manager for the UKUI desktop. This
+ package adds extended functionality to the Peony file manager.
+ .
+ In addition to set wallpaper in ukui-control-center, you can select a 
+ picture and right click to quickly set as wallpaper.
+
 Package: peony-extensions
 Architecture: any
 Depends: ${misc:Depends},
@@ -80,7 +92,8 @@ Depends: ${misc:Depends},
          parchives,
          peony-share, 
          peony-open-terminal,
-         peony-extension-computer-view
+         peony-extension-computer-view,
+         peony-set-wallpaper
 Description: Peony qt extensions (common files)
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
