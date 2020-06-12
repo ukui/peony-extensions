@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>translations/peony-qt-set-wallpaper-extension_zh_CN.ts</file>
+        <file>translations/peony-qt-set-wallpaper-extension_zh_CN.qm</file>
     </qresource>
 </RCC>

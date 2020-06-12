@@ -41,8 +41,11 @@ using namespace Peony;
 SetWallPaperPlugin::SetWallPaperPlugin(QObject *parent) : QObject (parent)
 {
     QTranslator *t = new QTranslator(this);
-    qDebug()<<"system().name:"<<QLocale::system().name();
-    qDebug()<<"\n\n\n\n\n\n\ntranslate:"<<t->load(":/translations/peony-qt-set-wallpaper-extension_"+QLocale::system().name());
+    QString path = ":/translations/peony-qt-set-wallpaper-extension_"+QLocale::system().name();
+    QFileInfo file(path + ".qm");
+    QFileInfo source(path + ".ts");
+    qDebug()<<"system().name:"<<path <<file.exists() <<source.exists();
+    qDebug()<<"\n\n\n translate:"<<t->load(":/translations/peony-qt-set-wallpaper-extension_"+QLocale::system().name());
     QApplication::installTranslator(t);
 }
 
