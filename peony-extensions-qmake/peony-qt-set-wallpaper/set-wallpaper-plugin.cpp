@@ -42,10 +42,8 @@ SetWallPaperPlugin::SetWallPaperPlugin(QObject *parent) : QObject (parent)
 {
     QTranslator *t = new QTranslator(this);
     QString path = ":/translations/peony-qt-set-wallpaper-extension_"+QLocale::system().name();
-    QFileInfo file(path + ".qm");
-    QFileInfo source(path + ".ts");
-    qDebug()<<"system().name:"<<path <<file.exists() <<source.exists();
-    qDebug()<<"\n\n\n translate:"<<t->load(":/translations/peony-qt-set-wallpaper-extension_"+QLocale::system().name());
+    qDebug()<<"system().name and path:"<<QLocale::system().name() << path;
+    qDebug()<<"\n\n\n translate:"<<t->load(path);
     QApplication::installTranslator(t);
 }
 
@@ -55,7 +53,7 @@ QList<QAction*> SetWallPaperPlugin::menuActions(Types types, const QString &uri,
     if (types == MenuPluginInterface::DirectoryView || types == MenuPluginInterface::DesktopWindow)
     {
         if (selectionUris.count() == 1 && is_picture_file(selectionUris.first())) {
-            QAction *set_action = new QAction(tr("Set as wallpaper"));
+            QAction *set_action = new QAction(tr("Set as wallpaper"), nullptr);
             actions<<set_action;
             connect(set_action, &QAction::triggered, [=](){
                 if (QGSettings::isSchemaInstalled(BACKGROUND_SETTINGS))
