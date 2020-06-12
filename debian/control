@@ -13,7 +13,8 @@ Build-Depends: debhelper-compat (= 12),
                qtchooser,
                qtbase5-dev-tools,
                libpoppler-qt5-dev,
-               libpeony-dev
+               libpeony-dev,
+               libgsettings-qt-dev
 Standards-Version: 4.5.0
 Rules-Requires-Root: no
 Homepage: https://github.com/ukui/peony-extensions
