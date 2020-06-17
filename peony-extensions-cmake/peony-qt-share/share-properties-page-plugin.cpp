@@ -104,6 +104,11 @@ bool SharePropertiesPagePlugin::supportUris(const QStringList &uris)
         return false;
     }
 
+    // don't share directory that has no permission
+    if (!info->canRead() || !info->canWrite() || !info->canExecute()) {
+        return false;
+    }
+
     return true;
 }
 
