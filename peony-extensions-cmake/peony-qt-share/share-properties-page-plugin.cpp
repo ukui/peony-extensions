@@ -98,6 +98,17 @@ bool SharePropertiesPagePlugin::supportUris(const QStringList &uris)
     if (!info->isDir() || info->isVirtual() || !info->uri().startsWith("file:///")) {
         return false;
     }
+    // don't share user's home directory file:///home/xxx/
+    QStringList file = info->uri().split('/', QString::SkipEmptyParts);
+    if ((3 == file.size ()) && (file.at(1) == "home")) {
+        return false;
+    }
+
+    // don't share directory that has no permission
+    if (!info->canRead() || !info->canWrite() || !info->canExecute()) {
+        return false;
+    }
+
     return true;
 }
 
