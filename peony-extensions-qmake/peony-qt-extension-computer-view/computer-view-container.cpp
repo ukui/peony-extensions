@@ -33,6 +33,8 @@
 
 #include <QHBoxLayout>
 
+#include <QKeyEvent>
+
 #include <QMenu>
 #include <QInputDialog>
 #include <QProcess>
@@ -119,6 +121,18 @@ void Peony::ComputerViewContainer::paintEvent(QPaintEvent *e)
     DirectoryViewWidget::paintEvent(e);
 }
 
+void Peony::ComputerViewContainer::keyPressEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
+        if (m_enterAction)
+            m_enterAction->triggered();
+        e->accept();
+        return;
+    }
+
+    QWidget::keyPressEvent(e);
+}
+
 void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony::FileItemProxyFilterSortModel *proxyModel)
 {
     m_model = model;
@@ -150,6 +164,16 @@ void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony:
         }
         else
             item->mount();
+    });
+
+    m_enterAction = new QAction(this);
+    m_enterAction->setShortcut(Qt::Key_Enter);
+    addAction(m_enterAction);
+
+    connect(m_enterAction, &QAction::triggered, this, [=](){
+        if (m_view->selectionModel()->selectedIndexes().count() == 1) {
+            Q_EMIT m_view->doubleClicked(m_view->selectionModel()->selectedIndexes().first());
+        }
     });
 }
 
