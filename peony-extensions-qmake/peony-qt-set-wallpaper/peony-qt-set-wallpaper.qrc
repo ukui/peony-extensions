@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>translations/peony-qt-set-wallpaper-extension_zh_CN.ts</file>
         <file>translations/peony-qt-set-wallpaper-extension_zh_CN.qm</file>
+        <file>translations/peony-qt-set-wallpaper-extension_tr.ts</file>
+        <file>translations/peony-qt-set-wallpaper-extension_tr.qm</file>
     </qresource>
 </RCC>
