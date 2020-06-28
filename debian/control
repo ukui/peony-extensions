@@ -66,12 +66,12 @@ Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          libpeony2 (>= 2.2.0)
-Description: Peony plugin for displaying computer:/// with more infomation.
+Description: Peony plugin for displaying computer:/// with more information
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
  .
  peony-extionsion-computer-view is a proof-of-concept Peony extension
- which allows user browsering computer:/// with more infomation, which
+ which allows user browsering computer:/// with more information, which
  not provided in icon view and list view.
 
 Package: peony-set-wallpaper
@@ -79,11 +79,11 @@ Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          libpeony2 (>= 2.2.0)
-Description: Peony plugin for right click a picture to set as wallpaper.
+Description: Peony plugin for right click a picture to set as wallpaper
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
  .
- In addition to set wallpaper in ukui-control-center, you can select a 
+ In addition to set wallpaper in ukui-control-center, you can select a
  picture and right click to quickly set as wallpaper.
 
 Package: peony-extensions
@@ -91,7 +91,7 @@ Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          parchives,
-         peony-share, 
+         peony-share,
          peony-open-terminal,
          peony-extension-computer-view,
          peony-set-wallpaper
