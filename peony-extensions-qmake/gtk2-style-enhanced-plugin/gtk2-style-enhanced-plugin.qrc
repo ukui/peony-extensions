@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>translations/gtk2-style-enhanced-extension_zh_CN.qm</file>
         <file>translations/gtk2-style-enhanced-extension_zh_CN.ts</file>
+        <file>translations/gtk2-style-enhanced-extension_tr.ts</file>
     </qresource>
 </RCC>
