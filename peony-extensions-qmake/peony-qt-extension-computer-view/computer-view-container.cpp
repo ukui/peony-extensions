@@ -66,6 +66,8 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 QInputDialog dlg;
                 //dlg.setOption(QInputDialog::UsePlainTextEditForTextInput);
                 dlg.setLabelText(tr("sftp://, etc..."));
+		dlg.setCancelButtonText(tr("Cancel"));
+		dlg.setOkButtonText(tr("OK"));
                 if (dlg.exec()) {
                     auto uri = dlg.textValue();
                     Q_EMIT this->updateWindowLocationRequest(uri);

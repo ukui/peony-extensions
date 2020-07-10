@@ -4,7 +4,7 @@
 <context>
     <name>ComputerItemDelegate</name>
     <message>
-        <location filename="computer-view/computer-item-delegate.cpp" line="122"/>
+        <location filename="computer-view/computer-item-delegate.cpp" line="146"/>
         <source>You should mount volume first</source>
         <translation>Svazek je třeba nejprve připojit (mount)</translation>
     </message>
@@ -51,18 +51,28 @@
         <translation>sftp://, atd…</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="77"/>
+        <location filename="computer-view-container.cpp" line="69"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view-container.cpp" line="70"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view-container.cpp" line="79"/>
         <source>Unmount</source>
         <translation>Odpojit</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="83"/>
-        <location filename="computer-view-container.cpp" line="97"/>
+        <location filename="computer-view-container.cpp" line="85"/>
+        <location filename="computer-view-container.cpp" line="100"/>
         <source>Property</source>
         <translation>Vlastnost</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="85"/>
+        <location filename="computer-view-container.cpp" line="87"/>
         <source>You have to mount this volume first</source>
         <translation>Tento svazek je třeba nejprve připojit (mount)</translation>
     </message>
