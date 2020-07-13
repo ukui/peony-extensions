@@ -86,6 +86,18 @@ Description: Peony plugin for right click a picture to set as wallpaper
  In addition to set wallpaper in ukui-control-center, you can select a
  picture and right click to quickly set as wallpaper.
 
+Package: peony-admin
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         libpeony2 (>= 2.2.0)
+Description: Peony plugin for open files or directories as admin
+ Peony is the official file manager for the UKUI desktop. This
+ package adds extended functionality to the Peony file manager.
+ .
+ peony-extionsion-computer-view is a proof-of-concept Peony extension
+ which allows user open files or directories with higher permission.
+
 Package: peony-extensions
 Architecture: any
 Depends: ${misc:Depends},
