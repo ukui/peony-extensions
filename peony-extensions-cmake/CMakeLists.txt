@@ -4,5 +4,5 @@ project(peony-qt-extensions-cmake VERSION 0.1 LANGUAGES CXX)
 
 add_definitions(-std=c++11)
 
-#add_subdirectory(peony-qt-admin)
+add_subdirectory(peony-qt-admin)
 add_subdirectory(peony-qt-share)
