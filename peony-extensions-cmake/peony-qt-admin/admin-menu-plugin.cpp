@@ -31,6 +31,8 @@
 #include <QApplication>
 #include <QFile>
 
+#include <QtGlobal>
+
 #include <QDebug>
 
 using namespace Peony;
@@ -76,10 +78,15 @@ QList<QAction *> AdminMenuPlugin::menuActions(Types types, const QString &uri, c
             l<<directoryAction;
             directoryAction->connect(directoryAction, &QAction::triggered, [=](){
                 QtConcurrent::run([=](){
-                    QProcess p;
+                    QStringList args;
                     QUrl url = selectionUris.first();
+                    args<<"peony"<<url.toEncoded();
+                    auto env = qgetenv("QT_QPA_PLATFORMTHEME");
+                    if (!env.isEmpty())
+                        args<<"-platformtheme"<<env;
+                    QProcess p;
                     p.setProgram("pkexec");
-                    p.setArguments(QStringList()<<"peony"<<url.toEncoded());
+                    p.setArguments(args);
                     p.start();
                     p.waitForFinished();
                 });
