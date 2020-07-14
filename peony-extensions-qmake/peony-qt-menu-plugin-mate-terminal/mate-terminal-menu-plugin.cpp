@@ -121,6 +121,9 @@ QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString 
             actions<<dirAction;
         }
         if (selectionUris.count() == 1) {
+            //select computer or trash, return
+            if (selectionUris.first().contains("trash://") || selectionUris.first().contains("computer://"))
+                return actions;
             auto info = FileInfo::fromUri(selectionUris.first(), false);
             if (info->isDir()) {
                 m_uri = selectionUris.first();
