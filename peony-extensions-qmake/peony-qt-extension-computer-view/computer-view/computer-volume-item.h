@@ -39,12 +39,12 @@ public:
     const QString uri() override {return m_uri;}
     const QString displayName() override;
     const QIcon icon() override;
+    bool isMount() override;
 
     void findChildren() override;
 
     void updateInfo() override {updateInfoAsync();}
     void check() override;
-
 
     bool canEject() override;
     void eject() override;
