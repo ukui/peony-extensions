@@ -21,10 +21,11 @@
  */
 
 #include "computer-volume-item.h"
-
+#include <peony-qt/file-utils.h>
 #include "computer-model.h"
 #include <QMessageBox>
 #include <QDebug>
+#include <QApplication>
 
 ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, AbstractComputerItem *parentNode, QObject *parent) : AbstractComputerItem(model, parentNode, parent)
 {
@@ -84,7 +85,7 @@ void ComputerVolumeItem::updateInfoAsync()
         //m_mount = nullptr;
         //mount first
         //FIXME: check auto mount
-        //this->mount();
+//        this->mount();
     }
 
     auto index = this->itemIndex();
@@ -99,6 +100,11 @@ const QString ComputerVolumeItem::displayName()
 const QIcon ComputerVolumeItem::icon()
 {
     return m_icon.isNull()? AbstractComputerItem::icon(): m_icon;
+}
+
+bool ComputerVolumeItem::isMount()
+{
+    return Peony::FileUtils::isMountPoint(m_uri);
 }
 
 void ComputerVolumeItem::findChildren()
@@ -146,6 +152,7 @@ void ComputerVolumeItem::check()
               time. that makes some volumes location changement meet troubles.
               */
             m_uri = uri;
+
             g_free(uri);
         }
         if (path) {
@@ -153,6 +160,23 @@ void ComputerVolumeItem::check()
             g_free(path);
         }
         g_object_unref(active_root);
+    }
+
+    if (m_uri.isNull()) {
+        GFile* file = nullptr;
+        GMount* mount = g_volume_get_mount(m_volume->getGVolume());
+        if (nullptr != mount) {
+            file = g_mount_get_root (mount);
+            if (nullptr != file) {
+                m_uri = g_file_get_uri(file);
+            }
+        }
+        if (nullptr != file) {
+            g_object_unref(file);
+        }
+        if (nullptr != mount) {
+            g_object_unref (mount);
+        }
     }
 }
 
@@ -228,7 +252,7 @@ void ComputerVolumeItem::volume_changed_callback(GVolume *volume, ComputerVolume
     p_this->m_displayName = nullptr;
     p_this->m_usedSpace = 0;
     p_this->m_totalSpace = 0;
-    p_this->updateInfoAsync();
+    p_this->updateInfo();
 }
 
 void ComputerVolumeItem::volume_removed_callback(GVolume *volume, ComputerVolumeItem *p_this)

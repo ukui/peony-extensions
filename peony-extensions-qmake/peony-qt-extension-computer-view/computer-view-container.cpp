@@ -25,6 +25,7 @@
 #include "computer-proxy-model.h"
 #include "abstract-computer-item.h"
 
+#include <peony-qt/file-utils.h>
 #include <peony-qt/file-item-model.h>
 #include <peony-qt/file-item-proxy-filter-sort-model.h>
 
@@ -59,6 +60,10 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
         QList<AbstractComputerItem *> items;
         for (auto index : m_view->selectionModel()->selectedIndexes()) {
             auto item = model->itemFromIndex(index);
+            if (!item->isMount()) {
+                item->mount();
+            }
+            item->updateInfo();
             uris<<item->uri();
             items<<item;
         }
@@ -68,6 +73,8 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 QInputDialog dlg;
                 //dlg.setOption(QInputDialog::UsePlainTextEditForTextInput);
                 dlg.setLabelText(tr("sftp://, etc..."));
+                dlg.setCancelButtonText(tr("Cancel"));
+                dlg.setOkButtonText(tr("OK"));
                 if (dlg.exec()) {
                     auto uri = dlg.textValue();
                     Q_EMIT this->updateWindowLocationRequest(uri);
@@ -161,9 +168,9 @@ void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony:
         if (!item->uri().isEmpty()) {
             item->check();
             this->updateWindowLocationRequest(item->uri());
-        }
-        else
+        } else {
             item->mount();
+        }
     });
 
     m_enterAction = new QAction(this);

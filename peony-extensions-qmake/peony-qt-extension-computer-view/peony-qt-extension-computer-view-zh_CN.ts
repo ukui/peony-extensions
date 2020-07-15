@@ -4,7 +4,7 @@
 <context>
     <name>ComputerItemDelegate</name>
     <message>
-        <location filename="computer-view/computer-item-delegate.cpp" line="122"/>
+        <location filename="computer-view/computer-item-delegate.cpp" line="146"/>
         <source>You should mount volume first</source>
         <translation>需要首先挂载分区</translation>
     </message>
@@ -51,18 +51,28 @@
         <translation>如sftp://...</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="77"/>
+        <location filename="computer-view-container.cpp" line="69"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="computer-view-container.cpp" line="70"/>
+        <source>OK</source>
+        <translation type="unfinished">确定</translation>
+    </message>
+    <message>
+        <location filename="computer-view-container.cpp" line="79"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="83"/>
-        <location filename="computer-view-container.cpp" line="97"/>
+        <location filename="computer-view-container.cpp" line="85"/>
+        <location filename="computer-view-container.cpp" line="100"/>
         <source>Property</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="85"/>
+        <location filename="computer-view-container.cpp" line="87"/>
         <source>You have to mount this volume first</source>
         <translation>需要首先挂载分区</translation>
     </message>

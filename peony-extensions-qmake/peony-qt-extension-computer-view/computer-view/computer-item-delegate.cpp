@@ -21,16 +21,16 @@
  */
 
 #include <gio/gio.h>
-
-#include "computer-item-delegate.h"
-#include "abstract-computer-item.h"
 #include "computer-view.h"
 #include "computer-proxy-model.h"
+#include "computer-item-delegate.h"
+#include "abstract-computer-item.h"
 
-#include <QPainter>
-#include <QApplication>
 #include <QStyle>
+#include <QDebug>
+#include <QPainter>
 #include <QListView>
+#include <QApplication>
 
 ComputerItemDelegate::ComputerItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
@@ -142,8 +142,10 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
             g_free(usedFormat);
             shouldDrawProgress = true;
         } else {
-            if (item->uri().isNull())
+            item->updateInfo();
+            if (!item->isMount()) {
                 spaceInfo = tr("You should mount volume first");
+            }
         }
         qApp->style()->drawItemText(painter, textRect.translated(0, 2*option.fontMetrics.ascent()), Qt::AlignLeft|Qt::AlignVCenter|Qt::TextWordWrap, option.palette, enable, spaceInfo, QPalette::Dark);
 

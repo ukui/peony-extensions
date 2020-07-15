@@ -53,6 +53,7 @@ public:
     virtual void clearChildren() {}
     virtual void updateInfo() {}
     virtual void check() {}
+    virtual bool isMount () {return false;}
 
     //for volumn
     virtual qint64 totalSpace() {return 0;}
