@@ -142,7 +142,6 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
             g_free(usedFormat);
             shouldDrawProgress = true;
         } else {
-            item->updateInfo();
             if (!item->isMount()) {
                 spaceInfo = tr("You should mount volume first");
             }

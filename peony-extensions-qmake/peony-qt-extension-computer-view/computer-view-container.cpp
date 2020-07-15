@@ -58,10 +58,6 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
         QList<AbstractComputerItem *> items;
         for (auto index : m_view->selectionModel()->selectedIndexes()) {
             auto item = model->itemFromIndex(index);
-            if (!item->isMount()) {
-                item->mount();
-            }
-            item->updateInfo();
             uris<<item->uri();
             items<<item;
         }
