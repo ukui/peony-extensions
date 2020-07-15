@@ -4,7 +4,7 @@
 <context>
     <name>ComputerItemDelegate</name>
     <message>
-        <location filename="computer-view/computer-item-delegate.cpp" line="146"/>
+        <location filename="computer-view/computer-item-delegate.cpp" line="147"/>
         <source>You should mount volume first</source>
         <translation>需要首先挂载分区</translation>
     </message>
@@ -28,12 +28,12 @@
 <context>
     <name>ComputerVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="32"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="33"/>
         <source>Volume</source>
         <translation>本地分区</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="40"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="41"/>
         <source>File System</source>
         <translation>文件系统</translation>
     </message>
@@ -41,38 +41,39 @@
 <context>
     <name>Peony::ComputerViewContainer</name>
     <message>
-        <location filename="computer-view-container.cpp" line="65"/>
+        <location filename="computer-view-container.cpp" line="72"/>
+        <location filename="computer-view-container.cpp" line="75"/>
         <source>Connect a server</source>
         <translation>连接远程服务器</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="68"/>
+        <location filename="computer-view-container.cpp" line="76"/>
         <source>sftp://, etc...</source>
         <translation>如sftp://...</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="69"/>
+        <location filename="computer-view-container.cpp" line="77"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="70"/>
+        <location filename="computer-view-container.cpp" line="78"/>
         <source>OK</source>
-        <translation type="unfinished">确定</translation>
+        <translation>确定</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="79"/>
+        <location filename="computer-view-container.cpp" line="87"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="85"/>
-        <location filename="computer-view-container.cpp" line="100"/>
+        <location filename="computer-view-container.cpp" line="93"/>
+        <location filename="computer-view-container.cpp" line="108"/>
         <source>Property</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="87"/>
+        <location filename="computer-view-container.cpp" line="95"/>
         <source>You have to mount this volume first</source>
         <translation>需要首先挂载分区</translation>
     </message>

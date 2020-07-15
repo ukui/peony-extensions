@@ -72,6 +72,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             menu.addAction(tr("Connect a server"), [=](){
                 QInputDialog dlg;
                 //dlg.setOption(QInputDialog::UsePlainTextEditForTextInput);
+                dlg.setWindowTitle(tr("Connect a server"));
                 dlg.setLabelText(tr("sftp://, etc..."));
                 dlg.setCancelButtonText(tr("Cancel"));
                 dlg.setOkButtonText(tr("OK"));
