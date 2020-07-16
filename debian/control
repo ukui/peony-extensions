@@ -107,6 +107,7 @@ Depends: ${misc:Depends},
          peony-share,
          peony-open-terminal,
          peony-extension-computer-view,
+         peony-admin,
          peony-set-wallpaper
 Description: Peony qt extensions (common files)
  Peony is the official file manager for the UKUI desktop. This
