@@ -32,6 +32,7 @@
 
 #include <QMenu>
 #include <QProcess>
+#include <QKeyEvent>
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QStyleOption>
@@ -91,7 +92,6 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
 
         if (items.count() == 0) {
             menu.addAction(tr("Connect a server"), [=](){
-                // ip 192.168.17.242
                 QString uri;
                 LoginRemoteFilesystem* dlg = new LoginRemoteFilesystem;
                 connect(dlg, &QDialog::accept, [=] () {
@@ -105,7 +105,6 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 if (code == QDialog::Rejected) {
                     // Exit
                     return;
-                }
 
                 GFile* m_volume = g_file_new_for_uri(dlg->uri().toUtf8().constData());
                 m_remote_uri = dlg->uri();
@@ -166,6 +165,18 @@ void Peony::ComputerViewContainer::paintEvent(QPaintEvent *e)
     DirectoryViewWidget::paintEvent(e);
 }
 
+void Peony::ComputerViewContainer::keyPressEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
+        if (m_enterAction)
+            m_enterAction->triggered();
+        e->accept();
+        return;
+    }
+
+    QWidget::keyPressEvent(e);
+}
+
 void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony::FileItemProxyFilterSortModel *proxyModel)
 {
     m_model = model;
@@ -196,6 +207,16 @@ void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony:
             this->updateWindowLocationRequest(item->uri());
         } else {
             item->mount();
+        }
+    });
+
+    m_enterAction = new QAction(this);
+    m_enterAction->setShortcut(Qt::Key_Enter);
+    addAction(m_enterAction);
+
+    connect(m_enterAction, &QAction::triggered, this, [=](){
+        if (m_view->selectionModel()->selectedIndexes().count() == 1) {
+            Q_EMIT m_view->doubleClicked(m_view->selectionModel()->selectedIndexes().first());
         }
     });
 }

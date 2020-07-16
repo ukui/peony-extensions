@@ -9,12 +9,12 @@
         <translation>压缩...</translation>
     </message>
     <message>
-        <location filename="../engrampa-menu-plugin.cpp" line="75"/>
+        <location filename="../engrampa-menu-plugin.cpp" line="76"/>
         <source>uncompress to current path</source>
         <translation>解压缩到此处</translation>
     </message>
     <message>
-        <location filename="../engrampa-menu-plugin.cpp" line="85"/>
+        <location filename="../engrampa-menu-plugin.cpp" line="87"/>
         <source>uncompress to specific path...</source>
         <translation>解压缩到...</translation>
     </message>

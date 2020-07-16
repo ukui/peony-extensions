@@ -63,6 +63,8 @@ public:
 protected:
     void paintEvent(QPaintEvent *e);
 
+    void keyPressEvent(QKeyEvent *e);
+
 public Q_SLOTS:
     virtual void bindModel(FileItemModel *model, FileItemProxyFilterSortModel *proxyModel);
 
@@ -102,6 +104,7 @@ public:
 private:
     ComputerView *m_view = nullptr;
     GMountOperation* m_op = nullptr;
+    QAction *m_enterAction = nullptr;
     Peony::FileItemModel *m_model = nullptr;
     Peony::FileItemProxyFilterSortModel *m_proxyModel = nullptr;
 };

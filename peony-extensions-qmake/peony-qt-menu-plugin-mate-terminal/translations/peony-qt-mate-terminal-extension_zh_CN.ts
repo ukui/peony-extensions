@@ -4,8 +4,8 @@
 <context>
     <name>Peony::MateTerminalMenuPlugin</name>
     <message>
-        <location filename="../mate-terminal-menu-plugin.cpp" line="116"/>
-        <location filename="../mate-terminal-menu-plugin.cpp" line="126"/>
+        <location filename="../mate-terminal-menu-plugin.cpp" line="117"/>
+        <location filename="../mate-terminal-menu-plugin.cpp" line="130"/>
         <source>Open Directory in Terminal</source>
         <translation>打开终端</translation>
     </message>
