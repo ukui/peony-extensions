@@ -1,7 +1,5 @@
 /*
- * Peony-Qt's Library
- *
- * Copyright (C) 2020, Tianjin KYLIN Information Technology Co., Ltd.
+ * Copyright (C) 2019, Tianjin KYLIN Information Technology Co., Ltd.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,29 +18,30 @@
  *
  */
 
-#ifndef COMPUTERPROXYMODEL_H
-#define COMPUTERPROXYMODEL_H
+#ifndef LOGINREMOTEFILESYSTEM_H
+#define LOGINREMOTEFILESYSTEM_H
 
-#include <QSortFilterProxyModel>
+#include <QDialog>
 
-class ComputerModel;
-class AbstractComputerItem;
+namespace Ui {
+class LoginRemoteFilesystem;
+}
 
-class ComputerProxyModel : public QSortFilterProxyModel
+class LoginRemoteFilesystem : public QDialog
 {
     Q_OBJECT
+
 public:
-    explicit ComputerProxyModel(QObject *parent = nullptr);
+    explicit LoginRemoteFilesystem(QWidget *parent = nullptr);
+    ~LoginRemoteFilesystem();
 
-    static ComputerProxyModel *globalInstance();
-
-    AbstractComputerItem *itemFromIndex(const QModelIndex &proxyIndex);
-
-protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+    QString user();
+    QString password();
+    QString domain();
+    QString uri();
 
 private:
-    ComputerModel *m_model;
+    Ui::LoginRemoteFilesystem *ui;
 };
 
-#endif // COMPUTERPROXYMODEL_H
+#endif // LOGINREMOTEFILESYSTEM_H

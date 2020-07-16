@@ -27,6 +27,8 @@
 #include <peony-qt/directory-view-plugin-iface2.h>
 #include <peony-qt/controls/directory-view/directory-view-widget.h>
 
+#include <gio/gio.h>
+
 class ComputerView;
 
 namespace Peony {
@@ -36,6 +38,7 @@ class ComputerViewContainer : public DirectoryViewWidget
     Q_OBJECT
 public:
     explicit ComputerViewContainer(QWidget *parent = nullptr);
+    ~ComputerViewContainer();
 
     const virtual QString viewId() {return "Computer View";}
 
@@ -93,10 +96,14 @@ public Q_SLOTS:
     //zoom
     virtual void setCurrentZoomLevel(int zoomLevel) {}
 
+public:
+    QString m_remote_uri;
+
 private:
     ComputerView *m_view = nullptr;
-    Peony::FileItemModel *m_model;
-    Peony::FileItemProxyFilterSortModel *m_proxyModel;
+    GMountOperation* m_op = nullptr;
+    Peony::FileItemModel *m_model = nullptr;
+    Peony::FileItemProxyFilterSortModel *m_proxyModel = nullptr;
 };
 
 }

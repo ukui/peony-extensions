@@ -45,7 +45,6 @@ protected:
     void drawTab(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void drawStyledItem(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
-signals:
 private:
     QListView *m_styleIconView;
 };

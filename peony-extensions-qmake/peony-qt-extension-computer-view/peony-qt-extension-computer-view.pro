@@ -5,7 +5,7 @@ TARGET = peony-qt-computer-view-plugin
 TEMPLATE = lib
 DEFINES += PEONYQTEXTENSIONCOMPUTERVIEW_LIBRARY
 
-CONFIG += c++11 plugin link_pkgconfig
+CONFIG += c++11 plugin no_keywords link_pkgconfig
 PKGCONFIG +=gio-2.0 glib-2.0 gio-unix-2.0 peony
 
 # The following define makes your compiler emit warnings if you use
@@ -25,12 +25,14 @@ include(computer-view/computer-view.pri)
 
 SOURCES += \
     computer-view-container.cpp \
-    peony-computer-view-plugin.cpp
+    login-remote-filesystem.cpp \
+    peony-computer-view-plugin.cpp \
 
 HEADERS += \
     computer-view-container.h \
+    login-remote-filesystem.h \
+    peony-computer-view-plugin.h \
     peony-qt-extension-computer-view_global.h \
-    peony-computer-view-plugin.h
 
 DESTDIR += ../../testdir
 
@@ -39,6 +41,9 @@ unix {
     target.path = /usr/lib/peony-qt-extensions
 }
 !isEmpty(target.path): INSTALLS += target
+
+FORMS += \
+    login-remote-filesystem.ui
 
 RESOURCES += \
     translation.qrc
