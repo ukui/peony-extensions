@@ -24,26 +24,52 @@
 #include "computer-view.h"
 #include "computer-proxy-model.h"
 #include "abstract-computer-item.h"
+#include "login-remote-filesystem.h"
 
 #include <peony-qt/file-utils.h>
 #include <peony-qt/file-item-model.h>
 #include <peony-qt/file-item-proxy-filter-sort-model.h>
 
-#include <QStylePainter>
-#include <QStyleOption>
-
-#include <QHBoxLayout>
-
-#include <QKeyEvent>
-
 #include <QMenu>
-#include <QInputDialog>
 #include <QProcess>
+#include <QKeyEvent>
+#include <QHBoxLayout>
 #include <QMessageBox>
+#include <QStyleOption>
+#include <QInputDialog>
+#include <QStylePainter>
+
+static GAsyncReadyCallback mount_enclosing_volume_callback(GFile *volume, GAsyncResult *res, Peony::ComputerViewContainer *p_this)
+{
+    GError *err = nullptr;
+    g_file_mount_enclosing_volume_finish (volume, res, &err);
+    if ((nullptr == err) || (g_error_matches (err, G_IO_ERROR, G_IO_ERROR_ALREADY_MOUNTED))) {
+        qDebug() << "login successful!";
+        Q_EMIT p_this->updateWindowLocationRequest(p_this->m_remote_uri);
+    } else {
+        qDebug() << "login remote error: " <<err->code<<err->message<<err->domain;
+        QMessageBox::warning(nullptr, "log remote error", err->message, QMessageBox::Ok);
+    }
+
+    if (nullptr != err) {
+        g_error_free(err);
+    }
+
+    return nullptr;
+}
+
+void aborted_cb(GMountOperation *op, Peony::ComputerViewContainer *p_this)
+{
+    g_mount_operation_reply(op, G_MOUNT_OPERATION_ABORTED);
+    p_this->disconnect();
+}
 
 Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : DirectoryViewWidget(parent)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
+    m_op = g_mount_operation_new();
+    g_signal_connect (m_op, "aborted", G_CALLBACK (aborted_cb), this);
+
     connect(this, &QWidget::customContextMenuRequested, this, [=](const QPoint &pos){
         auto selectedIndexes = m_view->selectionModel()->selectedIndexes();
         auto index = m_view->indexAt(pos);
@@ -66,16 +92,23 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
 
         if (items.count() == 0) {
             menu.addAction(tr("Connect a server"), [=](){
-                QInputDialog dlg;
-                //dlg.setOption(QInputDialog::UsePlainTextEditForTextInput);
-                dlg.setWindowTitle(tr("Connect a server"));
-                dlg.setLabelText(tr("sftp://, etc..."));
-                dlg.setCancelButtonText(tr("Cancel"));
-                dlg.setOkButtonText(tr("OK"));
-                if (dlg.exec()) {
-                    auto uri = dlg.textValue();
-                    Q_EMIT this->updateWindowLocationRequest(uri);
-                }
+                QString uri;
+                LoginRemoteFilesystem* dlg = new LoginRemoteFilesystem;
+                connect(dlg, &QDialog::accept, [=] () {
+                    g_mount_operation_set_username(m_op, dlg->user().toUtf8().constData());
+                    g_mount_operation_set_password(m_op, dlg->password().toUtf8().constData());
+                    g_mount_operation_set_password_save(m_op, G_PASSWORD_SAVE_FOR_SESSION);
+                });
+
+                dlg->deleteLater();
+                auto code = dlg->exec();
+                if (code == QDialog::Rejected) {
+                    // Exit
+                    return;
+
+                GFile* m_volume = g_file_new_for_uri(dlg->uri().toUtf8().constData());
+                m_remote_uri = dlg->uri();
+                g_file_mount_enclosing_volume(m_volume, G_MOUNT_MOUNT_NONE, m_op, nullptr, GAsyncReadyCallback(mount_enclosing_volume_callback), this);
             });
         } else if (items.count() == 1) {
             auto item = items.first();
@@ -107,6 +140,13 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
 
         menu.exec(QCursor::pos());
     });
+}
+
+Peony::ComputerViewContainer::~ComputerViewContainer()
+{
+    if (nullptr != m_op) {
+        g_object_unref(m_op);
+    }
 }
 
 const QStringList Peony::ComputerViewContainer::getSelections()
