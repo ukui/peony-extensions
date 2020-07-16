@@ -50,9 +50,9 @@ static GAsyncReadyCallback mount_enclosing_volume_callback(GFile *volume, GAsync
         QMessageBox::warning(nullptr, "log remote error", err->message, QMessageBox::Ok);
     }
 
-//    if (nullptr != err) {
-//        g_object_unref(err);
-//    }
+    if (nullptr != err) {
+        g_error_free(err);
+    }
 
     return nullptr;
 }
