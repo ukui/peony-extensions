@@ -105,6 +105,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 if (code == QDialog::Rejected) {
                     // Exit
                     return;
+                }
 
                 GFile* m_volume = g_file_new_for_uri(dlg->uri().toUtf8().constData());
                 m_remote_uri = dlg->uri();
