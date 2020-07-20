@@ -60,7 +60,12 @@ QList<QAction *> AdminMenuPlugin::menuActions(Types types, const QString &uri, c
                 QProcess p;
                 QUrl url = uri;
                 p.setProgram("pkexec");
-                p.setArguments(QStringList()<<"peony"<<url.toEncoded());
+                QStringList args;
+                args<<"peony"<<url.toEncoded();
+                auto env = qgetenv("QT_QPA_PLATFORMTHEME");
+                if (!env.isEmpty())
+                    args<<"-platformtheme"<<env;
+                p.setArguments(args);
                 p.start();
                 p.waitForFinished();
             });
