@@ -167,7 +167,7 @@ void ComputerView::updateEditorGeometries()
             break;
         }
         case AbstractComputerItem::RemoteVolume: {
-            layoutRemoteIndexes(index);
+            //layoutRemoteIndexes(index);
             break;
         }
         case AbstractComputerItem::Network: {
