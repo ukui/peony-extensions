@@ -55,12 +55,6 @@ void ComputerNetworkItem::findChildren()
     g_file_enumerate_children_async(file, G_FILE_ATTRIBUTE_STANDARD_NAME, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, 0,
                                     m_cancellable, GAsyncReadyCallback(enumerate_async_callback), this);
     g_object_unref(file);
-
-    m_watcher = new Peony::FileWatcher("network:///", this);
-    connect(m_watcher, &Peony::FileWatcher::fileCreated, this, &ComputerNetworkItem::onFileAdded);
-    connect(m_watcher, &Peony::FileWatcher::fileDeleted, this, &ComputerNetworkItem::onFileRemoved);
-    connect(m_watcher, &Peony::FileWatcher::fileChanged, this, &ComputerNetworkItem::onFileChanged);
-    m_watcher->startMonitor();
 }
 
 void ComputerNetworkItem::updateInfo()
@@ -174,6 +168,12 @@ void ComputerNetworkItem::find_children_async_callback(GFileEnumerator *enumerat
         //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
     }
+
+    p_this->m_watcher = new Peony::FileWatcher("network:///", p_this);
+    connect(p_this->m_watcher, &Peony::FileWatcher::fileCreated, p_this, &ComputerNetworkItem::onFileAdded);
+    connect(p_this->m_watcher, &Peony::FileWatcher::fileDeleted, p_this, &ComputerNetworkItem::onFileRemoved);
+    connect(p_this->m_watcher, &Peony::FileWatcher::fileChanged, p_this, &ComputerNetworkItem::onFileChanged);
+    p_this->m_watcher->startMonitor();
 }
 
 void ComputerNetworkItem::query_info_async_callback(GFile *file, GAsyncResult *res, ComputerNetworkItem *p_this)
