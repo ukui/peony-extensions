@@ -29,6 +29,7 @@ class AbstractComputerItem;
 
 class ComputerModel : public QAbstractItemModel
 {
+    friend class ComputerNetworkItem;
     Q_OBJECT
 
 public:

@@ -46,7 +46,9 @@ public:
 
     QModelIndex itemIndex() override;
 
-public:
+public Q_SLOTS:
+    void reloadDirectory(const QString &uri);
+
     void onFileAdded(const QString &uri);
     void onFileRemoved(const QString &uri);
     void onFileChanged(const QString &uri);

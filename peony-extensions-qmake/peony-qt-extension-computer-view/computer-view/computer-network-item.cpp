@@ -73,6 +73,20 @@ QModelIndex ComputerNetworkItem::itemIndex()
     return m_model->createItemIndex(m_parentNode->m_children.indexOf(this), this);
 }
 
+void ComputerNetworkItem::reloadDirectory(const QString &uri)
+{
+    if (m_uri != "network:///")
+        return;
+
+    m_model->beginResetModel();
+    for (auto item : m_children) {
+        item->deleteLater();
+    }
+    m_children.clear();
+    findChildren();
+    m_model->endResetModel();
+}
+
 void ComputerNetworkItem::onFileAdded(const QString &uri)
 {
     for (auto item : m_children) {
@@ -169,7 +183,11 @@ void ComputerNetworkItem::find_children_async_callback(GFileEnumerator *enumerat
         g_error_free(err);
     }
 
+    if (p_this->m_watcher) {
+        p_this->m_watcher->deleteLater();
+    }
     p_this->m_watcher = new Peony::FileWatcher("network:///", p_this);
+    connect(p_this->m_watcher, &Peony::FileWatcher::directoryDeleted, p_this, &ComputerNetworkItem::reloadDirectory);
     connect(p_this->m_watcher, &Peony::FileWatcher::fileCreated, p_this, &ComputerNetworkItem::onFileAdded);
     connect(p_this->m_watcher, &Peony::FileWatcher::fileDeleted, p_this, &ComputerNetworkItem::onFileRemoved);
     connect(p_this->m_watcher, &Peony::FileWatcher::fileChanged, p_this, &ComputerNetworkItem::onFileChanged);
