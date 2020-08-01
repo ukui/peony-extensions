@@ -5,7 +5,7 @@ TARGET = peony-qt-computer-view-plugin
 TEMPLATE = lib
 DEFINES += PEONYQTEXTENSIONCOMPUTERVIEW_LIBRARY
 
-CONFIG += c++11 plugin no_keywords link_pkgconfig
+CONFIG += debug c++11 no_keywords link_pkgconfig plugin
 PKGCONFIG +=gio-2.0 glib-2.0 gio-unix-2.0 peony
 
 # The following define makes your compiler emit warnings if you use
