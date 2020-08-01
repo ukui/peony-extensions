@@ -1,3 +1,9 @@
+peony-extensions (3.0.0) unstable; urgency=medium
+
+  * new release.
+
+ -- Yue Lan <lanyue@ubuntukylin.com>  Sat, 01 Aug 2020 17:25:22 +0800
+
 peony-extensions (2.2.1) focal; urgency=medium
 
   * add set wallpaper plugin.
