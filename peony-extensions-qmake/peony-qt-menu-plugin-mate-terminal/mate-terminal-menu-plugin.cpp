@@ -94,7 +94,8 @@ void MateTerminalMenuPlugin::openTerminal(){
 
 void MateTerminalMenuPlugin::tryOpenAgain()
 {
-    auto absPath = m_uri.replace("file://", "");
+    QUrl url = m_uri;
+    auto absPath = url.path();
     qDebug() << "tryOpenAgain terminal url:" <<absPath;
     QProcess p;
     p.setProgram(terminal_cmd);
