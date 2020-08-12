@@ -94,7 +94,8 @@ void MateTerminalMenuPlugin::openTerminal(){
 
 void MateTerminalMenuPlugin::tryOpenAgain()
 {
-    auto absPath = m_uri.replace("file://", "");
+    QUrl url = m_uri;
+    auto absPath = url.path();
     qDebug() << "tryOpenAgain terminal url:" <<absPath;
     QProcess p;
     p.setProgram(terminal_cmd);
@@ -114,7 +115,7 @@ QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString 
     if (types == MenuPluginInterface::DirectoryView || types == MenuPluginInterface::DesktopWindow) {
         if (selectionUris.isEmpty()) {
             m_uri = uri;
-            QAction *dirAction = new QAction(QIcon::fromTheme("utilities-terminal-symbolic"), tr("Open Directory in Terminal"), nullptr);
+            QAction *dirAction = new QAction(QIcon::fromTheme("utilities-terminal-symbolic"), tr("Open Directory in T&erminal"), nullptr);
             dirAction->connect(dirAction, &QAction::triggered, [=](){
                 openTerminal();
             });
@@ -127,7 +128,7 @@ QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString 
             auto info = FileInfo::fromUri(selectionUris.first(), false);
             if (info->isDir()) {
                 m_uri = selectionUris.first();
-                QAction *dirAction = new QAction(QIcon::fromTheme("utilities-terminal-symbolic"), tr("Open Directory in Terminal"), nullptr);
+                QAction *dirAction = new QAction(QIcon::fromTheme("utilities-terminal-symbolic"), tr("Open Directory in T&erminal"), nullptr);
                 dirAction->connect(dirAction, &QAction::triggered, [=](){
                     openTerminal();
                 });
