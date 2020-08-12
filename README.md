@@ -10,7 +10,7 @@
 cmake ..
 make
 ```
-- Put the generated libraries into /usr/lib/peony-qt-extensions.
+- Put the generated libraries into &&[QT_INSTALL_LIBS]/peony-extensions.
   
 - Test the extension with peony.
 

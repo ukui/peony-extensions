@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>translations/peony-share-extension_zh_CN.qm</file>
+        <file>translations/peony-share-extension_tr.qm</file>
+        <file>translations/peony-share-extension_cs.qm</file>
+    </qresource>
+</RCC>

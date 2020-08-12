@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>translations/peony-create-link_zh_CN.qm</file>
+        <file>translations/peony-create-link_tr.qm</file>
+    </qresource>
+</RCC>

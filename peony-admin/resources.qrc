@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>translations/peony-admin_zh_CN.qm</file>
+        <file>translations/peony-admin_tr.qm</file>
+        <file>translations/peony-admin_cs.qm</file>
+    </qresource>
+</RCC>
