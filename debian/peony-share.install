@@ -1,1 +1,1 @@
-peony-extensions-cmake/peony-qt-share/libpeony-qt-share.* usr/lib/peony-qt-extensions
+usr/lib/*/peony-extensions/libpeony-share.so

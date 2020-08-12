@@ -1,1 +1,1 @@
-../../testdir/libpeony-qt-computer-view-plugin.so usr/lib/peony-qt-extensions
+usr/lib/*/peony-extensions/libpeony-computer-view-plugin.so

@@ -1,26 +1,8 @@
-peony-extensions (3.0.0) unstable; urgency=medium
+peony-extensions (3.0.0-1) unstable; urgency=medium
 
-  * new release.
+  * New upstream release.
 
- -- Yue Lan <lanyue@ubuntukylin.com>  Sat, 01 Aug 2020 17:25:22 +0800
-
-peony-extensions (2.2.1) focal; urgency=medium
-
-  * add set wallpaper plugin.
-
- -- MeihongHe <hemeihong@kylinos.cn>  Thu, 11 Jun 2020 17:40:45 +0800
-
-peony-extensions (2.2.0) focal; urgency=medium
-
-  * rebuild with latest libpeony.
-
- -- Yue Lan <lanyue@kylinos.cn>  Sat, 25 Apr 2020 19:42:45 +0800
-
-peony-extensions (2.1.0) unstable; urgency=low
-
-  * add computer view extension.
-
- -- Yue Lan <lanyue@kylinos.cn>  Wed, 22 Apr 2020 11:56:54 +0800
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Wed, 12 Aug 2020 05:38:37 +0000
 
 peony-extensions (2.0.2-1) unstable; urgency=medium
 

@@ -23,7 +23,7 @@ policy.config = verbatim
 QMAKE_SUBSTITUTES += policy
 
 policy_file.files = org.freedesktop.peony-admin.policy
-policy_file.path = /usr/share/polkik-1/actions
+policy_file.path = /usr/share/polkit-1/actions
 
 SOURCES += admin-menu-plugin.cpp
 HEADERS += admin-menu-plugin.h
