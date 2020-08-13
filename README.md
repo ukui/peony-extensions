@@ -22,8 +22,6 @@ make
 - **parchives**, compress/uncompress files with menu.
 - **computer view**, a special view for displaying computer:///.
 
-> Note that gtk2-style-enhanced-plugin and create-link is deprecated and will be removed later, they are not recommended to be installed in to plugins directory.
-
 ## Translations
 Unlike Peony, Peony Extensions translations job is relatively primitive and crude. The main idea is every plugin translates itself, and compile translations resources with code (qrc).
 
