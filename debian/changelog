@@ -1,8 +1,12 @@
 peony-extensions (3.0.0-1) unstable; urgency=medium
 
   * New upstream release.
+  * d/control:
+    - Add peony-extension-computer-view, peony-set-wallpaper,
+      peony-admin, peony-extensions.
+    - Remove hardcodes dependency on libpeony. (Closes: #968661)
 
- -- handsome_feng <jianfengli@ubuntukylin.com>  Wed, 12 Aug 2020 05:38:37 +0000
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Thu, 20 Aug 2020 10:06:58 +0800
 
 peony-extensions (2.0.2-1) unstable; urgency=medium
 
