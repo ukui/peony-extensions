@@ -59,7 +59,7 @@ SharePage::SharePage(const QString &uri, QWidget *parent) : QWidget(parent)
     QPushButton *bt = new QPushButton(this);
     bt->setIcon(QIcon::fromTheme(info->iconName()));
     bt->setIconSize(QSize(48, 48));
-    QLabel *uriLabel = new QLabel(info->uri(), this);
+    QLabel *uriLabel = new QLabel(url.path(), this);
     uriLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
     layout->addRow(bt, uriLabel);
 
