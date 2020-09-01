@@ -52,7 +52,7 @@ public:
 
 private:
     bool m_enable;
-    QStringList m_picture_type_list = {"png", "jpg", "jpeg"};
+    QStringList m_picture_type_list = {"png", "jpg", "jpeg", "bmp", "dib", "jfif", "jpe", "gif", "tif", "tiff", "wdp"};
 
     QGSettings *m_bg_settings = nullptr;
 };
