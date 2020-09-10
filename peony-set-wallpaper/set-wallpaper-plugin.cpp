@@ -52,6 +52,8 @@ QList<QAction*> SetWallPaperPlugin::menuActions(Types types, const QString &uri,
     QList<QAction*> actions;
     if (types == MenuPluginInterface::DirectoryView || types == MenuPluginInterface::DesktopWindow)
     {
+        if (selectionUris.first().contains("trash:///"))
+            return actions;
         if (selectionUris.count() == 1 && is_picture_file(selectionUris.first())) {
             QAction *set_action = new QAction(tr("Set as wallpaper"), nullptr);
             actions<<set_action;
