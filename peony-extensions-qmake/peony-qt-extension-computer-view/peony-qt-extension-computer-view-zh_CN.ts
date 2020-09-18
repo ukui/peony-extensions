@@ -176,6 +176,11 @@
         <translation>卸载</translation>
     </message>
     <message>
+        <location filename="computer-view-container.cpp" line="123"/>
+        <source>Eject</source>
+        <translation>弹出</translation>
+    </message>
+    <message>
         <location filename="computer-view-container.cpp" line="130"/>
         <location filename="computer-view-container.cpp" line="145"/>
         <source>Property</source>
