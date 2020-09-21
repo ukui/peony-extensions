@@ -18,8 +18,8 @@
         <translation>使用右键菜单打开终端。</translation>
     </message>
     <message>
-        <location filename="../mate-terminal-menu-plugin.cpp" line="117"/>
-        <location filename="../mate-terminal-menu-plugin.cpp" line="130"/>
+        <location filename="../mate-terminal-menu-plugin.cpp" line="118"/>
+        <location filename="../mate-terminal-menu-plugin.cpp" line="131"/>
         <source>Open Directory in T&amp;erminal</source>
         <translation>打开终端(&amp;E)</translation>
     </message>
