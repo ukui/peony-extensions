@@ -50,6 +50,12 @@ ComputerView::ComputerView(QWidget *parent) : QAbstractItemView(parent)
         this->viewport()->update();
     });
 
+    //fix #18184
+    auto volumeManager = Peony::VolumeManager::getInstance();
+    connect(volumeManager,&Peony::VolumeManager::volumeRemoved,this,[=](const std::shared_ptr<Peony::Volume> volume){
+        this->viewport()->update();
+    });
+
     setSelectionMode(QAbstractItemView::ExtendedSelection);
     this->viewport()->setMouseTracking(true);
     this->viewport()->installEventFilter(this);
