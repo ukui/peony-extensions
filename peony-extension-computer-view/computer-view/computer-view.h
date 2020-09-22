@@ -24,6 +24,7 @@
 #define COMPUTERVIEW_H
 
 #include <QAbstractItemView>
+#include <peony-qt/volume-manager.h>
 
 class ComputerProxyModel;
 class QRubberBand;
