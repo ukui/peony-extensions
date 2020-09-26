@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Kylin Team <team+kylin@tracker.debian.org>
 Uploaders: Aron Xu <aron@debian.org>,
            handsome_feng <jianfengli@ubuntukylin.com>,
+           He Meihong <hemeihong@kylinos.cn>
 Build-Depends: debhelper-compat (= 12),
                cmake,
                pkg-config,
