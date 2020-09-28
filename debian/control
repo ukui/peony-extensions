@@ -78,7 +78,8 @@ Package: peony-set-wallpaper
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         libpeony3 (>= 3.0.0)
+         libpeony3 (>= 3.0.0),
+         qt5-image-formats-plugins
 Description: Peony plugin for right click a picture to set as wallpaper
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
