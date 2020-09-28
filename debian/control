@@ -62,6 +62,7 @@ Package: peony-extension-computer-view
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
+         qt5-image-formats-plugins
 Description: Peony plugin for displaying computer:/// with more information
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
