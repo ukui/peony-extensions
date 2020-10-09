@@ -108,7 +108,9 @@ void MateTerminalMenuPlugin::tryOpenAgain()
 QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString &uri, const QStringList &selectionUris)
 {
     QList<QAction *> actions;
-    if (terminal_cmd.isNull() || uri.contains("trash://")) {
+    qDebug() << "terminal_cmd:" <<terminal_cmd <<uri;
+    if (terminal_cmd.isNull() || uri.startsWith("trash://") || uri.startsWith("recent://"))
+    {
         return actions;
     }
 
@@ -123,7 +125,8 @@ QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString 
         }
         if (selectionUris.count() == 1) {
             //select computer or trash, return
-            if (selectionUris.first().contains("trash://") || selectionUris.first().contains("computer://"))
+            if (selectionUris.first().startsWith("trash://")
+                || selectionUris.first().startsWith("computer://"))
                 return actions;
             auto info = FileInfo::fromUri(selectionUris.first(), false);
             if (info->isDir()) {
