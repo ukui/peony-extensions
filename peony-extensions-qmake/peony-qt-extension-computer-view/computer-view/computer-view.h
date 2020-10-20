@@ -52,6 +52,8 @@ public:
     virtual void setSelection(const QRect &rect, QItemSelectionModel::SelectionFlags command);
     virtual QRegion visualRegionForSelection(const QItemSelection &selection) const;
 
+    QString tryGetVolumeUriFromMountTarget(const QString &mountTargetUri);
+
 protected:
     void updateEditorGeometries();
     void resizeEvent(QResizeEvent *event);

@@ -126,6 +126,10 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             ejectAction->setEnabled(unmountable && item->canEject());
 
             auto uri = item->uri();
+            auto realUri = m_view->tryGetVolumeUriFromMountTarget(uri);
+            if (!realUri.isEmpty()) {
+                uri = realUri;
+            }
             auto a = menu.addAction(tr("Property"), [=](){
                 if (uri.isNull()) {
                     QMessageBox::warning(0, 0, tr("You have to mount this volume first"));

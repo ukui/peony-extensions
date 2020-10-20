@@ -22,6 +22,7 @@
 
 #include "computer-remote-volume-item.h"
 #include "computer-model.h"
+#include "file-utils.h"
 #include <QMessageBox>
 
 #include <QDebug>
@@ -31,6 +32,10 @@ ComputerRemoteVolumeItem::ComputerRemoteVolumeItem(const QString &uri, ComputerM
     m_uri = uri;
     m_cancellable = g_cancellable_new();
     updateInfo();
+
+    m_model->m_volumeTargetMap.insert(Peony::FileUtils::getTargetUri(uri), uri);
+
+    qDebug()<<"test";
 }
 
 ComputerRemoteVolumeItem::~ComputerRemoteVolumeItem()
@@ -39,6 +44,8 @@ ComputerRemoteVolumeItem::~ComputerRemoteVolumeItem()
         g_cancellable_cancel(m_cancellable);
         g_object_unref(m_cancellable);
     }
+
+    m_model->m_volumeTargetMap.remove(m_uri);
 }
 
 const QString ComputerRemoteVolumeItem::displayName()

@@ -47,6 +47,11 @@ AbstractComputerItem *ComputerProxyModel::itemFromIndex(const QModelIndex &proxy
     return static_cast<AbstractComputerItem *>(index.internalPointer());
 }
 
+QString ComputerProxyModel::tryGetVolumeUriFromMountTarget(const QString &mountTargetUri)
+{
+    return m_model->tryGetVolumeUriFromMountRoot(mountTargetUri);
+}
+
 bool ComputerProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     auto item = static_cast<AbstractComputerItem *>(m_model->index(source_row, 0, source_parent).internalPointer());

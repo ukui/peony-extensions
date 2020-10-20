@@ -25,11 +25,15 @@
 
 #include <QAbstractItemModel>
 
+#include <QMap>
+
 class AbstractComputerItem;
 
 class ComputerModel : public QAbstractItemModel
 {
     friend class ComputerNetworkItem;
+    friend class ComputerVolumeItem;
+    friend class ComputerRemoteVolumeItem;
     Q_OBJECT
 
 public:
@@ -59,8 +63,12 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
+    QString tryGetVolumeUriFromMountRoot(const QString &mountRootUri);
+
 private:
     AbstractComputerItem *m_parentNode;
+
+    QMap<QString, QString> m_volumeTargetMap;
 };
 
 #endif // COMPUTERMODEL_H
