@@ -156,6 +156,11 @@ QRegion ComputerView::visualRegionForSelection(const QItemSelection &selection) 
     return QRegion();
 }
 
+QString ComputerView::tryGetVolumeUriFromMountTarget(const QString &mountTargetUri)
+{
+    return m_model->tryGetVolumeUriFromMountTarget(mountTargetUri);
+}
+
 void ComputerView::updateEditorGeometries()
 {
     QAbstractItemView::updateEditorGeometries();

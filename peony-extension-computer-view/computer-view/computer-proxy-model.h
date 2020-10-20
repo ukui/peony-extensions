@@ -38,6 +38,8 @@ public:
 
     AbstractComputerItem *itemFromIndex(const QModelIndex &proxyIndex);
 
+    QString tryGetVolumeUriFromMountTarget(const QString &mountTargetUri);
+
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 

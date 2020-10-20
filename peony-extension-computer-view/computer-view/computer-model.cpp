@@ -148,3 +148,9 @@ Qt::ItemFlags ComputerModel::flags(const QModelIndex &index) const
 
     return QAbstractItemModel::flags(index); // FIXME: Implement me!
 }
+
+QString ComputerModel::tryGetVolumeUriFromMountRoot(const QString &mountRootUri)
+{
+    auto value = m_volumeTargetMap.value(mountRootUri);
+    return value;
+}
