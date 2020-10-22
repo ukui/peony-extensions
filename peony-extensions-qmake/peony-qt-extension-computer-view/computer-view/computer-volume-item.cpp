@@ -62,6 +62,9 @@ ComputerVolumeItem::~ComputerVolumeItem()
 
 void ComputerVolumeItem::updateInfoAsync()
 {
+    char *deviceName;
+    QString unixDeviceName;
+
     m_displayName = m_volume->name();
     m_icon = QIcon::fromTheme(m_volume->iconName());
     //qDebug()<<m_displayName;
@@ -87,6 +90,14 @@ void ComputerVolumeItem::updateInfoAsync()
         //mount first
         //FIXME: check auto mount
 //        this->mount();
+    }
+
+    //Handle the Chinese name of fat32 udisk.
+    deviceName = g_volume_get_identifier(m_volume->getGVolume(),G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
+    if(deviceName){
+        unixDeviceName = QString(deviceName);
+        Peony::FileUtils::handleVolumeLabelForFat32(m_displayName,unixDeviceName);
+        g_free(deviceName);
     }
 
     auto index = this->itemIndex();
