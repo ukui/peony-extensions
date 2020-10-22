@@ -47,9 +47,9 @@ public:
     void check() override;
 
     bool canEject() override;
-    void eject() override;
+    void eject(GMountUnmountFlags ejectFlag) override;
     bool canUnmount() override;
-    void unmount() override;
+    void unmount(GMountUnmountFlags unmountFlag) override;
 
     void mount() override;
 

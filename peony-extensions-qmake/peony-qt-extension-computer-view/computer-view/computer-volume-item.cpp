@@ -26,6 +26,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QApplication>
+#include <QPushButton>
 
 ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, AbstractComputerItem *parentNode, QObject *parent) : AbstractComputerItem(model, parentNode, parent)
 {
@@ -185,10 +186,10 @@ bool ComputerVolumeItem::canEject()
     return true;
 }
 
-void ComputerVolumeItem::eject()
+void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
 {
     if (auto g_mount = m_mount->getGMount()) {
-        g_mount_eject_with_operation(g_mount, G_MOUNT_UNMOUNT_NONE, nullptr, m_cancellable,
+        g_mount_eject_with_operation(g_mount, ejectFlag, nullptr, m_cancellable,
                                      GAsyncReadyCallback(eject_async_callback), this);
     }
 }
@@ -198,10 +199,10 @@ bool ComputerVolumeItem::canUnmount()
     return m_mount != nullptr;
 }
 
-void ComputerVolumeItem::unmount()
+void ComputerVolumeItem::unmount(GMountUnmountFlags unmountFlag)
 {
     if (auto g_mount = m_mount->getGMount()) {
-        g_mount_unmount_with_operation(g_mount, G_MOUNT_UNMOUNT_NONE, nullptr, m_cancellable,
+        g_mount_unmount_with_operation(g_mount, unmountFlag, nullptr, m_cancellable,
                                        GAsyncReadyCallback(unmount_async_callback), this);
     }
 }
@@ -327,13 +328,23 @@ void ComputerVolumeItem::mount_async_callback(GVolume *volume, GAsyncResult *res
 void ComputerVolumeItem::unmount_async_callback(GMount *mount, GAsyncResult *res, ComputerVolumeItem *p_this)
 {
     GError *err = nullptr;
+    QString errorMsg;
     bool successed = g_mount_unmount_with_operation_finish(mount, res, &err);
     if (successed) {
         //QMessageBox::information(0, 0, "Volume Umounted");
         p_this->m_mount = nullptr;
     }
     if (err) {
-        //QMessageBox::critical(0, 0, err->message);
+        if(strstr(err->message,"target is busy"))
+            errorMsg = QObject::tr("One or more programs prevented the unmount operation.");
+
+        auto button = QMessageBox::warning(nullptr, QObject::tr("Unmount failed"),
+                                           QObject::tr("Error: %1\n"
+                                                       "Do you want to unmount forcely?").arg(errorMsg),
+                                           QMessageBox::Yes, QMessageBox::No);
+        if (button == QMessageBox::Yes)
+            p_this->unmount(G_MOUNT_UNMOUNT_FORCE);
+
         g_error_free(err);
     }
 }
@@ -341,12 +352,20 @@ void ComputerVolumeItem::unmount_async_callback(GMount *mount, GAsyncResult *res
 void ComputerVolumeItem::eject_async_callback(GMount *mount, GAsyncResult *res, ComputerVolumeItem *p_this)
 {
     GError *err = nullptr;
+    QString errorMsg;
     bool successed = g_mount_eject_with_operation_finish(mount, res, &err);
     if (successed) {
         //QMessageBox::information(0, 0, "Volume Ejected");
     }
     if (err) {
         //QMessageBox::critical(0, 0, err->message);
+        QMessageBox warningBox(QMessageBox::Warning,QObject::tr("Eject failed"),QString(err->message));
+        QPushButton *cancelBtn = (warningBox.addButton(QObject::tr("Cancel"),QMessageBox::RejectRole));
+        QPushButton *ensureBtn = (warningBox.addButton(QObject::tr("Eject Anyway"),QMessageBox::YesRole));
+        warningBox.exec();
+        if(warningBox.clickedButton() == ensureBtn)
+            p_this->eject(G_MOUNT_UNMOUNT_FORCE);
+
         g_error_free(err);
     }
 }
