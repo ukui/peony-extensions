@@ -85,10 +85,10 @@ void ComputerRemoteVolumeItem::updateInfo()
     g_object_unref(file);
 }
 
-void ComputerRemoteVolumeItem::unmount()
+void ComputerRemoteVolumeItem::unmount(GMountUnmountFlags unmountFlag)
 {
     GFile *file = g_file_new_for_uri(m_uri.toUtf8().constData());
-    g_file_unmount_mountable_with_operation(file, G_MOUNT_UNMOUNT_NONE, nullptr, nullptr, nullptr, nullptr);
+    g_file_unmount_mountable_with_operation(file, unmountFlag, nullptr, nullptr, nullptr, nullptr);
     g_object_unref(file);
 }
 

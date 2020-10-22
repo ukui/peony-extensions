@@ -20,7 +20,7 @@
 <context>
     <name>ComputerRemoteVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-remote-volume-item.cpp" line="47"/>
+        <location filename="computer-view/computer-remote-volume-item.cpp" line="54"/>
         <source>Remote</source>
         <translation>Uzak</translation>
     </message>
@@ -28,12 +28,12 @@
 <context>
     <name>ComputerVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="33"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="34"/>
         <source>Volume</source>
         <translation>Bölüm</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="41"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="42"/>
         <source>File System</source>
         <translation>Dosya Sistemi</translation>
     </message>
@@ -149,38 +149,32 @@
 <context>
     <name>Peony::ComputerViewContainer</name>
     <message>
-        <location filename="computer-view-container.cpp" line="85"/>
+        <location filename="computer-view-container.cpp" line="94"/>
         <source>Connect a server</source>
         <translation>Servere bağlan</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="112"/>
         <source>sftp://, etc...</source>
-        <translation>sftp://, gibi...</translation>
+        <translation type="vanished">sftp://, gibi...</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="113"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="computer-view-container.cpp" line="114"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="computer-view-container.cpp" line="124"/>
+        <location filename="computer-view-container.cpp" line="117"/>
         <source>Unmount</source>
         <translation>Bağlantıyı kes</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="130"/>
-        <location filename="computer-view-container.cpp" line="145"/>
+        <location filename="computer-view-container.cpp" line="123"/>
+        <source>Eject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view-container.cpp" line="133"/>
+        <location filename="computer-view-container.cpp" line="148"/>
         <source>Property</source>
         <translation>Özellik</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="132"/>
+        <location filename="computer-view-container.cpp" line="135"/>
         <source>You have to mount this volume first</source>
         <translation>Önce bu bölümü bağlamalısınız</translation>
     </message>
@@ -196,6 +190,37 @@
         <location filename="peony-computer-view-plugin.h" line="43"/>
         <source>Show drives, network and personal directories.</source>
         <translation>Sürücüleri, ağı ve kişisel dizinleri göster.</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="338"/>
+        <source>One or more programs prevented the unmount operation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="340"/>
+        <source>Unmount failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="341"/>
+        <source>Error: %1
+Do you want to unmount forcely?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="360"/>
+        <source>Eject failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="361"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="362"/>
+        <source>Eject Anyway</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -115,13 +115,13 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             auto item = items.first();
             bool unmountable = item->canUnmount();
             menu.addAction(tr("Unmount"), [=](){
-                item->unmount();
+                item->unmount(G_MOUNT_UNMOUNT_NONE);
             });
             menu.actions().first()->setEnabled(unmountable);
 
             /*eject function for volume. fix #18216*/
             auto ejectAction = menu.addAction(tr("Eject"), [=](){
-                item->eject();
+                item->eject(G_MOUNT_UNMOUNT_NONE);
             });
             ejectAction->setEnabled(unmountable && item->canEject());
 

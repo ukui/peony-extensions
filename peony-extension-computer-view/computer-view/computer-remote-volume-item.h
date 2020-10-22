@@ -44,7 +44,7 @@ public:
     void updateInfo() override;
 
     bool canUnmount() override {return true;}
-    void unmount() override;
+    void unmount(GMountUnmountFlags unmountFlag) override;
 
     QModelIndex itemIndex() override;
 
