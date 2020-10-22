@@ -4,7 +4,7 @@
 <context>
     <name>ComputerItemDelegate</name>
     <message>
-        <location filename="computer-view/computer-item-delegate.cpp" line="147"/>
+        <location filename="computer-view/computer-item-delegate.cpp" line="146"/>
         <source>You should mount volume first</source>
         <translation>需要首先挂载分区</translation>
     </message>
@@ -20,7 +20,7 @@
 <context>
     <name>ComputerRemoteVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-remote-volume-item.cpp" line="47"/>
+        <location filename="computer-view/computer-remote-volume-item.cpp" line="54"/>
         <source>Remote</source>
         <translation>远程目录</translation>
     </message>
@@ -28,12 +28,12 @@
 <context>
     <name>ComputerVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="33"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="34"/>
         <source>Volume</source>
         <translation>本地分区</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="41"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="42"/>
         <source>File System</source>
         <translation>文件系统</translation>
     </message>
@@ -88,7 +88,7 @@
     <message>
         <location filename="login-remote-filesystem.ui" line="411"/>
         <source>SAMBA</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="416"/>
@@ -149,29 +149,24 @@
 <context>
     <name>Peony::ComputerViewContainer</name>
     <message>
-        <location filename="computer-view-container.cpp" line="85"/>
-        <location filename="computer-view-container.cpp" line="72"/>
-        <location filename="computer-view-container.cpp" line="75"/>
+        <location filename="computer-view-container.cpp" line="94"/>
         <source>Connect a server</source>
         <translation>连接远程服务器</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="112"/>
         <source>sftp://, etc...</source>
-        <translation>如sftp://...</translation>
+        <translation type="vanished">如sftp://...</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="113"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="114"/>
         <source>OK</source>
-        <translation>确定</translation>
+        <translation type="vanished">确定</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="124"/>
+        <location filename="computer-view-container.cpp" line="117"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
@@ -181,13 +176,13 @@
         <translation>弹出</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="130"/>
-        <location filename="computer-view-container.cpp" line="145"/>
+        <location filename="computer-view-container.cpp" line="133"/>
+        <location filename="computer-view-container.cpp" line="148"/>
         <source>Property</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="132"/>
+        <location filename="computer-view-container.cpp" line="135"/>
         <source>You have to mount this volume first</source>
         <translation>需要首先挂载分区</translation>
     </message>
@@ -203,6 +198,38 @@
         <location filename="peony-computer-view-plugin.h" line="43"/>
         <source>Show drives, network and personal directories.</source>
         <translation>显示设备分区, 网络目录和个人目录.</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="338"/>
+        <source>One or more programs prevented the unmount operation.</source>
+        <translation>一个或多个程序阻止卸载操作。</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="340"/>
+        <source>Unmount failed</source>
+        <translation>卸载失败</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="341"/>
+        <source>Error: %1
+Do you want to unmount forcely?</source>
+        <translation>错误：%1
+是否强制卸载？</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="360"/>
+        <source>Eject failed</source>
+        <translation>弹出失败</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="361"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="362"/>
+        <source>Eject Anyway</source>
+        <translation>无论如何弹出</translation>
     </message>
 </context>
 </TS>

@@ -25,6 +25,7 @@
 
 #include <QObject>
 #include <QIcon>
+#include <gio/gio.h>
 
 class ComputerModel;
 
@@ -60,11 +61,11 @@ public:
     virtual qint64 usedSpace() {return 0;}
 
     virtual bool canUnmount() {return false;}
-    virtual void unmount() {}
+    virtual void unmount(GMountUnmountFlags unmountFlag) {}
     virtual void mount() {}
 
     virtual bool canEject() {return false;}
-    virtual void eject() {}
+    virtual void eject(GMountUnmountFlags ejectFlag) {}
 
     //for remote volume
     virtual bool isHidden() {return false;}
