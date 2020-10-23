@@ -19,7 +19,6 @@
  * Authors: Yue Lan <lanyue@kylinos.cn>
  *
  */
-
 #include "computer-volume-item.h"
 #include <peony-qt/file-utils.h>
 #include "computer-model.h"
@@ -194,15 +193,45 @@ void ComputerVolumeItem::check()
 
 bool ComputerVolumeItem::canEject()
 {
-    return true;
+    GVolume *gvolume;
+    GDrive  *gdrive;
+    bool ejectAble = false;
+
+    if("file:///" == m_uri)    /*The root File System cannot eject*/
+        return false;
+
+    if(NULL != m_volume->getGVolume()){
+        gvolume = (GVolume*)g_object_ref(m_volume->getGVolume());
+        gdrive = g_volume_get_drive(gvolume);
+        if(gdrive){
+            ejectAble = g_drive_can_eject(gdrive);
+            g_object_unref(gdrive);
+        }
+        g_object_unref(gvolume);
+    }
+
+    return ejectAble;
 }
 
 void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
 {
-    if (auto g_mount = m_mount->getGMount()) {
+    GVolume *g_volume;
+    GMount *g_mount;
+
+    /*If udisk device is mounted,eject it from here*/
+    if (m_mount && (g_mount = m_mount->getGMount())) {
         g_mount_eject_with_operation(g_mount, ejectFlag, nullptr, m_cancellable,
                                      GAsyncReadyCallback(eject_async_callback), this);
+
+        return;
     }
+
+    /*If udisk device is unmounted,eject it from here*/
+    if (m_volume && (g_volume = m_volume->getGVolume())) {
+        g_volume_eject_with_operation(g_volume, ejectFlag, nullptr, m_cancellable,
+                                     GAsyncReadyCallback(eject_async_callback), this);
+    }
+
 }
 
 bool ComputerVolumeItem::canUnmount()
@@ -360,11 +389,17 @@ void ComputerVolumeItem::unmount_async_callback(GMount *mount, GAsyncResult *res
     }
 }
 
-void ComputerVolumeItem::eject_async_callback(GMount *mount, GAsyncResult *res, ComputerVolumeItem *p_this)
+void ComputerVolumeItem::eject_async_callback(GObject *object, GAsyncResult *res, ComputerVolumeItem *p_this)
 {
     GError *err = nullptr;
     QString errorMsg;
-    bool successed = g_mount_eject_with_operation_finish(mount, res, &err);
+    bool successed;
+
+    if(G_IS_MOUNT(object))
+        successed = g_mount_eject_with_operation_finish(G_MOUNT(object), res, &err);
+    else if(G_IS_VOLUME(object))
+        successed = g_volume_eject_with_operation_finish(G_VOLUME(object), res, &err);
+
     if (successed) {
         //QMessageBox::information(0, 0, "Volume Ejected");
     }
