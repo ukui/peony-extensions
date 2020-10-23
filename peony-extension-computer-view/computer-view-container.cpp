@@ -123,7 +123,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             auto ejectAction = menu.addAction(tr("Eject"), [=](){
                 item->eject(G_MOUNT_UNMOUNT_NONE);
             });
-            ejectAction->setEnabled(unmountable && item->canEject());
+            ejectAction->setEnabled(item->canEject());
 
             auto uri = item->uri();
             auto realUri = m_view->tryGetVolumeUriFromMountTarget(uri);
