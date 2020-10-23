@@ -70,7 +70,7 @@ protected:
     //mount op
     static void mount_async_callback(GVolume *volume, GAsyncResult *res, ComputerVolumeItem *p_this);
     static void unmount_async_callback(GMount *mount, GAsyncResult *res, ComputerVolumeItem *p_this);
-    static void eject_async_callback(GMount *mount, GAsyncResult *res, ComputerVolumeItem *p_this);
+    static void eject_async_callback(GObject *object, GAsyncResult *res, ComputerVolumeItem *p_this);
 
 private Q_SLOTS:
     void onVolumeAdded(const std::shared_ptr<Peony::Volume> volume);
