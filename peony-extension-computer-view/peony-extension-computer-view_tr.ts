@@ -43,67 +43,67 @@
     <message>
         <location filename="login-remote-filesystem.ui" line="41"/>
         <source>Connect to Sever</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sunucuya bağlan</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="89"/>
         <source>server information</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sunucu bilgisi</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="111"/>
         <source>user information</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kullanıcı bilgisi</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="141"/>
         <source>tag</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Etiket</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="196"/>
         <source>user</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kullanıcı</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="252"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parola</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="308"/>
         <source>protocol</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Protokol</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="351"/>
         <source>server</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sunucu</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="382"/>
         <source>directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dizin</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="411"/>
         <source>SAMBA</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">SAMBA</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="416"/>
         <source>FTP</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">FTP</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="445"/>
         <source>/</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">/</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="476"/>
         <source>port</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Port</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="508"/>
@@ -138,12 +138,12 @@
     <message>
         <location filename="login-remote-filesystem.ui" line="592"/>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tamam</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="623"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">İptal</translation>
     </message>
 </context>
 <context>
@@ -165,7 +165,7 @@
     <message>
         <location filename="computer-view-container.cpp" line="123"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Çıkar</translation>
     </message>
     <message>
         <location filename="computer-view-container.cpp" line="133"/>
@@ -199,28 +199,29 @@
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="340"/>
         <source>Unmount failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bağlantıyı kesme başarısız</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="341"/>
         <source>Error: %1
 Do you want to unmount forcely?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hata: %1
+        Zorla ayrılmak ister misin?</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="360"/>
         <source>Eject failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Çıkarma başarısız</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="361"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">İptal</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="362"/>
         <source>Eject Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Yine de Çıkar</translation>
     </message>
 </context>
 </TS>
