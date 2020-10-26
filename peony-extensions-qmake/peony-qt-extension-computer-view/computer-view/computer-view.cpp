@@ -24,6 +24,7 @@
 #include "computer-proxy-model.h"
 #include "abstract-computer-item.h"
 #include "computer-item-delegate.h"
+#include "computer-view-style.h"
 
 #include <QScrollBar>
 #include <QPainter>
@@ -39,6 +40,7 @@ ComputerView::ComputerView(QWidget *parent) : QAbstractItemView(parent)
 
     m_model = ComputerProxyModel::globalInstance();
     setModel(m_model);
+    setStyle(ComputerViewStyle::getStyle());
 
     m_rubberBand = new QRubberBand(QRubberBand::Shape::Rectangle, this);
 
