@@ -28,12 +28,12 @@
 <context>
     <name>ComputerVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="34"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="33"/>
         <source>Volume</source>
         <translation>本地分区</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="42"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="41"/>
         <source>File System</source>
         <translation>文件系统</translation>
     </message>
@@ -200,34 +200,34 @@
         <translation>显示设备分区, 网络目录和个人目录.</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="338"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="379"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation>一个或多个程序阻止卸载操作。</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="340"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="381"/>
         <source>Unmount failed</source>
         <translation>卸载失败</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="341"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="382"/>
         <source>Error: %1
 Do you want to unmount forcely?</source>
         <translation>错误：%1
 是否强制卸载？</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="360"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="408"/>
         <source>Eject failed</source>
         <translation>弹出失败</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="361"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="409"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="362"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="410"/>
         <source>Eject Anyway</source>
         <translation>无论如何弹出</translation>
     </message>
