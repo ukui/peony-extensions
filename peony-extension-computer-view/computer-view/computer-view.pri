@@ -8,6 +8,7 @@ HEADERS += \
     $$PWD/computer-personal-item.h \
     $$PWD/computer-proxy-model.h \
     $$PWD/computer-remote-volume-item.h \
+    $$PWD/computer-view-style.h \
     $$PWD/computer-view.h \
     $$PWD/computer-volume-item.h
 
@@ -19,6 +20,7 @@ SOURCES += \
     $$PWD/computer-personal-item.cpp \
     $$PWD/computer-proxy-model.cpp \
     $$PWD/computer-remote-volume-item.cpp \
+    $$PWD/computer-view-style.cpp \
     $$PWD/computer-view.cpp \
     $$PWD/computer-volume-item.cpp
 
