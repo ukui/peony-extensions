@@ -197,7 +197,7 @@ bool ComputerVolumeItem::canEject()
     GDrive  *gdrive;
     bool ejectAble = false;
 
-    if("file:///" == m_uri)    /*The root File System cannot eject*/
+    if("file:///" == m_uri || m_volume == nullptr)    /*The root File System cannot eject*/
         return false;
 
     if(NULL != m_volume->getGVolume()){
