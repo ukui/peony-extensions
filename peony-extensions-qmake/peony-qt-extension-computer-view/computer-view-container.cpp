@@ -111,7 +111,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 m_remote_uri = dlg->uri();
                 g_file_mount_enclosing_volume(m_volume, G_MOUNT_MOUNT_NONE, m_op, nullptr, GAsyncReadyCallback(mount_enclosing_volume_callback), this);
             });
-        } else if (items.count() == 1) {
+        } else if (items.count() == 1 && items.first()->uri() != "") {
             auto item = items.first();
             bool unmountable = item->canUnmount();
             menu.addAction(tr("Unmount"), [=](){
@@ -144,7 +144,8 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 }
             });
             a->setEnabled(!uri.isNull());
-        } else {
+        } else if(items.first()->uri() != ""){
+            qDebug() << "unable Property uri:" <<items.first()->uri();
             menu.addAction(tr("Property"));
             menu.actions().first()->setEnabled(false);
         }
