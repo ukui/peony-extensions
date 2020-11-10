@@ -109,9 +109,17 @@ QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString 
 {
     QList<QAction *> actions;
     qDebug() << "terminal_cmd:" <<terminal_cmd <<uri;
-    if (terminal_cmd.isNull() || uri.startsWith("trash://") || uri.startsWith("recent://"))
+    if (uri.startsWith("trash://") || uri.startsWith("recent://"))
     {
         return actions;
+    }
+
+    //set default terminal_cmd value for unfind terminal has no option issue
+    //FIXME for unknow reason, did not find any terminal but it is actually exist
+    if (terminal_cmd.isNull())
+    {
+        qWarning("open terminal option has not find any terminal, set as default value.");
+        terminal_cmd = "mate-terminal";
     }
 
     if (types == MenuPluginInterface::DirectoryView || types == MenuPluginInterface::DesktopWindow) {
