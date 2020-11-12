@@ -31,6 +31,7 @@
 #include <QPainter>
 #include <QListView>
 #include <QApplication>
+#include <QPainterPath>
 
 ComputerItemDelegate::ComputerItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
