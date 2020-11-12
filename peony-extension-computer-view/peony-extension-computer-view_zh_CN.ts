@@ -93,12 +93,12 @@
     <message>
         <location filename="login-remote-filesystem.ui" line="416"/>
         <source>FTP</source>
-        <translation type="unfinished"></translation>
+        <translation>FTP</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="445"/>
         <source>/</source>
-        <translation type="unfinished"></translation>
+        <translation>/</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="476"/>
@@ -108,32 +108,32 @@
     <message>
         <location filename="login-remote-filesystem.ui" line="508"/>
         <source>20</source>
-        <translation type="unfinished"></translation>
+        <translation>20</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="513"/>
         <source>21</source>
-        <translation type="unfinished"></translation>
+        <translation>21</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="518"/>
         <source>137</source>
-        <translation type="unfinished"></translation>
+        <translation>137</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="523"/>
         <source>138</source>
-        <translation type="unfinished"></translation>
+        <translation>138</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="528"/>
         <source>139</source>
-        <translation type="unfinished"></translation>
+        <translation>139</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="533"/>
         <source>445</source>
-        <translation type="unfinished"></translation>
+        <translation>445</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="592"/>
