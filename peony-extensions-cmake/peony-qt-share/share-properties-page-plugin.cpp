@@ -90,6 +90,11 @@ bool SharePropertiesPagePlugin::supportUris(const QStringList &uris)
     if (uris.count() != 1) {
         return false;
     }
+    //fix kylin security tool box-manager path can be shared issue
+    if (uris.first().startsWith("file:///box"))
+    {
+        return false;
+    }
     auto info = FileInfo::fromUri(uris.first());
     if (info->displayName().isNull()) {
         FileInfoJob j(info);
