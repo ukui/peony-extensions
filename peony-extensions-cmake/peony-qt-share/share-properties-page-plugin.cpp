@@ -95,12 +95,7 @@ bool SharePropertiesPagePlugin::supportUris(const QStringList &uris)
     {
         return false;
     }
-
     auto info = FileInfo::fromUri(uris.first());
-    //only with full limits of authority can share folder
-    if (! info->canRead() || ! info->canWrite() || ! info->canExecute())
-        return false;
-
     if (info->displayName().isNull()) {
         FileInfoJob j(info);
         j.querySync();
