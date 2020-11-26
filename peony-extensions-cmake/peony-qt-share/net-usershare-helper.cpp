@@ -95,7 +95,7 @@ bool NetUsershareHelper::updateShareInfo(ShareInfo &info)
     //args<<(info.readOnly? QString("EveryOne:R")/*.arg(g_get_user_name())*/: "EveryOne:F");
     args<<(info.readOnly? "Everyone:R": "Everyone:F");
     args<<(info.allowGuest? "guest_ok=y": "guest_ok=n");
-    qDebug()<<args;
+    qDebug()<<"updateShareInfo args:"<<args;
     p.start("net", QStringList()<<"usershare"<<"add"<<args);
     p.waitForFinished();
     auto result = p.readAllStandardError();
