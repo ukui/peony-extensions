@@ -52,9 +52,10 @@ QList<QAction*> EngrampaMenuPlugin::menuActions(Types types, const QString &uri,
             //special type mountable, return
             qDebug()<<"info isVirtual:"<<info->isVirtual()<<info->mimeType();
             if (selectionUris.first().startsWith("computer:///") ||
-                    selectionUris.first().startsWith("trash:///")||
-                    info->isVirtual())
-                return actions;
+                selectionUris.first().startsWith("trash:///") ||
+                selectionUris.first().startsWith("recent:///") ||
+                info->isVirtual())
+                  return actions;
 
             QFileInfo file(selectionUris.first());
             QAction *compress = new QAction(QIcon::fromTheme("application-zip"), tr("compress..."), nullptr);
