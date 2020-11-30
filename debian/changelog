@@ -1,3 +1,22 @@
+peony-extensions (3.0.2-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fix the build errors. (Closes: #975139)
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Mon, 30 Nov 2020 14:08:27 +0800
+
+peony-extensions (3.0.1-1) unstable; urgency=medium
+
+  * New upstream bugfix release.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Sat, 26 Sep 2020 20:49:59 +0800
+
+peony-extensions (3.0.0-2) unstable; urgency=medium
+
+  * No-change source only upload
+
+ -- Aron Xu <aron@debian.org>  Wed, 09 Sep 2020 14:47:30 +0800
+
 peony-extensions (3.0.0-1) unstable; urgency=medium
 
   * New upstream release.
