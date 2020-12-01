@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ ! -d '/var/lib/samba/usershares' ];then
+    mkdir -p /var/lib/samba/usershares
+fi
+
+chmod 0777 /var/lib/samba/usershares
