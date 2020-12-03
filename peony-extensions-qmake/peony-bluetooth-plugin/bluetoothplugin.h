@@ -27,9 +27,9 @@ public:
     explicit BluetoothPlugin(QObject *parent = nullptr);
 
     PluginInterface::PluginType pluginType() override {return PluginInterface::MenuPlugin;}
-    const QString name() override {return tr("Peony-Qt engrampa Extension");}
-    const QString description() override {return tr("engrampa Menu Extension.");}
-    const QIcon icon() override {return QIcon::fromTheme("application-zip");}
+    const QString name() override {return tr("Peony-Qt bluetooth Extension");}
+    const QString description() override {return tr("bluetooth Menu Extension.");}
+    const QIcon icon() override {return QIcon::fromTheme("blueman-tray");}
     void setEnable(bool enable) override {m_enable = enable;}
     bool isEnable() override {return m_enable;}
 
