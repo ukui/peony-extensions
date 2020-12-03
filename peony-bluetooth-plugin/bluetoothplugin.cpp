@@ -25,16 +25,18 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
             if (!selectionUris.first().startsWith("file:///"))
                   return actions;
             else{
-                QAction *compress = new QAction(QIcon::fromTheme("blueman-tray"), tr("Send from bluetooth to..."), nullptr);
-                actions << compress;
-                connect(compress, &QAction::triggered, [=](){
-                    QString file = selectionUris.at(0);
-                    QDBusMessage m = QDBusMessage::createMethodCall("org.ukui.bluetooth","/org/ukui/bluetooth","org.ukui.bluetooth","file_transfer");
-                    m << file.split("//").at(1);
-                    qDebug() << Q_FUNC_INFO << m.arguments().at(0).value<QString>() <<__LINE__;
-                    // 发送Message
-                    QDBusConnection::sessionBus().call(m);
-                });
+                if(info->mimeType().split("/").at(1) != "directory"){
+                    QAction *compress = new QAction(QIcon::fromTheme("blueman-tray"), tr("Send from bluetooth to..."), nullptr);
+                    actions << compress;
+                    connect(compress, &QAction::triggered, [=](){
+                        QString path = selectionUris.at(0);
+                        QDBusMessage m = QDBusMessage::createMethodCall("org.ukui.bluetooth","/org/ukui/bluetooth","org.ukui.bluetooth","file_transfer");
+                        m << path.split("//").at(1);
+                        qDebug() << Q_FUNC_INFO << m.arguments().at(0).value<QString>() <<__LINE__;
+                        // 发送Message
+                        QDBusConnection::sessionBus().call(m);
+                    });
+                }
             }
         }
     }
