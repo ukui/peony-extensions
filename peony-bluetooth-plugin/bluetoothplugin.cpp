@@ -16,6 +16,9 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
 {
     qDebug() << Q_FUNC_INFO << uri << selectionUris;
     QList<QAction*> actions;
+    if(!QFileInfo::exists("/usr/bin/ukui-bluetooth")){
+        return actions;
+    }
     if (types == MenuPluginInterface::DirectoryView || types == MenuPluginInterface::DesktopWindow)
     {
         if (! selectionUris.isEmpty()) {
