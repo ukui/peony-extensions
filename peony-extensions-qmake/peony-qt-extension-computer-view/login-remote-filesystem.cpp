@@ -21,6 +21,8 @@
 #include "login-remote-filesystem.h"
 #include "ui_login-remote-filesystem.h"
 
+#include <QDebug>
+
 LoginRemoteFilesystem::LoginRemoteFilesystem(QWidget *parent) :
     QDialog(parent), ui(new Ui::LoginRemoteFilesystem)
 {
@@ -64,10 +66,12 @@ QString LoginRemoteFilesystem::uri()
     QString uuri = "";
 
     if (ui->type_comboBox->currentText() == "SAMBA") {
-        uuri = "smb://" + ui->ip_edit->text() + ":" + ui->port_comboBox->currentText() + "/" + ui->file_lineEdit->text();
+        uuri = "smb://" + ui->ip_edit->text() + ":" + ui->port_comboBox->currentText() + ui->file_lineEdit->text();
     } else if (ui->type_comboBox->currentText() == "FTP") {
-        uuri = "ftp://" + ui->ip_edit->text() + ":" + ui->port_comboBox->currentText() + "/" + ui->file_lineEdit->text();
+        uuri = "ftp://" + ui->ip_edit->text() + ":" + ui->port_comboBox->currentText() + ui->file_lineEdit->text();
     }
+
+    qDebug() << "++++++++++++++++++++++++++++" << uuri;
 
     return uuri;
 }
