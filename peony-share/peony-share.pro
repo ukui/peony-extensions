@@ -22,8 +22,8 @@ HEADERS += net-usershare-helper.h \
 	   share-properties-page-plugin.h
 
 TRANSLATIONS += translations/peony-share-extension_cs.ts \
-                translations/peony-admin-extension_tr.ts \
-		translations/peony-admin-extension_zh_CN.ts
+                translations/peony-share-extension_tr.ts \
+                translations/peony-share-extension_zh_CN.ts
 
 RESOURCES += resources.qrc
 
