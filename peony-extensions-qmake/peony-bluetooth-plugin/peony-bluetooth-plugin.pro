@@ -6,7 +6,7 @@ QT       += widgets dbus
 
 TEMPLATE = lib
 TARGET = peony-bluetooth-plugin
-INCLUDEPATH += .
+#INCLUDEPATH += .
 
 DEFINES += PEONYENGRAMPAMENUPLUGIN_LIBRARY
 
@@ -35,6 +35,9 @@ HEADERS += \
 
 SOURCES += \
     bluetoothplugin.cpp
+
+target.path = $$[QT_INSTALL_LIBS]/peony-extensions
+INSTALLS += target
 
 RESOURCES += \
     peony-bluetooth-plugin.qrc

@@ -100,6 +100,19 @@ Description: Peony plugin for open files or directories as admin
  peony-extionsion-computer-view is a proof-of-concept Peony extension
  which allows user open files or directories with higher permission.
 
+Package: peony-bluetooth
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         ukui-bluetooth
+Description: Peony plugin for right click a file to send to other devices via Bluetooth
+ Peony is the official file manager for the UKUI desktop. This
+ package adds extended functionality to the Peony file manager.
+ .
+ In addition to sending files in ukui-bluetooth, you can also choose one
+ File, then right-click to quickly send the file.
+ 
+
 Package: peony-extensions
 Architecture: any
 Depends: ${misc:Depends},
