@@ -11,7 +11,7 @@ CONFIG += link_pkgconfig \
 	  plugin \
 	  debug
 
-DESTDIR += ../../testdir
+#DESTDIR += ../testdir
 
 SOURCES += net-usershare-helper.cpp \
            share-page.cpp \

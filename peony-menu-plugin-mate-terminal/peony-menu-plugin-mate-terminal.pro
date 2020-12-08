@@ -25,7 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 PKGCONFIG +=gio-2.0 glib-2.0 gio-unix-2.0 peony
 CONFIG += debug c++11 link_pkgconfig no_keywords plugin
 
-DESTDIR += ../../testdir
+#DESTDIR += ../testdir
 
 SOURCES += \
         mate-terminal-menu-plugin.cpp

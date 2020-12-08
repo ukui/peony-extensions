@@ -29,7 +29,7 @@ PKGCONFIG += peony gsettings-qt
 TRANSLATIONS = translations/peony-set-wallpaper-extension_zh_CN.ts \
                translations/peony-set-wallpaper-extension_tr.ts
 
-DESTDIR += ../../testdir
+#DESTDIR += ../testdir
 
 SOURCES += \
     set-wallpaper-plugin.cpp

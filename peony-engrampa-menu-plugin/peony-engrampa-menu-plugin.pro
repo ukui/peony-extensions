@@ -30,7 +30,7 @@ TRANSLATIONS = translations/peony-engrampa-menu_zh_CN.ts \
                translations/peony-engrampa-menu_tr.ts \
 	       translations/peony-engrampa-menu_cs.ts
 
-DESTDIR += ../../testdir
+#DESTDIR += ../testdir
 
 SOURCES += \
     engrampa-menu-plugin.cpp
