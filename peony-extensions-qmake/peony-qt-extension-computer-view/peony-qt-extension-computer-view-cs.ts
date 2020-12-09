@@ -4,7 +4,7 @@
 <context>
     <name>ComputerItemDelegate</name>
     <message>
-        <location filename="computer-view/computer-item-delegate.cpp" line="146"/>
+        <location filename="computer-view/computer-item-delegate.cpp" line="147"/>
         <source>You should mount volume first</source>
         <translation>Svazek je třeba nejprve připojit (mount)</translation>
     </message>
@@ -28,12 +28,12 @@
 <context>
     <name>ComputerVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="34"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="33"/>
         <source>Volume</source>
         <translation>Svazek</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="42"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="41"/>
         <source>File System</source>
         <translation>Souborový systém</translation>
     </message>
@@ -149,7 +149,7 @@
 <context>
     <name>Peony::ComputerViewContainer</name>
     <message>
-        <location filename="computer-view-container.cpp" line="94"/>
+        <location filename="computer-view-container.cpp" line="98"/>
         <source>Connect a server</source>
         <translation>Připojit k serveru</translation>
     </message>
@@ -158,23 +158,23 @@
         <translation type="vanished">sftp://, atd…</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="117"/>
+        <location filename="computer-view-container.cpp" line="123"/>
         <source>Unmount</source>
         <translation>Odpojit</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="123"/>
+        <location filename="computer-view-container.cpp" line="129"/>
         <source>Eject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="133"/>
-        <location filename="computer-view-container.cpp" line="148"/>
+        <location filename="computer-view-container.cpp" line="139"/>
+        <location filename="computer-view-container.cpp" line="155"/>
         <source>Property</source>
         <translation>Vlastnost</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="135"/>
+        <location filename="computer-view-container.cpp" line="141"/>
         <source>You have to mount this volume first</source>
         <translation>Tento svazek je třeba nejprve připojit (mount)</translation>
     </message>
@@ -192,33 +192,44 @@
         <translation>Zobrazit disky, síť a osobní složky.</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="338"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="434"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="340"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="436"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="445"/>
         <source>Unmount failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="341"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="437"/>
         <source>Error: %1
 Do you want to unmount forcely?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="360"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="444"/>
+        <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="446"/>
+        <source>%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="470"/>
         <source>Eject failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="361"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="471"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="362"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="472"/>
         <source>Eject Anyway</source>
         <translation type="unfinished"></translation>
     </message>
