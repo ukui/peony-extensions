@@ -1,4 +1,5 @@
 #!/bin/bash
+#DEBHELPER#
 
 if [ ! -d '/var/lib/samba/usershares' ];then
     mkdir -p /var/lib/samba/usershares

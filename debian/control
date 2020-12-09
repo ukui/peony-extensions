@@ -111,7 +111,6 @@ Description: Peony plugin for right click a file to send to other devices via Bl
  .
  In addition to sending files in ukui-bluetooth, you can also choose one
  File, then right-click to quickly send the file.
- 
 
 Package: peony-extensions
 Architecture: any
