@@ -107,6 +107,12 @@ bool ComputerRemoteVolumeItem::isHidden()
 
 void ComputerRemoteVolumeItem::onFileAdded(const QString &uri)
 {
+    //not include udisk、mobile-disk、local-partition etc.
+    QString targetUri;
+    targetUri = Peony::FileUtils::getTargetUri(uri);
+    if(!targetUri.isEmpty() && targetUri.contains("file:///"))
+        return;
+
     for (auto item : m_children) {
         if (item->uri() == uri)
             return;
@@ -179,6 +185,12 @@ void ComputerRemoteVolumeItem::find_children_async_callback(GFileEnumerator *enu
 
         auto uri = g_file_get_uri(file);
         if (!uri)
+            continue;
+
+        //not include udisk、mobile-disk、local-partition etc.
+        QString targetUri;
+        targetUri = Peony::FileUtils::getTargetUri(uri);
+        if(!targetUri.isEmpty() && targetUri.contains("file:///"))
             continue;
 
         p_this->m_model->beginInsertItem(p_this->itemIndex(), p_this->m_children.count());
