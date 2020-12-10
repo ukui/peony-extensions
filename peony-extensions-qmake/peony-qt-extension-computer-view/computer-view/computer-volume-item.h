@@ -93,6 +93,7 @@ private:
     std::shared_ptr<Peony::Volume> m_volume;
     std::shared_ptr<Peony::Mount> m_mount;
     GCancellable *m_cancellable;
+    GCancellable *m_tmpCancellable;
 
     //info
     QString m_displayName;
