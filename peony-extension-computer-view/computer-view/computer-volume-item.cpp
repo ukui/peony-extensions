@@ -64,6 +64,11 @@ ComputerVolumeItem::~ComputerVolumeItem()
 {
     g_cancellable_cancel(m_cancellable);
     g_object_unref(m_cancellable);
+
+    if(m_watcher){
+        m_watcher->stopMonitor();
+        delete m_watcher;
+    }
 }
 
 void ComputerVolumeItem::updateInfoAsync()
@@ -555,15 +560,12 @@ void ComputerVolumeItem::onFileRemoved(const QString &uri)
 void ComputerVolumeItem::findChildrenWhenGPartedOpen()
 {
     GFile *file;
-    GCancellable *cancel;
 
     file = g_file_new_for_uri("computer:///");
-    cancel = g_cancellable_new();
+    m_tmpCancellable = g_cancellable_new();
     g_file_enumerate_children_async(file, G_FILE_ATTRIBUTE_STANDARD_NAME, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, 0,
-                                    cancel, GAsyncReadyCallback(enumerate_async_callback), this);
-    /*g_object_unref(file);
-	g_cancellable_cancel(cancel);
-	g_object_unref(cancel);*/
+                                    m_tmpCancellable, GAsyncReadyCallback(enumerate_async_callback), this);
+    //g_object_unref(file);
 }
 
 void ComputerVolumeItem::enumerate_async_callback(GFile *file, GAsyncResult *res, ComputerVolumeItem *p_this)
@@ -571,7 +573,7 @@ void ComputerVolumeItem::enumerate_async_callback(GFile *file, GAsyncResult *res
     GError *err = nullptr;
     auto enumerator = g_file_enumerate_children_finish(file, res, &err);
     if (enumerator) {
-        g_file_enumerator_next_files_async(enumerator, 9999, 0, p_this->m_cancellable,
+        g_file_enumerator_next_files_async(enumerator, 9999, 0, p_this->m_tmpCancellable,
                                            GAsyncReadyCallback(find_children_async_callback), p_this);
     }
     if (err)
@@ -621,6 +623,11 @@ void ComputerVolumeItem::find_children_async_callback(GFileEnumerator *enumerato
     if (enumerator) {
         g_file_enumerator_close(enumerator, nullptr, nullptr);
         g_object_unref(enumerator);
+    }
+
+    if(p_this->m_tmpCancellable){
+        g_cancellable_cancel(p_this->m_tmpCancellable);
+        g_object_unref(p_this->m_tmpCancellable);
     }
 
     if (err) {
