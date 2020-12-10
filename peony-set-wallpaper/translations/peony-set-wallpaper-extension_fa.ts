@@ -11,12 +11,12 @@
     <message>
         <location filename="../set-wallpaper-plugin.h" line="43"/>
         <source>set wallpaper Extension.</source>
-        <translation type="unfinished"></translation>
+        <translation>افزونۀ انتخاب پس‌زمینه</translation>
     </message>
     <message>
         <location filename="../set-wallpaper-plugin.cpp" line="55"/>
         <source>Set as wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>انتخاب به عنوان پس‌زمینه</translation>
     </message>
 </context>
 </TS>
