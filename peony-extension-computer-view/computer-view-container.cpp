@@ -28,6 +28,7 @@
 
 #include <peony-qt/file-utils.h>
 #include <peony-qt/file-item-model.h>
+#include <peony-qt/connect-to-server-dialog.h>
 #include <peony-qt/file-item-proxy-filter-sort-model.h>
 
 #include <QMenu>
@@ -97,17 +98,25 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
         if (items.count() == 0) {
             menu.addAction(tr("Connect a server"), [=](){
                 QString uri;
-                LoginRemoteFilesystem* dlg = new LoginRemoteFilesystem;
+                ConnectServerDialog* dlg = new ConnectServerDialog;
                 dlg->deleteLater();
                 auto code = dlg->exec();
                 if (code == QDialog::Rejected) {
-                    // Exit
                     return;
                 }
 
-                g_mount_operation_set_username(m_op, dlg->user().toUtf8().constData());
-                g_mount_operation_set_password(m_op, dlg->password().toUtf8().constData());
-                g_mount_operation_set_domain(m_op, dlg->domain().toUtf8().constData());
+                QUrl url = dlg->uri();
+
+                ConnectServerLogin* dlgLogin = new ConnectServerLogin(url.host());
+                dlgLogin->deleteLater();
+                code = dlgLogin->exec();
+                if (code == QDialog::Rejected) {
+                    return;
+                }
+
+                g_mount_operation_set_username(m_op, dlgLogin->user().toUtf8().constData());
+                g_mount_operation_set_password(m_op, dlgLogin->password().toUtf8().constData());
+//                g_mount_operation_set_domain(m_op, dlg->domain().toUtf8().constData());
                 g_mount_operation_set_anonymous(m_op, FALSE);  //fixme://
                 g_mount_operation_set_password_save(m_op, G_PASSWORD_SAVE_FOR_SESSION);
 

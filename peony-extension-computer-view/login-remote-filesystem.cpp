@@ -71,8 +71,6 @@ QString LoginRemoteFilesystem::uri()
         uuri = "ftp://" + ui->ip_edit->text() + ":" + ui->port_comboBox->currentText() + ui->file_lineEdit->text();
     }
 
-    qDebug() << "++++++++++++++++++++++++++++" << uuri;
-
     return uuri;
 }
 
