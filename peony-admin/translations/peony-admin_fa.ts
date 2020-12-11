@@ -7,12 +7,12 @@
         <location filename="../admin-menu-plugin.cpp" line="22"/>
         <location filename="../admin-menu-plugin.cpp" line="37"/>
         <source>Open Directory as Admin</source>
-        <translation type="unfinished"></translation>
+        <translation>بازکردن پوشه به عنوان ادمین</translation>
     </message>
     <message>
         <location filename="../admin-menu-plugin.cpp" line="51"/>
         <source>Open Text as Admin</source>
-        <translation type="unfinished"></translation>
+        <translation>بازکردن متن به عنوان ادمین</translation>
     </message>
 </context>
 </TS>
