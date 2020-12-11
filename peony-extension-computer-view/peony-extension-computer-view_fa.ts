@@ -58,92 +58,92 @@
     <message>
         <location filename="login-remote-filesystem.ui" line="141"/>
         <source>tag</source>
-        <translation type="unfinished"></translation>
+        <translation>برچسب</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="196"/>
         <source>user</source>
-        <translation type="unfinished"></translation>
+        <translation>کاربر</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="252"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>گذرواژه</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="308"/>
         <source>protocol</source>
-        <translation type="unfinished"></translation>
+        <translation>پروتکل</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="351"/>
         <source>server</source>
-        <translation type="unfinished"></translation>
+        <translation>سرور</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="382"/>
         <source>directory</source>
-        <translation type="unfinished"></translation>
+        <translation>پوشه</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="411"/>
         <source>SAMBA</source>
-        <translation type="unfinished"></translation>
+        <translation>SAMBA</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="416"/>
         <source>FTP</source>
-        <translation type="unfinished"></translation>
+        <translation>FTP</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="445"/>
         <source>/</source>
-        <translation type="unfinished"></translation>
+        <translation>/</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="476"/>
         <source>port</source>
-        <translation type="unfinished"></translation>
+        <translation>پورت</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="508"/>
         <source>20</source>
-        <translation type="unfinished"></translation>
+        <translation>20</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="513"/>
         <source>21</source>
-        <translation type="unfinished"></translation>
+        <translation>21</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="518"/>
         <source>137</source>
-        <translation type="unfinished"></translation>
+        <translation>137</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="523"/>
         <source>138</source>
-        <translation type="unfinished"></translation>
+        <translation>138</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="528"/>
         <source>139</source>
-        <translation type="unfinished"></translation>
+        <translation>139</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="533"/>
         <source>445</source>
-        <translation type="unfinished"></translation>
+        <translation>445</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="592"/>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation>تأیید</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="623"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>لغو</translation>
     </message>
 </context>
 <context>
@@ -189,7 +189,7 @@
     <message>
         <location filename="peony-computer-view-plugin.h" line="43"/>
         <source>Show drives, network and personal directories.</source>
-        <translation type="unfinished"></translation>
+        <translation>نمایش درایوها، شبکه و پوشه‌های شخصی.</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="338"/>
@@ -215,7 +215,7 @@ Do you want to unmount forcely?</source>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="361"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>لغو</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="362"/>
