@@ -6,7 +6,7 @@
     <message>
         <location filename="computer-view/computer-item-delegate.cpp" line="147"/>
         <source>You should mount volume first</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous devez d&apos;abord monter le volume</translation>
     </message>
 </context>
 <context>
@@ -14,7 +14,7 @@
     <message>
         <location filename="computer-view/computer-network-item.cpp" line="45"/>
         <source>Network Neighborhood</source>
-        <translation type="unfinished"></translation>
+        <translation>Voisinage réseau</translation>
     </message>
 </context>
 <context>
@@ -22,7 +22,7 @@
     <message>
         <location filename="computer-view/computer-remote-volume-item.cpp" line="54"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Distant</translation>
     </message>
 </context>
 <context>
@@ -30,12 +30,12 @@
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="33"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="41"/>
         <source>File System</source>
-        <translation type="unfinished"></translation>
+        <translation>Système de fichiers</translation>
     </message>
 </context>
 <context>
