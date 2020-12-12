@@ -43,107 +43,107 @@
     <message>
         <location filename="login-remote-filesystem.ui" line="41"/>
         <source>Connect to Sever</source>
-        <translation type="unfinished"></translation>
+        <translation>Connecter au serveur</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="89"/>
         <source>server information</source>
-        <translation type="unfinished"></translation>
+        <translation>informations sur le serveur</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="111"/>
         <source>user information</source>
-        <translation type="unfinished"></translation>
+        <translation>informations de l&apos;utilisateur</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="141"/>
         <source>tag</source>
-        <translation type="unfinished"></translation>
+        <translation>étiquette</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="196"/>
         <source>user</source>
-        <translation type="unfinished"></translation>
+        <translation>utilisateur</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="252"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>mot de passe</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="308"/>
         <source>protocol</source>
-        <translation type="unfinished"></translation>
+        <translation>protocole</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="351"/>
         <source>server</source>
-        <translation type="unfinished"></translation>
+        <translation>serveur</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="382"/>
         <source>directory</source>
-        <translation type="unfinished"></translation>
+        <translation>répertoire</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="411"/>
         <source>SAMBA</source>
-        <translation type="unfinished"></translation>
+        <translation>SAMBA</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="416"/>
         <source>FTP</source>
-        <translation type="unfinished"></translation>
+        <translation>FTP</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="445"/>
         <source>/</source>
-        <translation type="unfinished"></translation>
+        <translation>/</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="476"/>
         <source>port</source>
-        <translation type="unfinished"></translation>
+        <translation>Port</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="508"/>
         <source>20</source>
-        <translation type="unfinished"></translation>
+        <translation>20</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="513"/>
         <source>21</source>
-        <translation type="unfinished"></translation>
+        <translation>21</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="518"/>
         <source>137</source>
-        <translation type="unfinished"></translation>
+        <translation>137</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="523"/>
         <source>138</source>
-        <translation type="unfinished"></translation>
+        <translation>138</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="528"/>
         <source>139</source>
-        <translation type="unfinished"></translation>
+        <translation>139</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="533"/>
         <source>445</source>
-        <translation type="unfinished"></translation>
+        <translation>445</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="592"/>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation>ok</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="623"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -151,7 +151,7 @@
     <message>
         <location filename="computer-view-container.cpp" line="98"/>
         <source>Connect a server</source>
-        <translation type="unfinished"></translation>
+        <translation>Connecter un serveur</translation>
     </message>
     <message>
         <source>sftp://, etc...</source>
@@ -160,23 +160,23 @@
     <message>
         <location filename="computer-view-container.cpp" line="123"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>Démonter</translation>
     </message>
     <message>
         <location filename="computer-view-container.cpp" line="129"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Éjecter</translation>
     </message>
     <message>
         <location filename="computer-view-container.cpp" line="139"/>
         <location filename="computer-view-container.cpp" line="155"/>
         <source>Property</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriété</translation>
     </message>
     <message>
         <location filename="computer-view-container.cpp" line="141"/>
         <source>You have to mount this volume first</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous devez d&apos;abord monter ce volume</translation>
     </message>
 </context>
 <context>
@@ -184,54 +184,55 @@
     <message>
         <location filename="peony-computer-view-plugin.h" line="42"/>
         <source>Computer View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vue de l&apos;ordinateur</translation>
     </message>
     <message>
         <location filename="peony-computer-view-plugin.h" line="43"/>
         <source>Show drives, network and personal directories.</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les lecteurs, le réseau et les répertoires personnels.</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="434"/>
         <source>One or more programs prevented the unmount operation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Un ou plusieurs programmes ont empêché l&apos;opération de démontage.</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="436"/>
         <location filename="computer-view/computer-volume-item.cpp" line="445"/>
         <source>Unmount failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du démontage</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="437"/>
         <source>Error: %1
 Do you want to unmount forcely?</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur : %1
+Voulez-vous démonter de force ?</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="444"/>
         <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de le démonter, vous devrez peut-être fermer certains programmes, tels que : GParted etc.</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="446"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="470"/>
         <source>Eject failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de l&apos;éjection</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="471"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="472"/>
         <source>Eject Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Éjecter quand même</translation>
     </message>
 </context>
 </TS>
