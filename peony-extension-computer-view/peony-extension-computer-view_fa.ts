@@ -43,17 +43,17 @@
     <message>
         <location filename="login-remote-filesystem.ui" line="41"/>
         <source>Connect to Sever</source>
-        <translation type="unfinished"></translation>
+        <translation>اتصال به سرور</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="89"/>
         <source>server information</source>
-        <translation type="unfinished"></translation>
+        <translation>اطلاعات سرور</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="111"/>
         <source>user information</source>
-        <translation type="unfinished"></translation>
+        <translation>اطلاعات کاربر</translation>
     </message>
     <message>
         <location filename="login-remote-filesystem.ui" line="141"/>
