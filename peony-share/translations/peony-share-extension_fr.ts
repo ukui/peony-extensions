@@ -13,12 +13,12 @@
     <message>
         <location filename="../share-properties-page-plugin.h" line="26"/>
         <source>Peony Qt Share Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Extension de partage de Peony Qt</translation>
     </message>
     <message>
         <location filename="../share-properties-page-plugin.h" line="27"/>
         <source>Allow user share folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoriser les dossiers de partage des utilisateurs</translation>
     </message>
 </context>
 <context>
@@ -26,27 +26,27 @@
     <message>
         <location filename="../share-page.cpp" line="50"/>
         <source>Share folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier de partage</translation>
     </message>
     <message>
         <location filename="../share-page.cpp" line="52"/>
         <source>Share:</source>
-        <translation type="unfinished"></translation>
+        <translation>Partager :</translation>
     </message>
     <message>
         <location filename="../share-page.cpp" line="58"/>
         <source>Read Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Lecture seulement</translation>
     </message>
     <message>
         <location filename="../share-page.cpp" line="61"/>
         <source>Allow Anonymous</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoriser aux anonymes</translation>
     </message>
     <message>
         <location filename="../share-page.cpp" line="73"/>
         <source>Comment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Commentaire :</translation>
     </message>
 </context>
 </TS>
