@@ -7,17 +7,17 @@
         <location filename="../mate-terminal-menu-plugin.cpp" line="116"/>
         <location filename="../mate-terminal-menu-plugin.cpp" line="126"/>
         <source>Open Directory in Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir un répertoire dans le terminal</translation>
     </message>
     <message>
         <location filename="../mate-terminal-menu-plugin.h" line="43"/>
         <source>Peony-Qt Mate Terminal Menu Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Extension du menu du terminal Peony-Qt Mate</translation>
     </message>
     <message>
         <location filename="../mate-terminal-menu-plugin.h" line="44"/>
         <source>Open Terminal with menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le terminal avec le menu.</translation>
     </message>
 </context>
 </TS>
