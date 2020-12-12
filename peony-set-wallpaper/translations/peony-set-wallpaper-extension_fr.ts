@@ -6,17 +6,17 @@
     <message>
         <location filename="../set-wallpaper-plugin.h" line="42"/>
         <source>Peony-Qt set wallpaper Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir l&apos;extension du fond d&apos;écran de Peony-Qt</translation>
     </message>
     <message>
         <location filename="../set-wallpaper-plugin.h" line="43"/>
         <source>set wallpaper Extension.</source>
-        <translation type="unfinished"></translation>
+        <translation>définir l&apos;extension du fond d&apos;écran.</translation>
     </message>
     <message>
         <location filename="../set-wallpaper-plugin.cpp" line="55"/>
         <source>Set as wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir en tant que fond d&apos;écran</translation>
     </message>
 </context>
 </TS>
