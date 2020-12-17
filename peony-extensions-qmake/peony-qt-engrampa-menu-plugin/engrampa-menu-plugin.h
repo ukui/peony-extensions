@@ -52,7 +52,7 @@ private:
     bool m_enable;
     QStringList m_file_type_list = {"7z","ar","bz","bz2","cbz","deb", "ear","exe","gz","jar","tar","tar.7z",
                                     "tar.bz2","tar.gz","tar.lzma","rar","tar.xz","war","zip","lzma","xz","tgz",
-                                    "odp", "ods", "otp", "ott", "ots", "odt"};
+                                    "odp", "ods", "otp", "ott", "ots", "odt", "iso"};
 };
 
 }
