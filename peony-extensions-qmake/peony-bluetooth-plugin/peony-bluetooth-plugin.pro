@@ -27,7 +27,7 @@ PKGCONFIG += peony
 
 TRANSLATIONS = translations/peony-bluetooth-plugin_zh_CN.ts
 
-DESTDIR += ../../testdir
+DESTDIR += ../../debian/testdir
 
 HEADERS += \
     bluetoothplugin.h \

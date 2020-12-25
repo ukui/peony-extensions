@@ -1,1 +1,1 @@
-usr/lib/*/peony-extensions/libpeony-bluetooth-plugin.so
+debian/testdir/libpeony-bluetooth-plugin.* usr/lib/peony-qt-extensions

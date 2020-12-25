@@ -34,7 +34,7 @@ HEADERS += \
     peony-computer-view-plugin.h \
     peony-qt-extension-computer-view_global.h \
 
-DESTDIR += ../../testdir
+DESTDIR += ../../debian/testdir
 
 # Default rules for deployment.
 unix {

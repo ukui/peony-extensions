@@ -28,7 +28,7 @@ PKGCONFIG += peony gsettings-qt
 
 TRANSLATIONS = translations/peony-qt-set-wallpaper-extension_zh_CN.ts
 
-DESTDIR += ../../testdir
+DESTDIR += ../../debian/testdir
 
 SOURCES += \
     set-wallpaper-plugin.cpp

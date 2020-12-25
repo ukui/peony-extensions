@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Kylin Team <team+kylin@tracker.debian.org>
 Uploaders: Aron Xu <aron@debian.org>,
            handsome_feng <jianfengli@ubuntukylin.com>,
-Build-Depends: debhelper-compat (= 12),
+Build-Depends: debhelper,
                cmake,
                pkg-config,
                libglib2.0-dev,
@@ -121,7 +121,8 @@ Depends: ${misc:Depends},
          peony-open-terminal,
          peony-extension-computer-view,
          peony-admin,
-         peony-set-wallpaper
+         peony-set-wallpaper,
+         peony-bluetooth
 Description: Peony qt extensions (common files)
  Peony is the official file manager for the UKUI desktop. This
  package is a metapackage, which adds extended functionality to

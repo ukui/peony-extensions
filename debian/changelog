@@ -1,20 +1,186 @@
-peony-extensions (3.0.0) unstable; urgency=medium
+peony-extensions (3.0.12-1) v101; urgency=medium
 
-  * new release.
+  * 同步上游更新，在新peony版本基础上编译包
+  * New upstream release.
 
- -- Yue Lan <lanyue@ubuntukylin.com>  Sat, 01 Aug 2020 17:25:22 +0800
+ -- MeihongHe <hemeihong@kylinos.cn>  Fri, 25 Dec 2020 15:05:35 +0800
 
-peony-extensions (2.2.1) focal; urgency=medium
+peony-extensions (3.0.12) v101; urgency=medium
 
-  * add set wallpaper plugin.
+  * 同步上游更新，在新peony版本基础上编译包
+    - 修复iso文件无法右键解压缩问题(#28951)。
+    - 修复蓝牙发送文件插件未集成到版本问题。
+    - 添加以管理员身份打开插件。
+  * New upstream release.
+    - Fix can not uncompress iso file issue(#28951),
+      and add open as admin plugin.
 
- -- MeihongHe <hemeihong@kylinos.cn>  Thu, 11 Jun 2020 17:40:45 +0800
+ -- MeihongHe <hemeihong@kylinos.cn>  Mon, 21 Dec 2020 15:55:35 +0800
 
-peony-extensions (2.2.0) focal; urgency=medium
+peony-extensions (3.0.11-3) v101; urgency=medium
 
-  * rebuild with latest libpeony.
+  * 同步上游更新，在新peony版本基础上编译包
+    - 修复普通用户无法设置文件夹分享问题。
+    - 修复FTP首次连接失败后无法登录问题。
+    - 修复打开gparted软件出现远程目录分类问题。
+    - 添加蓝牙发送文件插件。
+  * New upstream release.
+    - Fix not root account can not share folder issue,
+      and add bluetooth send file plugin.
 
- -- Yue Lan <lanyue@kylinos.cn>  Sat, 25 Apr 2020 19:42:45 +0800
+ -- MeihongHe <hemeihong@kylinos.cn>  Thu, 12 Dec 2020 20:55:35 +0800
+
+peony-extensions (3.0.10) v101; urgency=medium
+
+  * 同步上游更新，在新peony版本基础上编译包
+    - 修复bug #25737, .tgz格式压缩文件右键菜单
+      没有解压缩选项。
+    - 修复麒麟文件保护箱中文件夹可被设置共享问题。
+  * New upstream release.
+    - Fix .tgz format compressed file has no
+      uncompress option issue(#25737).
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Mon, 23 Nov 2020 14:05:35 +0800
+
+peony-extensions (3.0.9) v101; urgency=medium
+
+  * 同步上游更新，在新peony版本基础上编译包
+    - 修复bug #22897, 首次进入系统，右键菜单没有
+      打开终端选项问题。
+  * New upstream release.
+    - update with latest main version code，fix bug #22897.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Thu, 12 Nov 2020 16:05:35 +0800
+
+peony-extensions (3.0.8) v101; urgency=medium
+
+  * 同步上游更新，在新peony版本基础上编译包
+    - 修复bug #23260, 在计算机视图本地本区右键导致崩溃的问题。
+  * New upstream release.
+    - update with latest main version code，fix bug #23260.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Thu, 05 Nov 2020 14:05:35 +0800
+
+peony-extensions (3.0.7) v101; urgency=medium
+
+  * 同步上游更新，在新peony版本基础上编译包
+    - 修复bug #21883,18957,21022,18216,22521.
+  * New upstream release.
+    - update with latest main version code.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Fri, 16 Oct 2020 10:05:35 +0800
+
+peony-extensions (3.0.6) v101; urgency=medium
+
+  * 同步上游更新，在新peony版本基础上编译包
+  * New upstream release.
+    - update with latest main version code.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Fri, 16 Oct 2020 10:05:35 +0800
+
+peony-extensions (3.0.5-3) v101; urgency=medium
+
+  * New upstream release.
+    - Fix support more formats pictures issues.(#19460,11871).
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Sat, 10 Oct 2020 10:05:35 +0800
+
+peony-extensions (3.0.4) v101; urgency=medium
+
+  * New upstream release.
+    - Refresh peony window if volume device removed.(#18184).
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Fri, 24 Sep 2020 16:05:35 +0800
+
+peony-extensions (3.0.3-1) v101; urgency=medium
+
+  * New upstream release.
+    - Add eject function for volum in computer view.(#18216).
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Mon, 21 Sep 2020 10:05:35 +0800
+
+peony-extensions (3.0.2-1) v101; urgency=medium
+
+  * New upstream release.
+    - Fix can set wallpaper in trash path issue(#18278).
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Mon, 14 Sep 2020 10:05:35 +0800
+
+peony-extensions (3.0.1-1) v101; urgency=medium
+
+  * New upstream release.
+    - Surport more picture format(bmp,gif,jpe,tif,tiff,dib,wdp,jfif) 
+      for set wallpaper plugin.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Fri, 04 Sep 2020 09:05:35 +0800
+
+peony-extensions (3.0.0-2) v101; urgency=medium
+
+  * debian/control:
+    - libpeony2 -> libpeony3.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Fri, 28 Aug 2020 09:05:35 +0800
+
+peony-extensions (2.2.11) v101; urgency=medium
+   * New upstream release.
+     - Update with latest 2004 code.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Mon, 24 Aug 2020 09:32:35 +0800
+
+peony-extensions (2.2.10-1) v101; urgency=medium
+   * New upstream release.
+     - Update with latest 2004 code.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Fri, 14 Aug 2020 16:32:35 +0800
+
+peony-extensions (2.2.9) v101; urgency=medium
+   * New upstream release.
+     - Update with latest 2004 code.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Mon, 10 Aug 2020 09:32:35 +0800
+
+peony-extensions (2.2.8-1) v101; urgency=medium
+   * New upstream release.
+     - Update with latest 2004 code.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Mon, 03 Aug 2020 10:32:35 +0800
+
+ (2.2.7) v101; urgency=medium
+
+  * New upstream bugfix release.
+    - Update with ukui3.0 latest colde.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Sun, 26 Jul 2020 14:32:45 +0800
+
+peony-extensions (2.2.6) v101; urgency=medium
+
+  * New upstream bugfix release.
+    - Update with ukui3.0 latest colde.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Sat, 18 Jul 2020 14:32:45 +0800
+
+peony-extensions (2.2.4-3) v101; urgency=medium
+
+  * New upstream bugfix release.
+    - No authority folder and user home can not share.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Mon, 29 Jun 2020 11:32:45 +0800
+
+peony-extensions (2.2.2-4) v101; urgency=medium
+
+  * add set as wallpaper extension.
+    - Right click a picture can quickly set as wallpaper.
+    - Improve compress file check with suffix.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Thu, 11 Jun 2020 19:42:45 +0800
+
+peony-extensions (2.2.1-1) v101; urgency=medium
+
+  * New upstream bugfix release.
+    - Fix can open terminal in trash by right click menu.
+    - Improve the computer view interactions.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Mon, 18 May 2020 19:42:45 +0800
 
 peony-extensions (2.1.0) unstable; urgency=low
 
