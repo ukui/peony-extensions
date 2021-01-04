@@ -38,7 +38,7 @@ ComputerView::ComputerView(QWidget *parent) : QAbstractItemView(parent)
 {
     setItemDelegate(new ComputerItemDelegate(this));
 
-    m_model = ComputerProxyModel::globalInstance();
+    m_model = new ComputerProxyModel(this);
     setModel(m_model);
     setStyle(ComputerViewStyle::getStyle());
 
