@@ -33,7 +33,7 @@ namespace Peony {
 class PEONYQTSETWALLPAPERSHARED_EXPORT SetWallPaperPlugin: public QObject, public MenuPluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID MenuPluginInterface_iid)
+    Q_PLUGIN_METADATA(IID MenuPluginInterface_iid FILE "common.json")
     Q_INTERFACES(Peony::MenuPluginInterface)
 public:
     explicit SetWallPaperPlugin(QObject *parent = nullptr);

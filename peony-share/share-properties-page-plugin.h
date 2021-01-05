@@ -34,7 +34,7 @@ namespace Peony {
 class SharePropertiesPagePlugin : public QObject, public PropertiesWindowTabPagePluginIface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID PropertiesWindowTabPagePluginIface_iid)
+    Q_PLUGIN_METADATA(IID PropertiesWindowTabPagePluginIface_iid FILE "common.json")
     Q_INTERFACES(Peony::PropertiesWindowTabPagePluginIface)
 public:
     explicit SharePropertiesPagePlugin(QObject *parent = nullptr);

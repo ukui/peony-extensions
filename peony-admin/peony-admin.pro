@@ -1,5 +1,7 @@
 QT += core gui widgets concurrent
 
+include(../common.pri)
+
 TARGET = peony-admin
 TEMPLATE = lib
 

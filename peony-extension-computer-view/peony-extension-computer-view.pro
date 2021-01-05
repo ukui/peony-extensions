@@ -5,6 +5,8 @@ TARGET = peony-computer-view-plugin
 TEMPLATE = lib
 DEFINES += PEONYEXTENSIONCOMPUTERVIEW_LIBRARY
 
+include(../common.pri)
+
 CONFIG += debug c++11 no_keywords link_pkgconfig plugin
 PKGCONFIG +=gio-2.0 glib-2.0 gio-unix-2.0 peony
 

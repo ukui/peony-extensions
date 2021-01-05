@@ -1,5 +1,8 @@
 TEMPLATE = subdirs
 
+VERSION = 3.1.0
+DEFINES += VERSION='\\"$${VERSION}\\"'
+
 SUBDIRS = peony-admin \
           #peony-bluetooth-plugin \
 	  peony-engrampa-menu-plugin \

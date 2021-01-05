@@ -5,6 +5,8 @@ TEMPLATE = lib
 
 DEFINES += PEONYSHARE_LIBRARY
 
+include(../common.pri)
+
 PKGCONFIG += peony
 CONFIG += link_pkgconfig \
           c++11 \

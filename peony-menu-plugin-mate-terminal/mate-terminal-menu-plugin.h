@@ -34,7 +34,7 @@ namespace Peony {
 class PEONYQTMENUPLUGINMATETERMINALSHARED_EXPORT MateTerminalMenuPlugin : public QObject, public MenuPluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID MenuPluginInterface_iid)
+    Q_PLUGIN_METADATA(IID MenuPluginInterface_iid FILE "common.json")
     Q_INTERFACES(Peony::MenuPluginInterface)
 public:
     explicit MateTerminalMenuPlugin(QObject *parent = nullptr);
