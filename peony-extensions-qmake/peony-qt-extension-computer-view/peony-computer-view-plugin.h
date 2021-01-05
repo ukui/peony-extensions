@@ -31,7 +31,7 @@ namespace Peony {
 class PEONYQTEXTENSIONCOMPUTERVIEW_EXPORT PeonyComputerViewPlugin : public QObject, public Peony::DirectoryViewPluginIface2
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID DirectoryViewPluginIface2_iid)
+    Q_PLUGIN_METADATA(IID DirectoryViewPluginIface2_iid FILE "common.json")
     Q_INTERFACES(Peony::DirectoryViewPluginIface2)
 public:
     explicit PeonyComputerViewPlugin(QObject *parent = nullptr);
