@@ -126,7 +126,7 @@ QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString 
         if (selectionUris.isEmpty()) {
             m_uri = uri;
             //virtual path not show this option
-            auto info = FileInfo::fromUri(uri);
+            auto info = FileInfo::fromUri(uri, false);
             if (info->isVirtual())
                 return actions;
 
@@ -143,7 +143,7 @@ QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString 
                 return actions;
 
             //virtual path not show this option
-            auto info = FileInfo::fromUri(selectionUris.first());
+            auto info = FileInfo::fromUri(selectionUris.first(), false);
             if (info->isVirtual())
                 return actions;
 
