@@ -31,7 +31,7 @@ namespace Peony {
 class PEONYQTENGRAMPAMENUPLUGINSHARED_EXPORT EngrampaMenuPlugin: public QObject, public MenuPluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID MenuPluginInterface_iid FILE "common.json")
+    Q_PLUGIN_METADATA(IID MenuPluginInterface_iid)
     Q_INTERFACES(Peony::MenuPluginInterface)
 public:
     explicit EngrampaMenuPlugin(QObject *parent = nullptr);
