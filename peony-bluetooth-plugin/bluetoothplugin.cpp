@@ -23,6 +23,7 @@
 #include "bluetoothplugin.h"
 
 #include <QFileInfo>
+#include <QProcess>
 
 using namespace Peony;
 
@@ -38,6 +39,15 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
 {
     qDebug() << Q_FUNC_INFO << uri << selectionUris;
     QList<QAction*> actions;
+
+    QProcess process;
+    process.start("rfkill list");
+    process.waitForFinished();
+    QByteArray output = process.readAllStandardOutput();
+    QString str_output = output;
+    if(!str_output.contains(QString("bluetooth"), Qt::CaseInsensitive))
+        return actions;
+
     if(!QFileInfo::exists("/usr/bin/ukui-bluetooth")){
         return actions;
     }
