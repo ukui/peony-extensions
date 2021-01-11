@@ -65,6 +65,8 @@ public:
 
     QString tryGetVolumeUriFromMountRoot(const QString &mountRootUri);
 
+    void refresh();
+
 private:
     AbstractComputerItem *m_parentNode;
 

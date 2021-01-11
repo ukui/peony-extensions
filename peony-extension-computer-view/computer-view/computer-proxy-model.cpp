@@ -52,6 +52,11 @@ QString ComputerProxyModel::tryGetVolumeUriFromMountTarget(const QString &mountT
     return m_model->tryGetVolumeUriFromMountRoot(mountTargetUri);
 }
 
+void ComputerProxyModel::refresh()
+{
+    m_model->refresh();
+}
+
 bool ComputerProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     auto item = static_cast<AbstractComputerItem *>(m_model->index(source_row, 0, source_parent).internalPointer());

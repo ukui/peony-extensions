@@ -163,6 +163,11 @@ QString ComputerView::tryGetVolumeUriFromMountTarget(const QString &mountTargetU
     return m_model->tryGetVolumeUriFromMountTarget(mountTargetUri);
 }
 
+void ComputerView::refresh()
+{
+    m_model->refresh();
+}
+
 void ComputerView::updateEditorGeometries()
 {
     QAbstractItemView::updateEditorGeometries();

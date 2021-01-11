@@ -73,6 +73,16 @@ ComputerVolumeItem::~ComputerVolumeItem()
 
 void ComputerVolumeItem::updateInfoAsync()
 {
+    if (!m_volume) {
+        m_icon = QIcon::fromTheme("drive-harddisk-system");
+        m_uri = "file:///";
+        m_displayName = tr("File System");
+        auto file = g_file_new_for_uri("file:///");
+        g_file_query_filesystem_info_async(file, "*", 0, m_cancellable,
+                                           GAsyncReadyCallback(query_root_info_async_callback), this);
+        return;
+    }
+
     char *deviceName;
     QString unixDeviceName;
 

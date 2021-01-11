@@ -154,3 +154,14 @@ QString ComputerModel::tryGetVolumeUriFromMountRoot(const QString &mountRootUri)
     auto value = m_volumeTargetMap.value(mountRootUri);
     return value;
 }
+
+void ComputerModel::refresh()
+{
+    for (auto child : m_parentNode->m_children) {
+        for (auto child2 : child->m_children) {
+            if (auto item = qobject_cast<AbstractComputerItem *>(child2)) {
+                item->updateInfo();
+            }
+        }
+    }
+}

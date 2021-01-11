@@ -268,6 +268,8 @@ void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony:
 void Peony::ComputerViewContainer::beginLocationChange()
 {
     Q_EMIT viewDirectoryChanged();
+
+    m_view->refresh();
 }
 
 void Peony::ComputerViewContainer::stopLocationChange()

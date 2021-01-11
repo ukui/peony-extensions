@@ -54,6 +54,8 @@ public:
 
     QString tryGetVolumeUriFromMountTarget(const QString &mountTargetUri);
 
+    void refresh();
+
 protected:
     void updateEditorGeometries();
     void resizeEvent(QResizeEvent *event);

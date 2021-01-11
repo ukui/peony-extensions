@@ -40,6 +40,8 @@ public:
 
     QString tryGetVolumeUriFromMountTarget(const QString &mountTargetUri);
 
+    void refresh();
+
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 
