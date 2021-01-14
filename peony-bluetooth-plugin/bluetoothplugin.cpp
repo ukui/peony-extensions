@@ -54,7 +54,7 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
     if (types == MenuPluginInterface::DirectoryView || types == MenuPluginInterface::DesktopWindow)
     {
         if (! selectionUris.isEmpty()) {
-            auto info = FileInfo::fromUri(selectionUris.first(), false);
+            auto info = FileInfo::fromUri(selectionUris.first());
             //special type mountable, return
             qDebug()<<"info isVirtual:"<<info->isVirtual()<<info->mimeType();
             if (!selectionUris.first().startsWith("file:///"))
