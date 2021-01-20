@@ -53,7 +53,7 @@ public:
 
     int tabOrder() override {return 99;}
     bool supportUris(const QStringList &uris) override;
-    QWidget *createTabPage(const QStringList &uris) override;
+    PropertiesWindowTabIface * createTabPage(const QStringList &uris) override;
 
     void closeFactory() {deleteLater();}
 
