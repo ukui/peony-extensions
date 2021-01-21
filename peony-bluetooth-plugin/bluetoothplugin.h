@@ -43,7 +43,7 @@ namespace Peony {
 class PEONYQTENGRAMPAMENUPLUGINSHARED_EXPORT BluetoothPlugin: public QObject, public MenuPluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID MenuPluginInterface_iid)
+    Q_PLUGIN_METADATA(IID MenuPluginInterface_iid FILE "common.json")
     Q_INTERFACES(Peony::MenuPluginInterface)
 public:
     explicit BluetoothPlugin(QObject *parent = nullptr);
