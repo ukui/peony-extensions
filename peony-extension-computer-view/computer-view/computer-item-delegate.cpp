@@ -128,7 +128,8 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
         auto textRect = option.rect;
         textRect.adjust(84, 10, -5, -10);
         textRect.translate(0, -option.fontMetrics.ascent());
-        qApp->style()->drawItemText(painter, textRect, Qt::AlignLeft|Qt::AlignVCenter, option.palette, enable, option.text, QPalette::Text);
+        auto elideText = opt.fontMetrics.elidedText(opt.text, Qt::ElideMiddle, textRect.width());
+        qApp->style()->drawItemText(painter, textRect, Qt::AlignLeft|Qt::AlignVCenter, option.palette, enable, elideText, QPalette::Text);
 
         //space
         bool shouldDrawProgress = false;
