@@ -92,6 +92,8 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
         for (auto index : m_view->selectionModel()->selectedIndexes()) {
             auto item = model->itemFromIndex(index);
             uris<<item->uri();
+            if (item->uri() == "network:///")
+                return;
             items<<item;
         }
 
@@ -126,7 +128,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 g_signal_connect (m_op, "ask-question", G_CALLBACK(ask_question_cb), this);
                 g_signal_connect (m_op, "ask-password", G_CALLBACK (ask_password_cb), this);
             });
-        } else if (items.count() == 1 && items.first()->uri() != "") {
+        } else if (items.count() == 1 && items.first()->uri() != "" && items.first()->uri() != "network:///") {
             auto item = items.first();
             bool unmountable = item->canUnmount();
             menu.addAction(tr("Unmount"), [=](){
@@ -159,7 +161,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 }
             });
             a->setEnabled(!uri.isNull());
-        } else if(items.first()->uri() != ""){
+        } else if(items.first()->uri() != "" && items.first()->uri() != "network:///"){
             qDebug() << "unable Property uri:" <<items.first()->uri();
             menu.addAction(tr("Property"));
             menu.actions().first()->setEnabled(false);
