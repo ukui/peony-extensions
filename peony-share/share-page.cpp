@@ -35,7 +35,7 @@
 
 #include <QDebug>
 
-SharePage::SharePage(const QString &uri, QWidget *parent) : QWidget(parent)
+SharePage::SharePage(const QString &uri, QWidget *parent) : PropertiesWindowTabIface(parent)
 {
     QUrl url = uri;
     m_share_info = ShareInfo(url.fileName(), false);
@@ -147,4 +147,11 @@ SharePage::SharePage(const QString &uri, QWidget *parent) : QWidget(parent)
         m_share_info.allowGuest = checked;
         NetUsershareHelper::updateShareInfo(m_share_info);
     });
+}
+
+void SharePage::saveAllChange()
+{
+    qDebug() << "共享页面，保存全部函数";
+    if (!this->m_thisPageChanged)
+        return;
 }

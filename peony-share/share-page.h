@@ -24,14 +24,21 @@
 #define SHAREPAGE_H
 
 #include <QWidget>
+#include <properties-window-tab-iface.h>
 
 #include "net-usershare-helper.h"
 
-class SharePage : public QWidget
+class SharePage : public Peony::PropertiesWindowTabIface
 {
     Q_OBJECT
 public:
     explicit SharePage(const QString &uri, QWidget *parent = nullptr);
+
+    /*!
+     * 响应确定按钮
+     * \brief
+     */
+    void saveAllChange() override;
 
 private:
     ShareInfo m_share_info = ShareInfo("", false);

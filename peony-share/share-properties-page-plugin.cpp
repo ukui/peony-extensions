@@ -117,7 +117,7 @@ bool SharePropertiesPagePlugin::supportUris(const QStringList &uris)
     return true;
 }
 
-QWidget *SharePropertiesPagePlugin::createTabPage(const QStringList &uris)
+PropertiesWindowTabIface * SharePropertiesPagePlugin::createTabPage(const QStringList &uris)
 {
     return new SharePage(uris.first());
 }
