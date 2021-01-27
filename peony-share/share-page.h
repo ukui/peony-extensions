@@ -24,15 +24,39 @@
 #define SHAREPAGE_H
 
 #include <QWidget>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QLabel>
+#include <QLineEdit>
 #include <properties-window-tab-iface.h>
+#include <memory>
+#include <file-info.h>
+#include <QCheckBox>
+#include <QFuture>
 
 #include "net-usershare-helper.h"
 
 class SharePage : public Peony::PropertiesWindowTabIface
 {
-    Q_OBJECT
+Q_OBJECT
 public:
     explicit SharePage(const QString &uri, QWidget *parent = nullptr);
+
+    void addSeparate()
+    {
+        QFrame * separate = new QFrame(this);
+        separate->setFrameShape(QFrame::HLine);
+
+        m_layout->addWidget(separate);
+    }
+
+    void init();
+
+    void initFloorOne();
+
+    void initFloorTwo();
+
+    void initFloorThree();
 
     /*!
      * 响应确定按钮
@@ -41,7 +65,28 @@ public:
     void saveAllChange() override;
 
 private:
-    ShareInfo m_share_info = ShareInfo("", false);
+    QFutureWatcher<void> *m_theFutureWatcher = nullptr;
+
+    ShareInfo m_shareInfo = ShareInfo("", false);
+    QVBoxLayout *m_layout = nullptr;
+
+    std::shared_ptr<Peony::FileInfo> m_fileInfo = nullptr;
+
+    //floor1
+    QPushButton *m_iconButton  = nullptr;
+    QLabel      *m_folderName  = nullptr;
+    QLabel      *m_sharedState = nullptr;
+
+    //floor2
+    QCheckBox *m_shareCheckBox = nullptr;
+    //floor3
+    QFrame    *m_floor3        = nullptr;
+    QLineEdit *m_shareNameEdit = nullptr;
+    QLineEdit *m_commentEdit   = nullptr;
+
+    QCheckBox *m_shareReadOnlyCheckBox   = nullptr;
+    QCheckBox *m_shareAllowGuestCheckBox = nullptr;
+
 };
 
 #endif // SHAREPAGE_H
