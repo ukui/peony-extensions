@@ -50,8 +50,13 @@ AdminMenuPlugin::AdminMenuPlugin(QObject *parent) : QObject(parent)
 
 QList<QAction *> AdminMenuPlugin::menuActions(Types types, const QString &uri, const QStringList &selectionUris)
 {
-    QList<QAction *> l;
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QList<QAction *> l;
+
+    if (uri.startsWith("mtp://")) {
+        return l;
+    }
+
     if (selectionUris.isEmpty()) {
         auto directoryAction = new QAction(tr("Open Directory as Admin"));
         l<<directoryAction;
