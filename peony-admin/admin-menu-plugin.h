@@ -48,7 +48,7 @@ public:
     QList<QAction *> menuActions(Types types, const QString &uri, const QStringList &selectionUris) override;
 
 private:
-    bool m_enable;
+    bool                m_enable;
 };
 
 }
