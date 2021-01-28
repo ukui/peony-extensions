@@ -114,7 +114,7 @@ void SharePage::initFloorOne()
     floor1->setMinimumHeight(90);
 
     QHBoxLayout * layout1 = new QHBoxLayout(floor1);
-    layout1->setContentsMargins(22, 0, 22, 0);
+    layout1->setContentsMargins(22, 14, 22, 0);
     layout1->setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
     floor1->setLayout(layout1);
@@ -207,8 +207,8 @@ void SharePage::initFloorThree()
     m_commentEdit->setMaxLength(64);
     m_commentEdit->setText(m_shareInfo.comment);
 
-    formLayout->addRow(tr("Share name"), m_shareNameEdit);
-    formLayout->addRow(tr("Comment"), m_commentEdit);
+    formLayout->addRow(tr("Share name:"), m_shareNameEdit);
+    formLayout->addRow(tr("Comment:"), m_commentEdit);
 
     layout3->addLayout(formLayout);
 
