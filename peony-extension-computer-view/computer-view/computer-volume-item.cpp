@@ -26,6 +26,8 @@
 #include <QDebug>
 #include <QApplication>
 #include <QPushButton>
+#include <QDBusConnection>
+#include <QDBusInterface>
 
 ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, AbstractComputerItem *parentNode, QObject *parent) : AbstractComputerItem(model, parentNode, parent)
 {
@@ -358,9 +360,8 @@ void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *re
     GError *err = nullptr;
     auto info = g_file_query_info_finish(file, res, &err);
     if (info) {
-        quint64 total = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_SIZE);
         quint64 used = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_USED);
-        p_this->m_totalSpace = total;
+        p_this->m_totalSpace = calcVolumeCapacity(p_this);
         p_this->m_usedSpace = used;
 
         /***************************collect info when gparted open*************************/
@@ -643,4 +644,39 @@ void ComputerVolumeItem::find_children_async_callback(GFileEnumerator *enumerato
     if (err) {
         g_error_free(err);
     }
+}
+
+quint64 calcVolumeCapacity(ComputerVolumeItem* pThis)
+{
+    char* tmpDevice;
+    GVolume* gVolume;
+    quint64 capacityBytes;
+    QString unixDevice,dbusPath;
+
+    if(!pThis->m_mount && pThis->m_targetUri.isEmpty())
+        return 0;
+
+    if(pThis->m_mount){
+        if(gVolume = pThis->m_volume->getGVolume()){
+            tmpDevice = g_volume_get_identifier(gVolume,G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
+            unixDevice = QString(tmpDevice+5);
+            g_free(tmpDevice);
+        }
+    }else{
+        unixDevice = Peony::FileUtils::getUnixDevice(pThis->m_uri);
+        unixDevice = unixDevice.section('/',-1);
+    }
+
+
+    dbusPath = "/org/freedesktop/UDisks2/block_devices/" + unixDevice;
+    QDBusInterface blockInterface("org.freedesktop.UDisks2",
+                                  dbusPath,
+                                  "org.freedesktop.UDisks2.Block",
+                                  QDBusConnection::systemBus());
+
+    capacityBytes = 0;
+    if(blockInterface.isValid())
+        capacityBytes = blockInterface.property("Size").toULongLong();
+
+    return capacityBytes;
 }

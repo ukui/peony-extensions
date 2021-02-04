@@ -83,6 +83,7 @@ protected:
     void findChildrenWhenGPartedOpen();
     static void enumerate_async_callback(GFile *file, GAsyncResult *res, ComputerVolumeItem *p_this);
     static void find_children_async_callback(GFileEnumerator *enumerator, GAsyncResult *res, ComputerVolumeItem *p_this);
+    friend quint64 calcVolumeCapacity(ComputerVolumeItem* pThis);
 
 private Q_SLOTS:
     void onVolumeAdded(const std::shared_ptr<Peony::Volume> volume);

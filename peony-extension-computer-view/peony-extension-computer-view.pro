@@ -1,4 +1,4 @@
-QT += widgets
+QT += widgets dbus
 
 TARGET = peony-computer-view-plugin
 
