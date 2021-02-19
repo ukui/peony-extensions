@@ -130,7 +130,7 @@ QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString 
             if (info->isVirtual())
                 return actions;
 
-            QAction *dirAction = new QAction(QIcon::fromTheme("utilities-terminal-symbolic"), tr("Open Directory in T&erminal"), nullptr);
+            QAction *dirAction = new QAction(QIcon::fromTheme("utilities-terminal-symbolic"), tr("Open Directory in Terminal"), nullptr);
             dirAction->connect(dirAction, &QAction::triggered, [=](){
                 openTerminal();
             });
@@ -149,7 +149,7 @@ QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString 
 
             if (info->isDir()) {
                 m_uri = selectionUris.first();
-                QAction *dirAction = new QAction(QIcon::fromTheme("utilities-terminal-symbolic"), tr("Open Directory in T&erminal"), nullptr);
+                QAction *dirAction = new QAction(QIcon::fromTheme("utilities-terminal-symbolic"), tr("Open Directory in Terminal"), nullptr);
                 dirAction->connect(dirAction, &QAction::triggered, [=](){
                     openTerminal();
                 });

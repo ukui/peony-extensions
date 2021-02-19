@@ -14,7 +14,7 @@
         <translation>Duvarkağıdı eklentisi ayarla.</translation>
     </message>
     <message>
-        <location filename="../set-wallpaper-plugin.cpp" line="55"/>
+        <location filename="../set-wallpaper-plugin.cpp" line="58"/>
         <source>Set as wallpaper</source>
         <translation>Duvar kağıdı olarak ayarla</translation>
     </message>

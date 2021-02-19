@@ -14,7 +14,7 @@
         <translation>设置壁纸插件。</translation>
     </message>
     <message>
-        <location filename="../set-wallpaper-plugin.cpp" line="56"/>
+        <location filename="../set-wallpaper-plugin.cpp" line="58"/>
         <source>Set as wallpaper</source>
         <translation>设为壁纸</translation>
     </message>
