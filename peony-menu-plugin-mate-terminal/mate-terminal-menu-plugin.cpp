@@ -53,11 +53,18 @@ MateTerminalMenuPlugin::MateTerminalMenuPlugin(QObject *parent) : QObject (paren
         while (l) {
             const char *cmd = g_app_info_get_executable(static_cast<GAppInfo*>(l->data));
             QString tmp = cmd;
-            if (tmp.contains("terminal")) {
-                terminal_cmd = tmp;
-                if (tmp == "mate-terminal") {
+            if (tmp.contains("terminal") || tmp.contains("terminator")) {
+                qDebug() << "terminal cmd:" <<tmp;
+                //if has x-terminal-emulator, use it first
+                if (tmp == "terminator") {
+                    terminal_cmd = tmp;
                     break;
                 }
+                else if (terminal_cmd == "mate-terminal"){
+                    continue;
+                }
+                else
+                    terminal_cmd = tmp;
             }
             l = l->next;
         }
