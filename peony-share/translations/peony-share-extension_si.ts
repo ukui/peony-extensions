@@ -26,7 +26,7 @@
     <message>
         <location filename="../share-page.cpp" line="159"/>
         <source>Share folder</source>
-        <translation type="unfinished"></translation>
+        <translation>බහාලුම බෙදාගන්න</translation>
     </message>
     <message>
         <source>Share:</source>
@@ -62,7 +62,7 @@
     <message>
         <location filename="../share-page.cpp" line="211"/>
         <source>Comment:</source>
-        <translation type="unfinished"></translation>
+        <translation>අදහස:</translation>
     </message>
 </context>
 </TS>
