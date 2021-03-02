@@ -7,7 +7,7 @@
         <location filename="../admin-menu-plugin.cpp" line="61"/>
         <location filename="../admin-menu-plugin.cpp" line="87"/>
         <source>Open Directory as Admin</source>
-        <translation type="unfinished"></translation>
+        <translation>පරිපාලක ලෙස නාමාවලිය විවෘත කරන්න</translation>
     </message>
     <message>
         <location filename="../admin-menu-plugin.cpp" line="106"/>
