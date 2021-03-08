@@ -300,17 +300,27 @@ void ComputerVolumeItem::unmount(GMountUnmountFlags unmountFlag)
     GMount *g_mount = nullptr;
     GFile *file = nullptr;
 
-    if(m_mount){
+    m_vfs_uri = m_model->m_volumeTargetMap.key(m_uri);
+    if (!m_vfs_uri.isEmpty()) {
+        file = g_file_new_for_uri(m_vfs_uri.toUtf8().constData());
+        if(file)
+            g_file_unmount_mountable_with_operation(file,unmountFlag,
+                                                    nullptr,nullptr,
+                                                    GAsyncReadyCallback(unmount_async_callback),
+                                                    this);
+        g_object_unref(file);
+    } else if (m_mount) {
         if (g_mount = m_mount->getGMount())
             g_mount_unmount_with_operation(g_mount, unmountFlag, nullptr, m_cancellable,
                                        GAsyncReadyCallback(unmount_async_callback), this);
-    }else{
+    } else if (!m_uri.isEmpty()) {
         file = g_file_new_for_uri(m_uri.toUtf8().constData());
         if(file)
             g_file_unmount_mountable_with_operation(file,unmountFlag,
                                                     nullptr,nullptr,
                                                     GAsyncReadyCallback(unmount_async_callback),
                                                     this);
+        g_object_unref(file);
     }
 }
 
@@ -459,7 +469,7 @@ void ComputerVolumeItem::unmount_async_callback(GObject* object,GAsyncResult *re
     bool successed;
 
     if(G_IS_MOUNT(object)){
-        successed = g_mount_eject_with_operation_finish(G_MOUNT(object),res,&err);
+        successed = g_mount_unmount_with_operation_finish(G_MOUNT(object),res,&err);
         if(successed)
             p_this->m_mount = nullptr;
     }else if(G_IS_FILE(object)){
@@ -482,6 +492,15 @@ void ComputerVolumeItem::unmount_async_callback(GObject* object,GAsyncResult *re
             QMessageBox::warning(nullptr, QObject::tr("Unmount failed"),
                                  QObject::tr("%1").arg(errorMsg),
                                  QMessageBox::Yes);
+        } else if (err->code == G_IO_ERROR_PERMISSION_DENIED) {
+            // do nothing because we have requested polkit dialog yet.
+        } else {
+            auto button = QMessageBox::warning(nullptr, QObject::tr("Unmount failed"),
+                                           QObject::tr("Error: %1\n"
+                                                       "Do you want to unmount forcely?").arg(err->message),
+                                           QMessageBox::Yes, QMessageBox::No);
+            if (button == QMessageBox::Yes)
+                p_this->unmount(G_MOUNT_UNMOUNT_FORCE);
         }
 
         g_error_free(err);
@@ -502,13 +521,16 @@ void ComputerVolumeItem::eject_async_callback(GObject *object, GAsyncResult *res
         //QMessageBox::information(0, 0, "Volume Ejected");
     }
     if (err) {
-        //QMessageBox::critical(0, 0, err->message);
-        QMessageBox warningBox(QMessageBox::Warning,QObject::tr("Eject failed"),QString(err->message));
-        QPushButton *cancelBtn = (warningBox.addButton(QObject::tr("Cancel"),QMessageBox::RejectRole));
-        QPushButton *ensureBtn = (warningBox.addButton(QObject::tr("Eject Anyway"),QMessageBox::YesRole));
-        warningBox.exec();
-        if(warningBox.clickedButton() == ensureBtn)
-            p_this->eject(G_MOUNT_UNMOUNT_FORCE);
+        if (err->code != G_IO_ERROR_PERMISSION_DENIED) {
+            // do nothing because we have requested polkit dialog yet.
+            //QMessageBox::critical(0, 0, err->message);
+            QMessageBox warningBox(QMessageBox::Warning,QObject::tr("Eject failed"),QString(err->message));
+            QPushButton *cancelBtn = (warningBox.addButton(QObject::tr("Cancel"),QMessageBox::RejectRole));
+            QPushButton *ensureBtn = (warningBox.addButton(QObject::tr("Eject Anyway"),QMessageBox::YesRole));
+            warningBox.exec();
+            if(warningBox.clickedButton() == ensureBtn)
+                p_this->eject(G_MOUNT_UNMOUNT_FORCE);
+        }
 
         g_error_free(err);
     }

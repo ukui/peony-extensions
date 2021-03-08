@@ -151,7 +151,7 @@ Qt::ItemFlags ComputerModel::flags(const QModelIndex &index) const
 
 QString ComputerModel::tryGetVolumeUriFromMountRoot(const QString &mountRootUri)
 {
-    auto value = m_volumeTargetMap.value(mountRootUri);
+    auto value = m_volumeTargetMap.key(mountRootUri);
     return value;
 }
 

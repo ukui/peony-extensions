@@ -91,6 +91,7 @@ private Q_SLOTS:
 
 private:
     QString m_uri;
+    QString m_vfs_uri;
 
     std::shared_ptr<Peony::Volume> m_volume;
     std::shared_ptr<Peony::Mount> m_mount;

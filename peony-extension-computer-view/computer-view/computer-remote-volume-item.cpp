@@ -110,6 +110,7 @@ void ComputerRemoteVolumeItem::onFileAdded(const QString &uri)
     //not include udisk、mobile-disk、local-partition etc.
     QString targetUri;
     targetUri = Peony::FileUtils::getTargetUri(uri);
+    m_model->m_volumeTargetMap.insert(uri, targetUri);
     if(!targetUri.isEmpty() && targetUri.contains("file:///"))
         return;
 
@@ -190,6 +191,7 @@ void ComputerRemoteVolumeItem::find_children_async_callback(GFileEnumerator *enu
         //not include udisk、mobile-disk、local-partition etc.
         QString targetUri;
         targetUri = Peony::FileUtils::getTargetUri(uri);
+        p_this->m_model->m_volumeTargetMap.insert(uri, targetUri);
         if(!targetUri.isEmpty() && targetUri.contains("file:///"))
             continue;
 
