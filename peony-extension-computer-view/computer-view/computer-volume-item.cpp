@@ -237,7 +237,7 @@ bool ComputerVolumeItem::canEject()
         gvolume = (GVolume*)g_object_ref(m_volume->getGVolume());
         gdrive = g_volume_get_drive(gvolume);
         if(gdrive){
-            ejectAble = g_drive_can_eject(gdrive) || g_drive_can_stop(gdrive);
+            ejectAble = g_drive_can_eject(gdrive) || g_drive_can_stop(gdrive) || g_drive_is_removable(gdrive);
             g_object_unref(gdrive);
         }
         g_object_unref(gvolume);
@@ -261,7 +261,7 @@ void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
             if (!g_drive)
                 return;
 
-            if (g_drive_can_stop(g_drive))
+            if (g_drive_can_stop(g_drive) || g_drive_is_removable(g_drive))
                 g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, nullptr, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
 
             g_object_unref(g_drive);
@@ -477,6 +477,7 @@ void ComputerVolumeItem::unmount_async_callback(GObject* object,GAsyncResult *re
     }
 
     if(err){
+        errorMsg = err->message;
         if(strstr(err->message,"target is busy")){
             errorMsg = QObject::tr("One or more programs prevented the unmount operation.");
 
@@ -492,7 +493,7 @@ void ComputerVolumeItem::unmount_async_callback(GObject* object,GAsyncResult *re
             QMessageBox::warning(nullptr, QObject::tr("Unmount failed"),
                                  QObject::tr("%1").arg(errorMsg),
                                  QMessageBox::Yes);
-        } else if (err->code == G_IO_ERROR_PERMISSION_DENIED) {
+        } else if (err->code == G_IO_ERROR_PERMISSION_DENIED || errorMsg.contains("authorized", Qt::CaseInsensitive)) {
             // do nothing because we have requested polkit dialog yet.
         } else {
             auto button = QMessageBox::warning(nullptr, QObject::tr("Unmount failed"),
@@ -521,7 +522,8 @@ void ComputerVolumeItem::eject_async_callback(GObject *object, GAsyncResult *res
         //QMessageBox::information(0, 0, "Volume Ejected");
     }
     if (err) {
-        if (err->code != G_IO_ERROR_PERMISSION_DENIED) {
+        QString errMsg = err->message;
+        if (!errMsg.contains("authorized", Qt::CaseInsensitive)) {
             // do nothing because we have requested polkit dialog yet.
             //QMessageBox::critical(0, 0, err->message);
             QMessageBox warningBox(QMessageBox::Warning,QObject::tr("Eject failed"),QString(err->message));
@@ -672,13 +674,13 @@ void ComputerVolumeItem::find_children_async_callback(GFileEnumerator *enumerato
         if (!uri)
             continue;
 
-		//not include ftp://xxx etc.
+        //not include ftp://xxx etc.
         QString targetUri;
         targetUri = Peony::FileUtils::getTargetUri(uri);
-		if(targetUri.isEmpty())
-			continue;
-		if("file:///" == targetUri)
-			continue;
+        if(targetUri.isEmpty())
+            continue;
+        if("file:///" == targetUri)
+            continue;
         if(!targetUri.contains("file:///"))
             continue;
 
