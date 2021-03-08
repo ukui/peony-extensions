@@ -73,6 +73,7 @@ protected:
     static void mount_async_callback(GVolume *volume, GAsyncResult *res, ComputerVolumeItem *p_this);
     static void unmount_async_callback(GObject *object, GAsyncResult *res, ComputerVolumeItem *p_this);
     static void eject_async_callback(GObject *object, GAsyncResult *res, ComputerVolumeItem *p_this);
+    static void stop_async_callback(GDrive *drive, GAsyncResult *res, ComputerVolumeItem *p_this);
 
     //watcher
     void collectInfoWhenGpartedOpen(QString uri);

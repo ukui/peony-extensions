@@ -237,7 +237,7 @@ bool ComputerVolumeItem::canEject()
         gvolume = (GVolume*)g_object_ref(m_volume->getGVolume());
         gdrive = g_volume_get_drive(gvolume);
         if(gdrive){
-            ejectAble = g_drive_can_eject(gdrive);
+            ejectAble = g_drive_can_eject(gdrive) || g_drive_can_stop(gdrive);
             g_object_unref(gdrive);
         }
         g_object_unref(gvolume);
@@ -253,18 +253,39 @@ void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
 
     /*If udisk device is mounted,eject it from here*/
     if (m_mount && (g_mount = m_mount->getGMount())) {
-        g_mount_eject_with_operation(g_mount, ejectFlag, nullptr, m_cancellable,
-                                     GAsyncReadyCallback(eject_async_callback), this);
+        if (g_mount_can_eject(g_mount)) {
+            g_mount_eject_with_operation(g_mount, ejectFlag, nullptr, m_cancellable,
+                                         GAsyncReadyCallback(eject_async_callback), this);
+        } else {
+            auto g_drive = g_mount_get_drive(g_mount);
+            if (!g_drive)
+                return;
+
+            if (g_drive_can_stop(g_drive))
+                g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, nullptr, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
+
+            g_object_unref(g_drive);
+        }
 
         return;
     }
 
     /*If udisk device is unmounted,eject it from here*/
     if (m_volume && (g_volume = m_volume->getGVolume())) {
-        g_volume_eject_with_operation(g_volume, ejectFlag, nullptr, m_cancellable,
-                                     GAsyncReadyCallback(eject_async_callback), this);
-    }
+        if (g_volume_can_eject(g_volume)) {
+            g_volume_eject_with_operation(g_volume, ejectFlag, nullptr, m_cancellable,
+                                         GAsyncReadyCallback(eject_async_callback), this);
+        } else {
+            auto g_drive = g_mount_get_drive(g_mount);
+            if (!g_drive)
+                return;
 
+            if (g_drive_can_stop(g_drive))
+                g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, nullptr, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
+
+            g_object_unref(g_drive);
+        }
+    }
 }
 
 bool ComputerVolumeItem::canUnmount()
@@ -470,7 +491,6 @@ void ComputerVolumeItem::unmount_async_callback(GObject* object,GAsyncResult *re
 void ComputerVolumeItem::eject_async_callback(GObject *object, GAsyncResult *res, ComputerVolumeItem *p_this)
 {
     GError *err = nullptr;
-    QString errorMsg;
     bool successed;
 
     if(G_IS_MOUNT(object))
@@ -483,6 +503,26 @@ void ComputerVolumeItem::eject_async_callback(GObject *object, GAsyncResult *res
     }
     if (err) {
         //QMessageBox::critical(0, 0, err->message);
+        QMessageBox warningBox(QMessageBox::Warning,QObject::tr("Eject failed"),QString(err->message));
+        QPushButton *cancelBtn = (warningBox.addButton(QObject::tr("Cancel"),QMessageBox::RejectRole));
+        QPushButton *ensureBtn = (warningBox.addButton(QObject::tr("Eject Anyway"),QMessageBox::YesRole));
+        warningBox.exec();
+        if(warningBox.clickedButton() == ensureBtn)
+            p_this->eject(G_MOUNT_UNMOUNT_FORCE);
+
+        g_error_free(err);
+    }
+}
+
+void ComputerVolumeItem::stop_async_callback(GDrive *drive, GAsyncResult *res, ComputerVolumeItem *p_this)
+{
+    GError *err = nullptr;
+    bool successed;
+
+    successed = g_drive_stop_finish(drive, res, &err);
+    if (successed) {
+
+    } else {
         QMessageBox warningBox(QMessageBox::Warning,QObject::tr("Eject failed"),QString(err->message));
         QPushButton *cancelBtn = (warningBox.addButton(QObject::tr("Cancel"),QMessageBox::RejectRole));
         QPushButton *ensureBtn = (warningBox.addButton(QObject::tr("Eject Anyway"),QMessageBox::YesRole));
