@@ -392,7 +392,11 @@ void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *re
     auto info = g_file_query_info_finish(file, res, &err);
     if (info) {
         quint64 used = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_USED);
+        quint64 total = g_file_info_get_attribute_int64(info, G_FILE_ATTRIBUTE_FILESYSTEM_SIZE);
         p_this->m_totalSpace = calcVolumeCapacity(p_this);
+        if (p_this->m_totalSpace == 0) {
+            p_this->m_totalSpace = total;
+        }
         p_this->m_usedSpace = used;
 
         /***************************collect info when gparted open*************************/
@@ -723,14 +727,22 @@ quint64 calcVolumeCapacity(ComputerVolumeItem* pThis)
     if(pThis->m_mount){
         if(gVolume = pThis->m_volume->getGVolume()){
             tmpDevice = g_volume_get_identifier(gVolume,G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
-            unixDevice = QString(tmpDevice+5);
-            g_free(tmpDevice);
+            if (tmpDevice) {
+                unixDevice = QString(tmpDevice+5);
+                g_free(tmpDevice);
+            } else {
+                unixDevice = Peony::FileUtils::getUnixDevice(pThis->m_uri);
+                unixDevice = unixDevice.section('/',-1);
+            }
         }
     }else{
         unixDevice = Peony::FileUtils::getUnixDevice(pThis->m_uri);
         unixDevice = unixDevice.section('/',-1);
     }
 
+    if (unixDevice.isEmpty()) {
+        return 0;
+    }
 
     dbusPath = "/org/freedesktop/UDisks2/block_devices/" + unixDevice;
     QDBusInterface blockInterface("org.freedesktop.UDisks2",
