@@ -729,7 +729,9 @@ quint64 calcVolumeCapacity(ComputerVolumeItem* pThis)
             tmpDevice = g_volume_get_identifier(gVolume,G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
             if (tmpDevice) {
                 unixDevice = QString(tmpDevice+5);
-                g_free(tmpDevice);
+                //fix crash issue
+                if (tmpDevice)
+                   g_free(tmpDevice);
             } else {
                 unixDevice = Peony::FileUtils::getUnixDevice(pThis->m_uri);
                 unixDevice = unixDevice.section('/',-1);
