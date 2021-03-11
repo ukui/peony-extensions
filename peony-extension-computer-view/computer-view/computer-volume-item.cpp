@@ -55,12 +55,12 @@ ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, Ab
     g_signal_connect(volume, "removed", G_CALLBACK(volume_removed_callback), this);
 }
 
-ComputerVolumeItem::ComputerVolumeItem(const QString uri,ComputerModel *model,AbstractComputerItem *parentNode,QObject *parent) : AbstractComputerItem(model,parentNode,parent){
-    if(uri.isNull() || uri.isEmpty())
-        return;
+//ComputerVolumeItem::ComputerVolumeItem(const QString uri,ComputerModel *model,AbstractComputerItem *parentNode,QObject *parent) : AbstractComputerItem(model,parentNode,parent){
+//    if(uri.isNull() || uri.isEmpty())
+//        return;
 
-    collectInfoWhenGpartedOpen(uri);
-}
+//    //collectInfoWhenGpartedOpen(uri);
+//}
 
 ComputerVolumeItem::~ComputerVolumeItem()
 {
@@ -163,18 +163,19 @@ void ComputerVolumeItem::findChildren()
         l = l->next;
     }
 
-    if(!current_volumes)
-        findChildrenWhenGPartedOpen();
+    //comment gparted process code to fix duplicated volume issue, bug#41623
+//    if(!current_volumes)
+//        findChildrenWhenGPartedOpen();
 
     //monitor
     auto volumeManager = Peony::VolumeManager::getInstance();
     connect(volumeManager, &Peony::VolumeManager::volumeAdded, this, &ComputerVolumeItem::onVolumeAdded);
 
     //watcher
-    m_watcher = new Peony::FileWatcher("computer:///",this);
-    connect(m_watcher, &Peony::FileWatcher::fileCreated, this, &ComputerVolumeItem::onFileAdded);
-    connect(m_watcher, &Peony::FileWatcher::fileDeleted, this, &ComputerVolumeItem::onFileRemoved);
-    m_watcher->startMonitor();
+//    m_watcher = new Peony::FileWatcher("computer:///",this);
+//    connect(m_watcher, &Peony::FileWatcher::fileCreated, this, &ComputerVolumeItem::onFileAdded);
+//    connect(m_watcher, &Peony::FileWatcher::fileDeleted, this, &ComputerVolumeItem::onFileRemoved);
+//    m_watcher->startMonitor();
 }
 
 void ComputerVolumeItem::check()
@@ -400,23 +401,23 @@ void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *re
         p_this->m_usedSpace = used;
 
         /***************************collect info when gparted open*************************/
-        if(p_this->m_icon.name().isEmpty()){
-            QString iconName = Peony::FileUtils::getFileIconName(p_this->m_uri);
-            if(iconName.isNull())               /*Some startup disks cannot get the icon*/
-                iconName = "drive-harddisk-usb";
-            p_this->m_icon = QIcon::fromTheme(iconName);
-        }
-        if(p_this->m_displayName.isEmpty()){
-            p_this->m_displayName = Peony::FileUtils::getFileDisplayName(p_this->m_uri);
+//        if(p_this->m_icon.name().isEmpty()){
+//            QString iconName = Peony::FileUtils::getFileIconName(p_this->m_uri);
+//            if(iconName.isNull())               /*Some startup disks cannot get the icon*/
+//                iconName = "drive-harddisk-usb";
+//            p_this->m_icon = QIcon::fromTheme(iconName);
+//        }
+//        if(p_this->m_displayName.isEmpty()){
+//            p_this->m_displayName = Peony::FileUtils::getFileDisplayName(p_this->m_uri);
 
-            if(!p_this->m_targetUri.isEmpty()){
-               char *realMountPoint = g_filename_from_uri(p_this->m_targetUri.toUtf8().constData(),NULL,NULL);
-               const char *unixDev = Peony::VolumeManager::getUnixDeviceFileFromMountPoint(realMountPoint);
-               QString unixDeviceName = unixDev;
-               Peony::FileUtils::handleVolumeLabelForFat32(p_this->m_displayName,unixDeviceName);
-               g_free(realMountPoint);
-            }
-        }
+//            if(!p_this->m_targetUri.isEmpty()){
+//               char *realMountPoint = g_filename_from_uri(p_this->m_targetUri.toUtf8().constData(),NULL,NULL);
+//               const char *unixDev = Peony::VolumeManager::getUnixDeviceFileFromMountPoint(realMountPoint);
+//               QString unixDeviceName = unixDev;
+//               Peony::FileUtils::handleVolumeLabelForFat32(p_this->m_displayName,unixDeviceName);
+//               g_free(realMountPoint);
+//            }
+//        }
         /**********************************************************************************/
 
         auto index = p_this->itemIndex();
@@ -576,143 +577,147 @@ void ComputerVolumeItem::onVolumeAdded(const std::shared_ptr<Peony::Volume> volu
  *   -> when computer:///xxx.mount or computer:///xxx.volume is generated,
  *      it will query their information from here.
  */
-void ComputerVolumeItem::collectInfoWhenGpartedOpen(QString uri)
-{
-    GFile *file = NULL;
+//comment gparted process code to fix duplicated volume issue, bug#41623
+//void ComputerVolumeItem::collectInfoWhenGpartedOpen(QString uri)
+//{
+//    GFile *file = NULL;
 
-    m_uri = uri;
-    m_displayName = "";
-    m_icon = QIcon();
-    m_cancellable = g_cancellable_new();
-    m_targetUri = Peony::FileUtils::getTargetUri(m_uri);
-    file = g_file_new_for_uri(m_targetUri.toUtf8().constData());
+//    m_uri = uri;
+//    m_displayName = "";
+//    m_icon = QIcon();
+//    m_cancellable = g_cancellable_new();
+//    m_targetUri = Peony::FileUtils::getTargetUri(m_uri);
+//    file = g_file_new_for_uri(m_targetUri.toUtf8().constData());
 
-    g_file_query_filesystem_info_async(file,"*",0,
-                            m_cancellable,
-                            GAsyncReadyCallback(qeury_info_async_callback),this);
-    g_object_unref(file);
-}
+//    g_file_query_filesystem_info_async(file,"*",0,
+//                            m_cancellable,
+//                            GAsyncReadyCallback(qeury_info_async_callback),this);
+//    g_object_unref(file);
+//}
 
 /* monitor file generation for computer:///xxx.mount or computer:///xxx.volume
  */
-void ComputerVolumeItem::onFileAdded(const QString &uri)
-{
-    QString targetUri = Peony::FileUtils::getTargetUri(uri);
-    if(!targetUri.contains("file:///") || targetUri.isEmpty())
-        return;
+//void ComputerVolumeItem::onFileAdded(const QString &uri)
+//{
+//    QString targetUri = Peony::FileUtils::getTargetUri(uri);
+//    if(!targetUri.contains("file:///") || targetUri.isEmpty())
+//        return;
 
-    for (auto item : m_children) {
-        if (item->uri() == uri)
-            return;
-    }
+//    for (auto item : m_children) {
+//        qDebug() << "ComputerVolumeItem onFileAdded uri:"<<uri<<item->uri();
+//        if (item->uri() == uri)
+//            return;
+//    }
 
-    m_model->beginInsertItem(itemIndex(), m_children.count());
-    auto item = new ComputerVolumeItem(uri, m_model, this);
-    m_children<<item;
-    m_model->endInsterItem();
-}
+//    m_model->beginInsertItem(itemIndex(), m_children.count());
+//    auto item = new ComputerVolumeItem(uri, m_model, this);
+//    m_children<<item;
+//    m_model->endInsterItem();
+//}
 
-void ComputerVolumeItem::onFileRemoved(const QString &uri)
-{
-    int row = -1;
-    for (auto item : m_children) {
-        if (item->uri() == uri) {
-            row = m_children.indexOf(item);
-            break;
-        }
-    }
+//void ComputerVolumeItem::onFileRemoved(const QString &uri)
+//{
+//    int row = -1;
+//    for (auto item : m_children) {
+//        qDebug() << "ComputerVolumeItem onFileRemoved uri:"<<uri<<item->uri();
+//        if (item->uri() == uri) {
+//            row = m_children.indexOf(item);
+//            break;
+//        }
+//    }
 
-    if (row < 0)
-        return;
+//    if (row < 0)
+//        return;
 
-    m_model->beginRemoveItem(itemIndex(), row);
-    auto item = m_children.takeAt(row);
-    item->deleteLater();
-    m_model->endRemoveItem();
-}
+//    m_model->beginRemoveItem(itemIndex(), row);
+//    auto item = m_children.takeAt(row);
+//    item->deleteLater();
+//    m_model->endRemoveItem();
+//}
 
 /* Usage scenarios:
  *   -> open Gparted first,then open Peony.
  *   -> when Gparted is open,it is used to find all partition devices
  *      except the root partition.
  */
-void ComputerVolumeItem::findChildrenWhenGPartedOpen()
-{
-    GFile *file;
+//void ComputerVolumeItem::findChildrenWhenGPartedOpen()
+//{
+//    GFile *file;
 
-    file = g_file_new_for_uri("computer:///");
-    m_tmpCancellable = g_cancellable_new();
-    g_file_enumerate_children_async(file, G_FILE_ATTRIBUTE_STANDARD_NAME, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, 0,
-                                    m_tmpCancellable, GAsyncReadyCallback(enumerate_async_callback), this);
-    //g_object_unref(file);
-}
+//    file = g_file_new_for_uri("computer:///");
+//    m_tmpCancellable = g_cancellable_new();
+//    g_file_enumerate_children_async(file, G_FILE_ATTRIBUTE_STANDARD_NAME, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, 0,
+//                                    m_tmpCancellable, GAsyncReadyCallback(enumerate_async_callback), this);
+//    //g_object_unref(file);
+//}
 
-void ComputerVolumeItem::enumerate_async_callback(GFile *file, GAsyncResult *res, ComputerVolumeItem *p_this)
-{
-    GError *err = nullptr;
-    auto enumerator = g_file_enumerate_children_finish(file, res, &err);
-    if (enumerator) {
-        g_file_enumerator_next_files_async(enumerator, 9999, 0, p_this->m_tmpCancellable,
-                                           GAsyncReadyCallback(find_children_async_callback), p_this);
-    }
-    if (err)
-        g_error_free(err);
-}
+//void ComputerVolumeItem::enumerate_async_callback(GFile *file, GAsyncResult *res, ComputerVolumeItem *p_this)
+//{
+//    GError *err = nullptr;
+//    auto enumerator = g_file_enumerate_children_finish(file, res, &err);
+//    if (enumerator) {
+//        g_file_enumerator_next_files_async(enumerator, 9999, 0, p_this->m_tmpCancellable,
+//                                           GAsyncReadyCallback(find_children_async_callback), p_this);
+//    }
+//    if (err)
+//        g_error_free(err);
+//}
 
-void ComputerVolumeItem::find_children_async_callback(GFileEnumerator *enumerator, GAsyncResult *res, ComputerVolumeItem *p_this)
-{
-    GError *err = nullptr;
-    auto infos = g_file_enumerator_next_files_finish(enumerator, res, &err);
-    GList *l = infos;
-    while (l) {
-        auto info = G_FILE_INFO(l->data);
-        l = l->next;
-        if (!info)
-            continue;
+//void ComputerVolumeItem::find_children_async_callback(GFileEnumerator *enumerator, GAsyncResult *res, ComputerVolumeItem *p_this)
+//{
+//    GError *err = nullptr;
+//    auto infos = g_file_enumerator_next_files_finish(enumerator, res, &err);
+//    GList *l = infos;
+//    while (l) {
+//        auto info = G_FILE_INFO(l->data);
+//        l = l->next;
+//        if (!info)
+//            continue;
 
-        auto file = g_file_enumerator_get_child(enumerator, info);
-        if (!file)
-            continue;
+//        auto file = g_file_enumerator_get_child(enumerator, info);
+//        if (!file)
+//            continue;
 
-        auto uri = g_file_get_uri(file);
-        if (!uri)
-            continue;
+//        auto uri = g_file_get_uri(file);
+//        if (!uri)
+//            continue;
 
-        //not include ftp://xxx etc.
-        QString targetUri;
-        targetUri = Peony::FileUtils::getTargetUri(uri);
-        if(targetUri.isEmpty())
-            continue;
-        if("file:///" == targetUri)
-            continue;
-        if(!targetUri.contains("file:///"))
-            continue;
+//        //not include ftp://xxx etc.
+//        QString targetUri;
+//        targetUri = Peony::FileUtils::getTargetUri(uri);
+//        if(targetUri.isEmpty())
+//            continue;
+//        if("file:///" == targetUri)
+//            continue;
+//        if(!targetUri.contains("file:///"))
+//            continue;
 
-        p_this->m_model->beginInsertItem(p_this->itemIndex(), p_this->m_children.count());
-        auto item = new ComputerVolumeItem(uri, p_this->m_model, p_this);
-        p_this->m_children<<item;
-        p_this->m_model->endInsterItem();
-        g_free(uri);
-        g_object_unref(file);
-    }
+//        p_this->m_model->beginInsertItem(p_this->itemIndex(), p_this->m_children.count());
+//        auto item = new ComputerVolumeItem(uri, p_this->m_model, p_this);
+//        qDebug() << "find_children_async_callback uri:" <<uri<<targetUri;
+//        p_this->m_children<<item;
+//        p_this->m_model->endInsterItem();
+//        g_free(uri);
+//        g_object_unref(file);
+//    }
 
-    if (infos)
-        g_list_free_full(infos, g_object_unref);
+//    if (infos)
+//        g_list_free_full(infos, g_object_unref);
 
-    if (enumerator) {
-        g_file_enumerator_close(enumerator, nullptr, nullptr);
-        g_object_unref(enumerator);
-    }
+//    if (enumerator) {
+//        g_file_enumerator_close(enumerator, nullptr, nullptr);
+//        g_object_unref(enumerator);
+//    }
 
-    if(p_this->m_tmpCancellable){
-        g_cancellable_cancel(p_this->m_tmpCancellable);
-        g_object_unref(p_this->m_tmpCancellable);
-    }
+//    if(p_this->m_tmpCancellable){
+//        g_cancellable_cancel(p_this->m_tmpCancellable);
+//        g_object_unref(p_this->m_tmpCancellable);
+//    }
 
-    if (err) {
-        g_error_free(err);
-    }
-}
+//    if (err) {
+//        g_error_free(err);
+//    }
+//}
 
 quint64 calcVolumeCapacity(ComputerVolumeItem* pThis)
 {

@@ -115,6 +115,7 @@ void ComputerRemoteVolumeItem::onFileAdded(const QString &uri)
         return;
 
     for (auto item : m_children) {
+        //qDebug() << "ComputerRemoteVolumeItem onFileAdded uri:"<<uri<<item->uri();
         if (item->uri() == uri)
             return;
     }
@@ -129,6 +130,7 @@ void ComputerRemoteVolumeItem::onFileRemoved(const QString &uri)
 {
     int row = -1;
     for (auto item : m_children) {
+        //qDebug() << "ComputerRemoteVolumeItem onFileRemoved uri:"<<uri<<item->uri();
         if (item->uri() == uri) {
             row = m_children.indexOf(item);
             break;
