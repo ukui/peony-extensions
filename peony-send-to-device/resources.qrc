@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>translations/peony-send-to-device_cs.qm</file>
+        <file>translations/peony-send-to-device_tr.qm</file>
+        <file>translations/peony-send-to-device_zh_CN.qm</file>
+    </qresource>
+</RCC>
