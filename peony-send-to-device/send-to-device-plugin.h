@@ -57,6 +57,7 @@ public:
 public Q_SLOTS:
 
 Q_SIGNALS:
+    void actionChange(bool show);
     void mountDel (QString uri);
     void mountAdd (QString uri, QString iconName, QString name);
 

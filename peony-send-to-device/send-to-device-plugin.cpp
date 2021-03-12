@@ -1,3 +1,4 @@
+
 /*
  * Peony-Qt's Library
  *
@@ -40,6 +41,8 @@ static void mounted_func (gpointer data, gpointer udata);
 static void handle_mount_added  (GVolumeMonitor* monitor, GMount* mount, gpointer data);
 static void handle_mount_removed(GVolumeMonitor* monitor, GMount* mount, gpointer data);
 
+//static QAction* gAction = nullptr;
+
 using namespace Peony;
 
 SendToPlugin::SendToPlugin(QObject *parent) : QObject(parent), mEnable(true)
@@ -51,12 +54,11 @@ SendToPlugin::SendToPlugin(QObject *parent) : QObject(parent), mEnable(true)
     QApplication::installTranslator(t);
 
     mVolumeMonitor = g_volume_monitor_get();
-    GList* mounts = nullptr;
 
     g_signal_connect(G_OBJECT(mVolumeMonitor), "mount-added",    G_CALLBACK(handle_mount_added),    (gpointer)this);
     g_signal_connect(G_OBJECT(mVolumeMonitor), "mount-removed",  G_CALLBACK(handle_mount_removed),  (gpointer)this);
 
-    mounts = g_volume_monitor_get_mounts (mVolumeMonitor);
+    GList* mounts = g_volume_monitor_get_mounts (mVolumeMonitor);
     if (mounts) {
         g_list_foreach (mounts, mounted_func, this);
     }
@@ -102,24 +104,30 @@ QList<QAction *> SendToPlugin::menuActions(Types types, const QString &uri, cons
         return l;
     }
 
-    auto menu = new QMenu();
-    auto action = new QAction(tr("Send to a removable device"));
+    QMenu* menu = new QMenu();
+    QAction* action = new QAction(tr("Send to a removable device"));
+
+    action->connect(action, &QAction::destroyed, this, [=] () {
+        action->disconnect(this);
+    });
 
     action->connect(this, &SendToPlugin::mountAdd, this, [=] (QString uri, QString iconName, QString name) {
-        action->setVisible(mDrivers.size() <= 0 ? false : true);
         getOneDriver(selectionUris, menu, uri, iconName, name);
-
     });
 
     action->connect(this, &SendToPlugin::mountDel, this, [=] (QString uri) {
-        action->setVisible(mDrivers.size() <= 0 ? false : true);
-
         for (auto c : menu->children()) {
-            if (mitems.contains(uri) && c == mitems[uri]) {
+            if (mitems.contains(uri)
+                    && c->metaObject()->className() == QLatin1String("Peony::DriverItem")
+                    && ((DriverItem*)c)->uri() == uri) {
                 menu->removeAction(mitems[uri]);
             }
         }
-        if (mitems.contains(uri)) mitems.remove(uri);
+
+        if (mitems.contains(uri)) {
+            delete mitems[uri];
+            mitems.remove(uri);
+        }
     });
 
     for (auto item = mDrivers.constBegin(); item != mDrivers.constEnd(); ++item) {
@@ -142,17 +150,40 @@ QList<QAction *> SendToPlugin::menuActions(Types types, const QString &uri, cons
 
 void SendToPlugin::getOneDriver(const QStringList &selectionUris, QMenu *menu, QString uri, QString iconName, QString name)
 {
-    DriverItem* it = new DriverItem(uri, QIcon::fromTheme(iconName), name, menu);
-    connect(it, &QAction::triggered, it, [=] () {
-        FileCopyOperation* op = new FileCopyOperation(selectionUris, it->uri(), it);
-        op->setAutoDelete(true);
-        FileOperationManager::getInstance()->startOperation(op);
-    });
+    bool flag = false;
 
     if (menu) {
-        menu->addAction(it);
+        for (auto c : menu->children()) {
+            if (c->metaObject()->className() == QLatin1String("Peony::DriverItem") && ((DriverItem*)c)->uri() == uri) {
+                flag = true;
+                if (menu->isVisible()) {
+                    ((DriverItem*)c)->setVisible(true);
+                }
+                break;
+            }
+        }
+        if (!flag) {
+            DriverItem* it = new DriverItem(uri, QIcon::fromTheme(iconName), name, menu);
+            it->connect(it, &QAction::triggered, it, [=] () {
+                FileCopyOperation* op = new FileCopyOperation(selectionUris, it->uri(), it);
+                op->setAutoDelete(true);
+                FileOperationManager::getInstance()->startOperation(op);
+            });
+            it->connect(it, &QAction::destroyed, this, [=] () {
+                if (mitems.contains(((DriverItem*)sender())->uri())) {
+                    menu->removeAction(mitems[((DriverItem*)sender())->uri()]);
+                    mitems.remove(((DriverItem*)sender())->uri());
+                    mDrivers.remove(((DriverItem*)sender())->uri());
+                }
+            });
+
+            if (menu->isVisible()) {
+                it->setVisible(true);
+            }
+            menu->addAction(it);
+            mitems[uri] = it;
+        }
     }
-    mitems[uri] = it;
 }
 
 DriverItem::DriverItem(QString uri, QIcon icon, QString name, QObject* parent) : QAction(parent), mName(name), mIcon(icon), mUri(uri)
