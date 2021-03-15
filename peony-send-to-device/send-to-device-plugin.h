@@ -31,7 +31,6 @@
 
 namespace Peony {
 
-//class Drive
 class DriverItem;
 class RemoveableDriver;
 
@@ -43,8 +42,6 @@ class SendToPlugin : public QObject, public MenuPluginInterface
 public:
     explicit SendToPlugin(QObject *parent = nullptr);
 
-    void addDriver (QString uri, GMount* file);
-    void removeDriver (const QString uri);
     QString testPlugin() override {return "";}
     bool isEnable() override {return mEnable;}
     void setEnable(bool enable) override {mEnable = enable;}
@@ -54,21 +51,31 @@ public:
     PluginInterface::PluginType pluginType() override {return PluginInterface::MenuPlugin;}
     QList<QAction *> menuActions(Types types, const QString &uri, const QStringList &selectionUris) override;
 
-public Q_SLOTS:
-
-Q_SIGNALS:
-    void actionChange(bool show);
-    void mountDel (QString uri);
-    void mountAdd (QString uri, QString iconName, QString name);
-
-private:
-    void getOneDriver(const QStringList &selectionUris, QMenu *menu, QString uri, QString iconName, QString name);
-
 private:
     bool                                mEnable;
-    QMap<QString, DriverItem*>          mitems;
-    QMap<QString, GMount*>              mDrivers;
+};
+
+class DriverAction : public QAction
+{
+    Q_OBJECT
+public:
+    explicit DriverAction (const QStringList& uris, QObject* parent = nullptr);
+    ~DriverAction ();
+
+Q_SIGNALS:
+    void driverRemove (QString uri);
+    void driverAdded (QString uri, QString name, QString icon);
+
+private:
+    void showAction ();
+
+private:
+    gulong                              mDeviceAdd;
+    gulong                              mDeviceRemove;
+    QMenu*                              mMenu;
     GVolumeMonitor*                     mVolumeMonitor;
+
+    QMap<QString, DriverItem*>          mDrivers;
 };
 
 class DriverItem : public QAction
@@ -90,4 +97,4 @@ private:
 };
 }
 
-#endif // ADMINMENUPLUGIN_H
+#endif
