@@ -2,10 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="cs">
 <context>
+    <name>Peony::DriverAction</name>
+    <message>
+        <location filename="../send-to-device-plugin.cpp" line="235"/>
+        <source>Send to a removable device</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Peony::SendToPlugin</name>
     <message>
-        <location filename="../send-to-plugin.cpp" line="106"/>
-        <location filename="../send-to-plugin.h" line="51"/>
+        <location filename="../send-to-device-plugin.h" line="48"/>
         <source>Send to a removable device</source>
         <translation type="unfinished"></translation>
     </message>

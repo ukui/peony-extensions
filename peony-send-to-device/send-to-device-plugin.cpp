@@ -1,4 +1,3 @@
-
 /*
  * Peony-Qt's Library
  *
@@ -36,12 +35,10 @@
 #include <file-copy-operation.h>
 #include <file-operation-manager.h>
 
-static QString getIconName (GMount* mount);
+static QString getIconName (GIcon* icons);
 static void mounted_func (gpointer data, gpointer udata);
 static void handle_mount_added  (GVolumeMonitor* monitor, GMount* mount, gpointer data);
 static void handle_mount_removed(GVolumeMonitor* monitor, GMount* mount, gpointer data);
-
-//static QAction* gAction = nullptr;
 
 using namespace Peony;
 
@@ -52,40 +49,6 @@ SendToPlugin::SendToPlugin(QObject *parent) : QObject(parent), mEnable(true)
     t->load(":/translations/peony-send-to-device_"+QLocale::system().name());
     QFile file(":/translations/peony-send-to-device_"+QLocale::system().name()+".ts");
     QApplication::installTranslator(t);
-
-    mVolumeMonitor = g_volume_monitor_get();
-
-    g_signal_connect(G_OBJECT(mVolumeMonitor), "mount-added",    G_CALLBACK(handle_mount_added),    (gpointer)this);
-    g_signal_connect(G_OBJECT(mVolumeMonitor), "mount-removed",  G_CALLBACK(handle_mount_removed),  (gpointer)this);
-
-    GList* mounts = g_volume_monitor_get_mounts (mVolumeMonitor);
-    if (mounts) {
-        g_list_foreach (mounts, mounted_func, this);
-    }
-}
-
-void SendToPlugin::removeDriver(const QString uri)
-{
-    if (nullptr == uri || "" == uri) return;
-
-    if (mDrivers.contains(uri)) {
-        mDrivers.remove(uri);
-        Q_EMIT mountDel(uri);
-    }
-}
-
-void SendToPlugin::addDriver(QString uri, GMount* mount)
-{
-    if (nullptr == mount || nullptr == uri) {
-        return;
-    }
-
-    if (nullptr != uri && !mDrivers.contains(uri)) {
-        mDrivers[uri] = mount;
-        char* name = g_mount_get_name((GMount*)mount);
-
-        Q_EMIT mountAdd (uri, getIconName(mount), name);
-    }
 }
 
 QList<QAction *> SendToPlugin::menuActions(Types types, const QString &uri, const QStringList &selectionUris)
@@ -104,86 +67,15 @@ QList<QAction *> SendToPlugin::menuActions(Types types, const QString &uri, cons
         return l;
     }
 
-    QMenu* menu = new QMenu();
-    QAction* action = new QAction(tr("Send to a removable device"));
-
-    action->connect(action, &QAction::destroyed, this, [=] () {
-        action->disconnect(this);
-    });
-
-    action->connect(this, &SendToPlugin::mountAdd, this, [=] (QString uri, QString iconName, QString name) {
-        getOneDriver(selectionUris, menu, uri, iconName, name);
-    });
-
-    action->connect(this, &SendToPlugin::mountDel, this, [=] (QString uri) {
-        for (auto c : menu->children()) {
-            if (mitems.contains(uri)
-                    && c->metaObject()->className() == QLatin1String("Peony::DriverItem")
-                    && ((DriverItem*)c)->uri() == uri) {
-                menu->removeAction(mitems[uri]);
-            }
-        }
-
-        if (mitems.contains(uri)) {
-            delete mitems[uri];
-            mitems.remove(uri);
-        }
-    });
-
-    for (auto item = mDrivers.constBegin(); item != mDrivers.constEnd(); ++item) {
-        GMount* mount = item.value();
-        char* name = g_mount_get_name((GMount*)mount);
-
-        getOneDriver(selectionUris, menu, item.key(), getIconName(mount), name);
-        if (name) g_free (name);
+    QAction* action = new DriverAction(selectionUris);
+    if (action) {
+        l << action;
     }
-
-    l << action;
-    action->setMenu(menu);
-    action->setVisible(mDrivers.size() <= 0 ? false : true);
 
     Q_UNUSED(uri)
     Q_UNUSED(types)
 
     return l;
-}
-
-void SendToPlugin::getOneDriver(const QStringList &selectionUris, QMenu *menu, QString uri, QString iconName, QString name)
-{
-    bool flag = false;
-
-    if (menu) {
-        for (auto c : menu->children()) {
-            if (c->metaObject()->className() == QLatin1String("Peony::DriverItem") && ((DriverItem*)c)->uri() == uri) {
-                flag = true;
-                if (menu->isVisible()) {
-                    ((DriverItem*)c)->setVisible(true);
-                }
-                break;
-            }
-        }
-        if (!flag) {
-            DriverItem* it = new DriverItem(uri, QIcon::fromTheme(iconName), name, menu);
-            it->connect(it, &QAction::triggered, it, [=] () {
-                FileCopyOperation* op = new FileCopyOperation(selectionUris, it->uri(), it);
-                op->setAutoDelete(true);
-                FileOperationManager::getInstance()->startOperation(op);
-            });
-            it->connect(it, &QAction::destroyed, this, [=] () {
-                if (mitems.contains(((DriverItem*)sender())->uri())) {
-                    menu->removeAction(mitems[((DriverItem*)sender())->uri()]);
-                    mitems.remove(((DriverItem*)sender())->uri());
-                    mDrivers.remove(((DriverItem*)sender())->uri());
-                }
-            });
-
-            if (menu->isVisible()) {
-                it->setVisible(true);
-            }
-            menu->addAction(it);
-            mitems[uri] = it;
-        }
-    }
 }
 
 DriverItem::DriverItem(QString uri, QIcon icon, QString name, QObject* parent) : QAction(parent), mName(name), mIcon(icon), mUri(uri)
@@ -209,7 +101,7 @@ const QString DriverItem::uri()
 
 static void handle_mount_added(GVolumeMonitor* monitor, GMount* mount, gpointer data)
 {
-    SendToPlugin* drivers = (SendToPlugin*)data;
+    DriverAction* drivers = (DriverAction*)data;
 
     mounted_func (mount, drivers);
 
@@ -229,8 +121,10 @@ static void handle_mount_removed(GVolumeMonitor* monitor, GMount* mount, gpointe
     }
 
     if (nullptr != path) {
-        ((SendToPlugin*)data)->removeDriver(path);
+        ((DriverAction*)data)->driverRemove(path);
     }
+
+    qDebug() << "remove uri:" << path;
 
     if (!path) g_free(path);
     if (!location) g_object_unref(location);
@@ -240,36 +134,47 @@ static void handle_mount_removed(GVolumeMonitor* monitor, GMount* mount, gpointe
 
 static void mounted_func (gpointer data, gpointer udata)
 {
-    GMount*             m = (GMount*)data;
+    GMount*             mount = (GMount*)data;
     GFile*              location = nullptr;
     char*               uri = nullptr;
+    char*               name = nullptr;
+    GIcon*              icons = nullptr;
+    QString             icon = nullptr;
 
     if (!data || !udata) return;
 
-    if (m) {
-        location = g_mount_get_default_location(m);
+    if (mount) {
+        name = g_mount_get_name(mount);
+        icons = g_mount_get_icon(mount);
+        location = g_mount_get_default_location(mount);
         if (location) {
             uri = g_file_get_uri(location);
-            if (uri) {
-                QString urit = uri;
-                ((SendToPlugin*)udata)->addDriver(urit, m);
-            }
         }
     }
 
+    icon = getIconName (icons);
+
+    if (uri && name) {
+        ((DriverAction*)udata)->driverAdded(uri, name, icon);
+    }
+
+    qDebug() << "name:" << name << " uri:" << uri << " icons:" << icons << " icon:" << icon;
+
     if (!uri) g_free(uri);
+    if (!name) g_free(name);
+    // FIXME://
+//    if (icons) g_object_unref(icons);
     if (!location) g_object_unref(location);
 }
 
-static QString getIconName (GMount* mount)
+static QString getIconName (GIcon* icons)
 {
-    if (nullptr == mount) {
+    if (nullptr == icons) {
         return "";
     }
 
     QString icon = nullptr;
 
-    GIcon* icons = g_mount_get_icon((GMount*)mount);
     if (G_IS_ICON(icons)) {
         const gchar* const* iconNames = g_themed_icon_get_names(G_THEMED_ICON (icons));
         if (iconNames) {
@@ -288,4 +193,64 @@ static QString getIconName (GMount* mount)
     }
 
     return icon;
+}
+
+DriverAction::DriverAction(const QStringList& uris, QObject *parent) : QAction(parent)
+{
+    mMenu = new QMenu();
+    mVolumeMonitor = g_volume_monitor_get();
+
+    mDeviceAdd = g_signal_connect(G_OBJECT(mVolumeMonitor), "mount-added", G_CALLBACK(handle_mount_added), (gpointer)this);
+    mDeviceRemove = g_signal_connect(G_OBJECT(mVolumeMonitor), "mount-removed", G_CALLBACK(handle_mount_removed), (gpointer)this);
+
+    connect(this, &DriverAction::driverAdded, this, [=] (QString uri, QString name, QString icon) {
+        if (!mDrivers.contains(uri)) {
+            auto it = new DriverItem (uri, QIcon::fromTheme(icon), name);
+            it->connect(it, &QAction::triggered, it, [=] () {
+                FileCopyOperation* op = new FileCopyOperation(uris, it->uri(), it);
+                op->setAutoDelete(true);
+                FileOperationManager::getInstance()->startOperation(op);
+            });
+            mMenu->addAction(it);
+            mDrivers[uri] = it;
+        }
+        showAction();
+    });
+
+    connect(this, &DriverAction::driverRemove, this, [=] (QString uri) {
+        if (mDrivers.contains(uri)) {
+            auto it = mDrivers[uri];
+            mMenu->removeAction(it);
+            it->deleteLater();
+            mDrivers.remove(uri);
+        }
+        showAction();
+    });
+
+    GList* mounts = g_volume_monitor_get_mounts (mVolumeMonitor);
+    if (mounts) {
+        g_list_foreach (mounts, mounted_func, this);
+        g_list_free_full(mounts, g_object_unref);
+    }
+
+    setMenu(mMenu);
+    setText(tr("Send to a removable device"));
+}
+
+DriverAction::~DriverAction()
+{
+    if (mMenu) delete mMenu;
+    if (mVolumeMonitor) {
+        g_signal_handler_disconnect(G_OBJECT(mVolumeMonitor), mDeviceAdd);
+        g_signal_handler_disconnect(G_OBJECT(mVolumeMonitor), mDeviceRemove);
+        g_object_unref(mVolumeMonitor);
+    }
+    for (auto it = mDrivers.begin(); it != mDrivers.end(); ++it) {
+        it.value()->deleteLater();
+    }
+}
+
+void DriverAction::showAction()
+{
+    setVisible(mDrivers.size() > 0 ? true : false);
 }
