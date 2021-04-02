@@ -8,7 +8,7 @@ SUBDIRS = \
     peony-share                         \
     peony-send-to-device                \
     peony-set-wallpaper                 \
-    #peony-bluetooth-plugin             \
+    peony-bluetooth-plugin              \
     peony-engrampa-menu-plugin          \
     peony-extension-computer-view       \
     peony-menu-plugin-mate-terminal     \

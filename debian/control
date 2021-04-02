@@ -26,8 +26,8 @@ Package: peony-share
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         samba-common-bin,
-         samba
+Recommends: samba-common-bin,
+            samba
 Description: Allows one to quickly share a folder from the Peony file manager
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
@@ -40,7 +40,7 @@ Package: parchives
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         engrampa
+Recommends: engrampa
 Description: Peony qt plugin for file compress and uncompress
  Parchives is an archive manager for the UKUI environment. You can use
  this plugin to compress or uncompress file or folder.
@@ -95,17 +95,17 @@ Description: Peony plugin for open files or directories as admin
  peony-extionsion-computer-view is a proof-of-concept Peony extension
  which allows user open files or directories with higher permission.
 
-#Package: peony-bluetooth
-#Architecture: any
-#Depends: ${misc:Depends},
-#         ${shlibs:Depends},
-#         ukui-bluetooth
-#Description: Peony plugin for right click a file to send to other devices via Bluetooth
-# Peony is the official file manager for the UKUI desktop. This
-# package adds extended functionality to the Peony file manager.
-# .
-# In addition to sending files in ukui-bluetooth, you can also choose one
-# File, then right-click to quickly send the file.
+Package: peony-bluetooth
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+Recommends: ukui-bluetooth
+Description: Peony plugin for right click a file to send to other devices via Bluetooth
+ Peony is the official file manager for the UKUI desktop. This
+ package adds extended functionality to the Peony file manager.
+ .
+ In addition to sending files in ukui-bluetooth, you can also choose one
+ File, then right-click to quickly send the file.
 
 Package: peony-extensions
 Architecture: any
@@ -117,6 +117,7 @@ Depends: ${misc:Depends},
          peony-extension-computer-view,
          peony-admin,
          peony-set-wallpaper
+Recommends: ukui-bluetooth
 Description: Peony qt extensions
  Peony is the official file manager for the UKUI desktop. This
  package is a metapackage, which adds extended functionality to
