@@ -63,9 +63,14 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+
     QString tryGetVolumeUriFromMountRoot(const QString &mountRootUri);
 
     void refresh();
+
+Q_SIGNALS:
+    void updateLocationRequest(const QString &uri);
 
 private:
     AbstractComputerItem *m_parentNode;

@@ -56,6 +56,9 @@ public:
 
     void refresh();
 
+Q_SIGNALS:
+    void updateLocationRequest(const QString &uri);
+
 protected:
     void updateEditorGeometries();
     void resizeEvent(QResizeEvent *event);
@@ -67,6 +70,10 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
 
     void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
+
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dragMoveEvent(QDragMoveEvent *event);
+    void dropEvent(QDropEvent *event);
 
     void layoutVolumeIndexes(const QModelIndex &volumeParentIndex);
     void layoutRemoteIndexes(const QModelIndex &remoteParentIndex);

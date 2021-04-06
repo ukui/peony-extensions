@@ -265,6 +265,8 @@ void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony:
             Q_EMIT m_view->doubleClicked(m_view->selectionModel()->selectedIndexes().first());
         }
     });
+
+    connect(m_view, &ComputerView::updateLocationRequest, this, &ComputerViewContainer::updateWindowLocationRequest);
 }
 
 void Peony::ComputerViewContainer::beginLocationChange()

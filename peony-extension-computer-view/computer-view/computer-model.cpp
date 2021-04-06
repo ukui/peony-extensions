@@ -27,6 +27,13 @@
 #include "computer-remote-volume-item.h"
 #include "computer-network-item.h"
 
+#include "file-info.h"
+#include "file-operation-utils.h"
+#include "file-utils.h"
+
+#include <QMimeData>
+#include <QUrl>
+
 ComputerModel::ComputerModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
@@ -147,6 +154,31 @@ Qt::ItemFlags ComputerModel::flags(const QModelIndex &index) const
         return Qt::NoItemFlags;
 
     return QAbstractItemModel::flags(index); // FIXME: Implement me!
+}
+
+bool ComputerModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+{
+    if (data->urls().isEmpty())
+        return false;
+    auto i = index(row, column, parent);
+    if (i.isValid()) {
+        auto item = static_cast<AbstractComputerItem *>(i.internalPointer());
+        if (!item->uri().isEmpty()) {
+            if (item->canUnmount()) {
+                QStringList sourcesUris;
+                for (auto url : data->urls()) {
+                    sourcesUris<<url.toString();
+                }
+                auto operation = Peony::FileOperationUtils::move(sourcesUris, item->uri(), true, action == Qt::CopyAction);
+                connect(operation, &Peony::FileOperation::operationFinished, item, [=](){
+                    if (!operation->hasError()) {
+                        Q_EMIT updateLocationRequest(item->uri());
+                    }
+                });
+            }
+        }
+    }
+    return false;
 }
 
 QString ComputerModel::tryGetVolumeUriFromMountRoot(const QString &mountRootUri)

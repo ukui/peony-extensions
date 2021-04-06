@@ -32,10 +32,16 @@
 #include <QMouseEvent>
 #include <QRubberBand>
 
+#include <QDragEnterEvent>
+#include <QDragMoveEvent>
+#include <QDropEvent>
+#include <QApplication>
+
 #include <QDebug>
 
 ComputerView::ComputerView(QWidget *parent) : QAbstractItemView(parent)
 {
+    setDragDropMode(QAbstractItemView::DropOnly);
     setItemDelegate(new ComputerItemDelegate(this));
 
     m_model = ComputerProxyModel::globalInstance();
@@ -43,6 +49,8 @@ ComputerView::ComputerView(QWidget *parent) : QAbstractItemView(parent)
     setStyle(ComputerViewStyle::getStyle());
 
     m_rubberBand = new QRubberBand(QRubberBand::Shape::Rectangle, this);
+
+    connect(m_model, &ComputerProxyModel::updateLocationRequest, this, &ComputerView::updateLocationRequest);
 
     connect(this, &QAbstractItemView::doubleClicked, this, [=](const QModelIndex &index){
         qDebug()<<index.data()<<"double clicked";
@@ -301,6 +309,30 @@ void ComputerView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bo
 {
     QAbstractItemView::dataChanged(topLeft, bottomRight, roles);
     this->viewport()->update();
+}
+
+void ComputerView::dragEnterEvent(QDragEnterEvent *event)
+{
+    event->accept();
+}
+
+void ComputerView::dragMoveEvent(QDragMoveEvent *event)
+{
+    event->accept();
+    auto newIndex = indexAt(event->pos());
+    if (newIndex != m_hoverIndex) {
+        m_hoverIndex = newIndex;
+        this->viewport()->update();
+    }
+}
+
+void ComputerView::dropEvent(QDropEvent *event)
+{
+    bool isMoveOp = event->keyboardModifiers() & Qt::ShiftModifier;
+    auto index = indexAt(event->pos());
+    if (index.isValid()) {
+        m_model->dropMimeData(event->mimeData(), isMoveOp? Qt::MoveAction: Qt::CopyAction, index.row(), index.column(), index.parent());
+    }
 }
 
 void ComputerView::layoutVolumeIndexes(const QModelIndex &volumeParentIndex)

@@ -42,6 +42,9 @@ public:
 
     void refresh();
 
+Q_SIGNALS:
+    void updateLocationRequest(const QString &uri);
+
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 

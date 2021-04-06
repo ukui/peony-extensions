@@ -31,6 +31,8 @@ ComputerProxyModel::ComputerProxyModel(QObject *parent) : QSortFilterProxyModel(
     auto computerModel = new ComputerModel(this);
     setSourceModel(computerModel);
     m_model = computerModel;
+
+    connect(m_model, &ComputerModel::updateLocationRequest, this, &ComputerProxyModel::updateLocationRequest);
 }
 
 ComputerProxyModel *ComputerProxyModel::globalInstance()
