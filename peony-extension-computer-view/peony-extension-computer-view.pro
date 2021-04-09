@@ -8,7 +8,7 @@ DEFINES += PEONYEXTENSIONCOMPUTERVIEW_LIBRARY
 include(../common.pri)
 
 CONFIG += debug c++11 no_keywords link_pkgconfig plugin
-PKGCONFIG +=gio-2.0 glib-2.0 gio-unix-2.0 peony
+PKGCONFIG +=gio-2.0 glib-2.0 gio-unix-2.0 peony udisks2 libnotify
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
