@@ -27,6 +27,8 @@
 #include "login-remote-filesystem.h"
 
 #include <peony-qt/file-utils.h>
+#include <peony-qt/format_dialog.h>
+#include <peony-qt/file-info-job.h>
 #include <peony-qt/file-item-model.h>
 #include <peony-qt/connect-to-server-dialog.h>
 #include <peony-qt/file-item-proxy-filter-sort-model.h>
@@ -39,6 +41,7 @@
 #include <QStyleOption>
 #include <QInputDialog>
 #include <QStylePainter>
+#include <file-info.h>
 
 static void ask_question_cb(GMountOperation *op, char *message, char **choices, Peony::ComputerViewContainer *p_this);
 static void ask_password_cb(GMountOperation *op, const char *message, const char *default_user, const char *default_domain, GAskPasswordFlags flags, Peony::ComputerViewContainer *p_this);
@@ -147,6 +150,22 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             if (!realUri.isEmpty()) {
                 uri = realUri;
             }
+
+            auto info = FileInfo::fromUri(uri);
+            if (info->displayName().isEmpty() || info->targetUri().isEmpty()) {
+                FileInfoJob j(info);
+                j.querySync();
+            }
+            auto mount = VolumeManager::getMountFromUri(info->targetUri());
+
+            auto fdMenu = menu.addAction(tr("format"), [=] () {
+                auto fd = new Format_Dialog(info->uri(), nullptr, m_view);
+                fd->show();
+            });
+            if (!mount) {
+                fdMenu->setEnabled(false);
+            }
+
             auto a = menu.addAction(tr("Property"), [=](){
                 if (uri.isNull()) {
                     QMessageBox::warning(0, 0, tr("You have to mount this volume first"));
