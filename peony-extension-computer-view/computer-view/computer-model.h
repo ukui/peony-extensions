@@ -71,6 +71,7 @@ public:
 
 Q_SIGNALS:
     void updateLocationRequest(const QString &uri);
+    void invalidateRequest();
 
 private:
     AbstractComputerItem *m_parentNode;
