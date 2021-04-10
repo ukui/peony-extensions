@@ -28,6 +28,7 @@ static ComputerProxyModel *global_instance = nullptr;
 
 ComputerProxyModel::ComputerProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
+    setDynamicSortFilter(true);
     auto computerModel = new ComputerModel(this);
     setSourceModel(computerModel);
     m_model = computerModel;

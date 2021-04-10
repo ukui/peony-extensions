@@ -41,7 +41,6 @@ ComputerModel::ComputerModel(QObject *parent)
 
     m_parentNode = new AbstractComputerItem(this, nullptr, this);
     auto computerItem = new ComputerVolumeItem(nullptr, this, m_parentNode);;
-    m_parentNode->m_children<<computerItem;
     computerItem->findChildren();
 
     auto remoteItem = new ComputerRemoteVolumeItem("computer:///", this, m_parentNode);
