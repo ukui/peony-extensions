@@ -52,37 +52,9 @@ SharePropertiesPagePlugin::SharePropertiesPagePlugin(QObject *parent) : QObject(
     qDebug()<<"file:"<<file.exists();
     QApplication::installTranslator(t);
 
-    auto items = NetUsershareHelper::getSharedItems();
-    for (auto item : items) {
-        auto shareInfo = ShareInfo(item, true);
-        m_share_infos<<shareInfo;
-    }
-    qDebug()<<"items:"<<items;
+    UserShareInfoManager::getInstance();
+
     global_instance = this;
-}
-
-void SharePropertiesPagePlugin::addShareInfo(ShareInfo info)
-{
-    if (m_share_infos.contains(info)) {
-        m_share_infos.removeOne(info);
-    }
-    m_share_infos<<info;
-}
-
-const QList<ShareInfo> SharePropertiesPagePlugin::getCurrentShareInfos()
-{
-    QList<ShareInfo> l;
-    return m_share_infos;
-}
-
-void SharePropertiesPagePlugin::removeShareInfo(const QString &item)
-{
-    for (auto info : m_share_infos) {
-        if (info.name == item) {
-            m_share_infos.removeOne(info);
-            break;
-        }
-    }
 }
 
 bool SharePropertiesPagePlugin::supportUris(const QStringList &uris)

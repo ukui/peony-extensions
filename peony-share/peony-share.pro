@@ -30,4 +30,11 @@ TRANSLATIONS += translations/peony-share-extension_cs.ts \
 RESOURCES += resources.qrc
 
 target.path = $$[QT_INSTALL_LIBS]/peony-extensions
-INSTALLS += target
+
+polkit1.files = $$PWD/org.freedesktop.peony-share.policy
+polkit1.path = /usr/share/polkit-1/actions/
+
+polkitbin.files = $$PWD/peony-share.sh
+polkitbin.path = /usr/bin/
+
+INSTALLS += target polkit1 polkitbin
