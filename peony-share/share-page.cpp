@@ -55,20 +55,13 @@ void SharePage::init()
     if (m_theFutureWatcher)
         delete m_theFutureWatcher;
 
-    m_shareInfo = ShareInfo(m_fileInfo->displayName(), false);
+    m_shareInfo.name = m_fileInfo->displayName();
     m_shareInfo.originalPath = m_fileInfo->filePath();
-    auto manager = Peony::SharePropertiesPagePlugin::getInstance();
-    auto infos = manager->getCurrentShareInfos();
-    for (auto info : infos) {
-        qDebug() << "compare" << m_shareInfo.name << info.name << m_shareInfo.originalPath << info.originalPath;
-        if (m_shareInfo.name == info.name && m_shareInfo.originalPath == info.originalPath) {
-            m_shareInfo.comment = info.comment;
-            m_shareInfo.readOnly = info.readOnly;
-            m_shareInfo.allowGuest = info.allowGuest;
-            m_shareInfo.originalPath = info.originalPath;
-            m_shareInfo.isShared = true;
-            break;
-        }
+
+    const ShareInfo* stmp = UserShareInfoManager::getInstance().getShareInfo(m_shareInfo.name);
+    if (nullptr != stmp) {
+        m_shareInfo = stmp;
+        m_shareInfo.isShared = true;
     }
 
     m_layout = new QVBoxLayout(this);
@@ -87,8 +80,6 @@ void SharePage::init()
 
 void SharePage::saveAllChange()
 {
-    qDebug() << __FILE__ << __FUNCTION__ << "page changed?" << m_thisPageChanged;
-
     if (!m_thisPageChanged)
         return;
 
@@ -101,10 +92,10 @@ void SharePage::saveAllChange()
         m_shareInfo.allowGuest = m_shareAllowGuestCheckBox->isChecked();
         m_shareInfo.isShared = true;
 
-        NetUsershareHelper::updateShareInfo(m_shareInfo);
+        UserShareInfoManager::getInstance().updateShareInfo(m_shareInfo);
     } else {
         //FIXME:需要先判断存在共享吗 - Need to determine whether there is sharing first
-        NetUsershareHelper::removeShared(m_shareInfo.name);
+        UserShareInfoManager::getInstance().removeShareInfo(m_shareInfo.name);
     }
 }
 

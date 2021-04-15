@@ -67,8 +67,8 @@ public:
 private:
     QFutureWatcher<void> *m_theFutureWatcher = nullptr;
 
-    ShareInfo m_shareInfo = ShareInfo("", false);
-    QVBoxLayout *m_layout = nullptr;
+    ShareInfo       m_shareInfo;
+    QVBoxLayout*    m_layout = nullptr;
 
     std::shared_ptr<Peony::FileInfo> m_fileInfo = nullptr;
 

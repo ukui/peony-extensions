@@ -40,10 +40,6 @@ public:
     explicit SharePropertiesPagePlugin(QObject *parent = nullptr);
     static SharePropertiesPagePlugin *getInstance();
 
-    const QList<ShareInfo> getCurrentShareInfos();
-    void addShareInfo(ShareInfo info);
-    void removeShareInfo(const QString &item);
-
     PluginInterface::PluginType pluginType() override {return PluginInterface::PropertiesWindowPlugin;}
     const QString name() override {return tr("Peony Qt Share Extension");}
     const QString description() override {return tr("Allow user share folders");}
@@ -58,8 +54,7 @@ public:
     void closeFactory() {deleteLater();}
 
 private:
-    bool m_enable;
-    QList<ShareInfo> m_share_infos;
+    bool            m_enable;
 };
 
 }

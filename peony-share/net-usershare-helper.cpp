@@ -24,95 +24,247 @@
 #include "share-properties-page-plugin.h"
 #include <glib.h>
 
-#include <QProcess>
 #include <QDebug>
+#include <QProcess>
 
-ShareInfo::ShareInfo(const QString &item, bool init)
+UserShareInfoManager* UserShareInfoManager::gShareInfo = nullptr;
+
+static void         parseShareInfo (ShareInfo& shareInfo, QString& content);
+static QString      exectueCommand (QStringList& args, bool* ret /* out */);
+
+ShareInfo& ShareInfo::operator =(const ShareInfo* oth)
 {
-    name = item;
+    if (oth == this) {
+        return *this;
+    }
 
-    if (init) {
-        QProcess p;
-        p.start("net", QStringList()<<"usershare"<<"info"<<item);
-        p.waitForFinished();
-        auto out = p.readAll();
-        auto l = out.split('\n');
-        qDebug()<<l;
-        for (auto s : l) {
-            if (s.startsWith("path")) {
-                originalPath = s.split('=').last();
-                continue;
-            }
-            if (s.startsWith("comment")) {
-                comment = s.split('=').last();
-                continue;
-            }
-            if (s.startsWith("usershare_acl")) {
-                readOnly = s.contains("EveryOne:R");
-                continue;
-            }
-            if (s.startsWith("guest_ok")) {
-                allowGuest = s.split('=').last() == "y";
-                continue;
-            }
+    this->name = oth->name;
+    this->comment = oth->comment;
+    this->isShared = oth->isShared;
+    this->readOnly = oth->readOnly;
+    this->allowGuest = oth->allowGuest;
+    this->originalPath = oth->originalPath;
+
+    return *this;
+}
+
+UserShareInfoManager& UserShareInfoManager::getInstance()
+{
+    if (!gShareInfo) {
+        gShareInfo = new UserShareInfoManager;
+        //gShareInfo->run();
+    }
+
+    return *gShareInfo;
+}
+
+// fixme:// not use
+void UserShareInfoManager::run()
+{
+    bool            ret;
+    QStringList     args;
+    QStringList     items;
+    QString         result;
+
+    // get all shared file
+    args << "usershare" << "list";
+    result = exectueCommand (args, &ret);
+    if (!ret) {
+        return;
+    }
+
+    // get all shared fileInfo
+    items = result.split('\n');
+    for (auto item : items) {
+        args.clear();
+        args << "usershare" << "info" << item;
+        result = exectueCommand (args, &ret);
+        if (!ret) {
+            qDebug() << "exectueCommand: error!";
+            continue;
         }
-        qDebug()<<"info:"<<name<<originalPath<<comment<<readOnly<<allowGuest;
+
+        // parse UserShared
+        ShareInfo* shareInfo = new ShareInfo;
+        shareInfo->name = item;
+        parseShareInfo(*shareInfo, result);
+        if (!addShareInfo(shareInfo)) {
+            delete shareInfo;
+        }
+    }
+
+    mIsInit = true;
+}
+
+bool UserShareInfoManager::hasSharedInfo(QString& name)
+{
+    if (!mIsInit) {
+        bool ret = false;
+        QStringList args;
+        args << "usershare" << "list";
+        QString result = exectueCommand (args, &ret);
+        return ret && !result.isEmpty();
+    }
+
+    mLock.lock();
+    if (mSharedInfo.contains(name) && nullptr != mSharedInfo[name]) {
+        mLock.unlock();
+        return true;
+    }
+    mLock.unlock();
+
+    return false;
+}
+
+
+static void parseShareInfo (ShareInfo& shareInfo, QString& content)
+{
+    auto lines = content.split('\n');
+
+    for (auto line : lines) {
+        if (line.startsWith("path")) {
+            shareInfo.originalPath = line.split('=').last();
+        } else if (line.startsWith("comment")) {
+            shareInfo.comment = line.split('=').last();
+        } else if (line.startsWith("usershare_acl")) {
+            shareInfo.readOnly = line.contains("Everyone:R");
+        } else if (line.startsWith("guest_ok")) {
+            shareInfo.allowGuest = line.split('=').last() == "y";
+        }
     }
 }
 
-NetUsershareHelper::NetUsershareHelper(QObject *parent) : QObject(parent)
+static QString exectueCommand (QStringList& args, bool* retb /* out */)
 {
+    QProcess proc;
+    proc.open();
 
-}
-
-const QStringList NetUsershareHelper::getSharedItems()
-{
-    QProcess p;
-    p.start("net", QStringList()<<"usershare"<<"list");
-    p.waitForFinished();
-    auto result = p.readAll();
-    auto l = result.split('\n');
-    QStringList items;
-    for (auto s : l) {
-        qDebug()<<"share name:"<<s;
-        items<<QString(s);
+    args.prepend("/usr/bin/peony-share.sh");
+    args.prepend("pkexec");
+    proc.start("bash");
+    proc.waitForStarted();
+    QString cmd = args.join(" ");
+    proc.write(cmd.toUtf8() + "\n");
+    proc.waitForFinished(500);
+//    qDebug() << "command: " << args.join(" ");
+    if (proc.readAllStandardError().isEmpty()) {
+        *retb = true;
+    } else {
+        *retb = false;
     }
-    return items;
+
+    QString all = proc.readAllStandardOutput();
+    proc.close();
+
+    return all;
 }
 
-ShareInfo NetUsershareHelper::getShareItemInfo(const QString &item)
+bool UserShareInfoManager::updateShareInfo(ShareInfo &shareInfo)
 {
-    return ShareInfo(item);
-}
+    if ("" == shareInfo.name
+            || shareInfo.name.isEmpty()
+            || shareInfo.originalPath.isEmpty()) {
+        return false;
+    }
 
-bool NetUsershareHelper::updateShareInfo(ShareInfo &info)
-{
-    QProcess p;
+    bool ret = false;
     QStringList args;
-    args<<info.name;
-    args<<info.originalPath;
-    args<<(info.comment.isNull()? "Peony-Qt-Share-Extension" : info.comment);
-    //args<<(info.readOnly? QString("EveryOne:R")/*.arg(g_get_user_name())*/: "EveryOne:F");
-    args<<(info.readOnly? "Everyone:R": "Everyone:F");
-    args<<(info.allowGuest? "guest_ok=y": "guest_ok=n");
-    qDebug()<<"updateShareInfo args:"<<args;
-    p.start("net", QStringList()<<"usershare"<<"add"<<args);
-    p.waitForFinished();
-    auto result = p.readAllStandardError();
+    ShareInfo* sharedInfo = new ShareInfo;
+    sharedInfo->name = shareInfo.name;
+    sharedInfo->comment = shareInfo.comment;
+    sharedInfo->isShared = shareInfo.isShared;
+    sharedInfo->readOnly = shareInfo.readOnly;
+    sharedInfo->allowGuest = shareInfo.allowGuest;
+    sharedInfo->originalPath = shareInfo.originalPath;
 
-    //if sucessed
-    info.isShared = result.isEmpty();
-    if (info.isShared) {
-        Peony::SharePropertiesPagePlugin::getInstance()->addShareInfo(info);
+    mLock.lock();
+    if (mSharedInfo.contains(sharedInfo->name)
+            && nullptr != mSharedInfo[sharedInfo->name]) {
+        delete mSharedInfo[sharedInfo->name];
     }
-    return info.isShared;
+    mSharedInfo[sharedInfo->name] = sharedInfo;
+    mLock.unlock();
+
+    args << "usershare" << "add";
+    args << sharedInfo->name;
+    args << sharedInfo->originalPath;
+    args << (sharedInfo->comment.isNull() ? "Peony-Qt-Share-Extension" : sharedInfo->comment);
+    args << (sharedInfo->readOnly ? "Everyone:R" : "Everyone:F");
+    args << (sharedInfo->allowGuest ? "guest_ok=y" : "guest_ok=n");
+
+    exectueCommand (args, &ret);
+
+    return ret;
 }
 
-void NetUsershareHelper::removeShared(const QString &item)
+const ShareInfo* UserShareInfoManager::getShareInfo(QString &name)
 {
-    Peony::SharePropertiesPagePlugin::getInstance()->removeShareInfo(item);
-    QProcess p;
-    p.start("net", QStringList()<<"usershare"<<"delete"<<item);
-    p.waitForFinished();
-    qDebug()<<"result:"<<p.readAll();
+    if (nullptr == name || name.isEmpty()) {
+        qDebug() << "invalid param";
+        return nullptr;
+    }
+
+    if (!mIsInit) {
+        bool            ret;
+        QStringList     args;
+        args << "usershare" << "info" << name;
+        QString result = exectueCommand (args, &ret);
+        if (!ret && result.isEmpty()) {
+            return nullptr;
+        }
+
+        // parse UserShared
+        ShareInfo* shareInfo = new ShareInfo;
+        shareInfo->name = name;
+        parseShareInfo(*shareInfo, result);
+        if (!addShareInfo(shareInfo)) {
+            delete shareInfo;
+        }
+    }
+
+    mLock.lock();
+    if (!mSharedInfo.contains(name)) {
+        mLock.unlock();
+        return nullptr;
+    }
+
+    mLock.unlock();
+
+    return mSharedInfo[name];
+}
+
+bool UserShareInfoManager::addShareInfo(ShareInfo* shareInfo)
+{
+    if (nullptr == shareInfo
+            || shareInfo->name.isEmpty()
+            || shareInfo->originalPath.isEmpty()) {
+        return false;
+    }
+
+    mLock.lock();
+    if (mSharedInfo.contains(shareInfo->name)) {
+        mLock.unlock();
+        return false;
+    }
+
+    mSharedInfo[shareInfo->name] = shareInfo;
+    mLock.unlock();
+
+    return true;
+}
+
+void UserShareInfoManager::removeShareInfo(QString &name)
+{
+    mLock.lock();
+    if (mSharedInfo.contains(name)) {
+        if (nullptr != mSharedInfo[name]) delete mSharedInfo[name];
+        mSharedInfo.remove(name);
+    }
+    mLock.unlock();
+
+    QStringList args;
+    args << "usershare" << "delete" << name;
+
+    exectueCommand (args, nullptr);
+
 }

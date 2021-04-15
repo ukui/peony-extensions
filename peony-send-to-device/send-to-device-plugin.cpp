@@ -162,8 +162,6 @@ static void mounted_func (gpointer data, gpointer udata)
 
     if (!uri) g_free(uri);
     if (!name) g_free(name);
-    // FIXME://
-//    if (icons) g_object_unref(icons);
     if (!location) g_object_unref(location);
 }
 
@@ -205,6 +203,16 @@ DriverAction::DriverAction(const QStringList& uris, QObject *parent) : QAction(p
 
     connect(this, &DriverAction::driverAdded, this, [=] (QString uri, QString name, QString icon) {
         if (!mDrivers.contains(uri)) {
+            // filter system drivers
+            QUrl sysData("file:///data");
+            QUrl sysBackup("file:///backup");
+            QUrl addUri = uri;
+
+            if (addUri == sysData
+                    || addUri == sysData) {
+                return ;
+            }
+
             auto it = new DriverItem (uri, QIcon::fromTheme(icon), name);
             it->connect(it, &QAction::triggered, it, [=] () {
                 FileCopyOperation* op = new FileCopyOperation(uris, it->uri(), it);

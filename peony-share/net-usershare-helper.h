@@ -23,54 +23,49 @@
 #ifndef NETUSERSHAREHELPER_H
 #define NETUSERSHAREHELPER_H
 
+#include <QMap>
+#include <QMutex>
 #include <QObject>
+#include <QProcess>
+#include <QRunnable>
+#include <QThread>
 
 class ShareInfo
 {
 public:
-    ShareInfo(const QString &item = nullptr, bool init = false);
-
-    bool operator ==(const ShareInfo &info) {return this->name == info.name;}
+    ShareInfo& operator= (const ShareInfo*);
 
     QString name;
-    QString originalPath;
     QString comment;
-    bool readOnly = true;
-    bool allowGuest = false;
+    QString originalPath;
 
-    bool isShared = false;
+    bool readOnly   = true;
+    bool allowGuest = false;
+    bool isShared   = false;
 };
 
-class NetUsershareHelper : public QObject
+
+class UserShareInfoManager : public QObject/*, public QThread*/
 {
     Q_OBJECT
 public:
-    static const QStringList getSharedItems();
-    static ShareInfo getShareItemInfo(const QString &item);
+    static UserShareInfoManager& getInstance ();
+    void run (); // fixme:// not use
 
-    /*!
-     * \brief addShareCmd
-     * \param itemDisplayName
-     * \param orignalPath
-     * \param comment
-     * \param readonly
-     * \param allowGuest
-     *
-     * \details
-     * Add/modify user defined share
-     */
-    static void addShareCmd(const QString &itemDisplayName,
-                            const QString &orignalPath,
-                            const QString &comment,
-                            bool readonly,
-                            bool allowGuest);
-
-    static bool updateShareInfo(ShareInfo &info);
-
-    static void removeShared(const QString &item);
+    bool hasSharedInfo (QString& name);
+    void removeShareInfo (QString& name);
+    bool addShareInfo (ShareInfo* shareInfo);
+    bool updateShareInfo (ShareInfo& shareInfo);
+    const ShareInfo* getShareInfo (QString& name);
 
 private:
-    explicit NetUsershareHelper(QObject *parent = nullptr);
+    explicit UserShareInfoManager (QObject* parent = nullptr) : QObject(parent) {};
+
+private:
+    bool                            mIsInit = false;
+    QMutex                          mLock;
+    QMap <QString, ShareInfo*>      mSharedInfo;
+    static UserShareInfoManager*    gShareInfo;
 };
 
 #endif // NETUSERSHAREHELPER_H
