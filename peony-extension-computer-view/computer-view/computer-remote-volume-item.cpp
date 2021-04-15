@@ -70,11 +70,7 @@ void ComputerRemoteVolumeItem::findChildren()
                                     m_cancellable, GAsyncReadyCallback(enumerate_async_callback), this);
     g_object_unref(file);
 
-    m_watcher = new Peony::FileWatcher("computer:///", this);
-    connect(m_watcher, &Peony::FileWatcher::fileCreated, this, &ComputerRemoteVolumeItem::onFileAdded);
-    connect(m_watcher, &Peony::FileWatcher::fileDeleted, this, &ComputerRemoteVolumeItem::onFileRemoved);
-    connect(m_watcher, &Peony::FileWatcher::fileChanged, this, &ComputerRemoteVolumeItem::onFileChanged);
-    m_watcher->startMonitor();
+
 }
 
 void ComputerRemoteVolumeItem::updateInfo()
@@ -216,6 +212,12 @@ void ComputerRemoteVolumeItem::find_children_async_callback(GFileEnumerator *enu
     if (err) {
         //QMessageBox::critical(0, 0, err->message);
         g_error_free(err);
+    } else {
+        p_this->m_watcher = new Peony::FileWatcher("computer:///", p_this);
+        connect(p_this->m_watcher, &Peony::FileWatcher::fileCreated, p_this, &ComputerRemoteVolumeItem::onFileAdded);
+        connect(p_this->m_watcher, &Peony::FileWatcher::fileDeleted, p_this, &ComputerRemoteVolumeItem::onFileRemoved);
+        connect(p_this->m_watcher, &Peony::FileWatcher::fileChanged, p_this, &ComputerRemoteVolumeItem::onFileChanged);
+        p_this->m_watcher->startMonitor();
     }
 }
 

@@ -31,8 +31,12 @@
 
 ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, AbstractComputerItem *parentNode, QObject *parent) : AbstractComputerItem(model, parentNode, parent)
 {
+    m_model->beginInsertItem(parentNode->itemIndex(), parentNode->m_children.count());
+    parentNode->m_children<<this;
+
     if (parentNode->itemType() != Volume) {
         m_displayName = tr("Volume");
+        m_model->endInsterItem();
         return;
     }
 
@@ -44,6 +48,7 @@ ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, Ab
         auto file = g_file_new_for_uri("file:///");
         g_file_query_filesystem_info_async(file, "*", 0, m_cancellable,
                                            GAsyncReadyCallback(query_root_info_async_callback), this);
+        m_model->endInsterItem();
         return;
     }
 
@@ -53,6 +58,7 @@ ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, Ab
 
     g_signal_connect(volume, "changed", G_CALLBACK(volume_changed_callback), this);
     g_signal_connect(volume, "removed", G_CALLBACK(volume_removed_callback), this);
+    m_model->endInsterItem();
 }
 
 //ComputerVolumeItem::ComputerVolumeItem(const QString uri,ComputerModel *model,AbstractComputerItem *parentNode,QObject *parent) : AbstractComputerItem(model,parentNode,parent){
@@ -145,10 +151,7 @@ bool ComputerVolumeItem::isMount()
 void ComputerVolumeItem::findChildren()
 {
     //add root
-    m_model->beginInsertItem(this->itemIndex(), m_children.count());
     auto root = new ComputerVolumeItem(nullptr, m_model, this);
-    m_children<<root;
-    m_model->endInsterItem();
 
     //enumerate
     auto volume_monitor = g_volume_monitor_get();
@@ -156,10 +159,7 @@ void ComputerVolumeItem::findChildren()
     GList *l = current_volumes;
     while (l) {
         auto volume = G_VOLUME(l->data);
-        m_model->beginInsertItem(this->itemIndex(), m_children.count());
         auto item = new ComputerVolumeItem(volume, m_model, this);
-        m_children<<item;
-        m_model->endInsterItem();
         l = l->next;
     }
 
@@ -566,10 +566,7 @@ void ComputerVolumeItem::stop_async_callback(GDrive *drive, GAsyncResult *res, C
 void ComputerVolumeItem::onVolumeAdded(const std::shared_ptr<Peony::Volume> volume)
 {
     auto g_volume = volume->getGVolume();
-    m_model->beginInsertItem(this->itemIndex(), m_children.count());
     auto item = new ComputerVolumeItem(g_volume, m_model, this);
-    m_children<<item;
-    m_model->endInsterItem();
 }
 
 /* Usage scenarios:
