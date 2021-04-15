@@ -34,6 +34,7 @@ ComputerProxyModel::ComputerProxyModel(QObject *parent) : QSortFilterProxyModel(
     m_model = computerModel;
 
     connect(m_model, &ComputerModel::updateLocationRequest, this, &ComputerProxyModel::updateLocationRequest);
+    connect(m_model, &ComputerModel::invalidateRequest, this, &ComputerProxyModel::invalidateFilter);
 }
 
 ComputerProxyModel *ComputerProxyModel::globalInstance()
@@ -63,8 +64,5 @@ void ComputerProxyModel::refresh()
 bool ComputerProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     auto item = static_cast<AbstractComputerItem *>(m_model->index(source_row, 0, source_parent).internalPointer());
-    if (item->itemType() == AbstractComputerItem::RemoteVolume) {
-        return !item->isHidden();
-    }
-    return true;
+    return !item->isHidden();
 }

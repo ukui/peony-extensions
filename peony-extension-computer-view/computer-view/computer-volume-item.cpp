@@ -110,6 +110,11 @@ void ComputerVolumeItem::updateInfoAsync()
                 m_uri = uri;
                 g_free(uri);
             }
+            if (m_uri == "file:///data") {
+                if (Peony::FileUtils::isFileExsit("file:///data/usershare")) {
+                    m_isHidden = true;
+                }
+            }
             g_file_query_filesystem_info_async(active_root, "*",
                                                0, m_cancellable, GAsyncReadyCallback(qeury_info_async_callback), this);
             g_object_unref(active_root);
@@ -131,6 +136,7 @@ void ComputerVolumeItem::updateInfoAsync()
 
     auto index = this->itemIndex();
     m_model->dataChanged(index, index);
+    m_model->invalidateRequest();
 }
 
 const QString ComputerVolumeItem::displayName()
@@ -187,6 +193,11 @@ void ComputerVolumeItem::check()
     if (active_root) {
         auto uri = g_file_get_uri(active_root);
         auto path = g_file_get_path(active_root);
+        if (QString(uri) == "file:///data") {
+            if (Peony::FileUtils::isFileExsit("file:///data/usershare")) {
+                m_isHidden = true;
+            }
+        }
         //QMessageBox::information(0, 0, QString("%1 has active root %2").arg(m_displayName).arg(uri));
         if (uri) {
             /*!
@@ -360,6 +371,11 @@ QModelIndex ComputerVolumeItem::itemIndex()
     } else {
         return m_model->createItemIndex(m_parentNode->m_children.indexOf(this), this);
     }
+}
+
+bool ComputerVolumeItem::isHidden()
+{
+    return m_isHidden;
 }
 
 void ComputerVolumeItem::volume_changed_callback(GVolume *volume, ComputerVolumeItem *p_this)

@@ -60,6 +60,8 @@ public:
     qint64 usedSpace() override {return m_usedSpace;}
     qint64 totalSpace() override {return m_totalSpace;}
 
+    bool isHidden() override;
+
 protected:
     //monitor
     static void volume_changed_callback(GVolume *volume, ComputerVolumeItem *p_this);
@@ -107,6 +109,8 @@ private:
 
     Peony::FileWatcher *m_watcher = nullptr;
     QString m_targetUri;
+
+    bool m_isHidden = false;
 };
 
 #endif // COMPUTERVOLUMEITEM_H
