@@ -24,6 +24,7 @@
 #define COMPUTERVIEWCONTAINER_H
 
 #include <QWidget>
+#include <peony-qt/connect-to-server-dialog.h>
 #include <peony-qt/directory-view-plugin-iface2.h>
 #include <peony-qt/controls/directory-view/directory-view-widget.h>
 
@@ -99,11 +100,12 @@ public Q_SLOTS:
     virtual void setCurrentZoomLevel(int zoomLevel) {}
 
 public:
-    QString m_remote_uri;
+    QString                 m_remote_uri;
+    GMountOperation*        m_op = nullptr;
+    ConnectServerDialog*    m_dlg = nullptr;
 
 private:
     ComputerView *m_view = nullptr;
-    GMountOperation* m_op = nullptr;
     QAction *m_enterAction = nullptr;
     Peony::FileItemModel *m_model = nullptr;
     Peony::FileItemProxyFilterSortModel *m_proxyModel = nullptr;

@@ -30,7 +30,6 @@
 #include <peony-qt/format_dialog.h>
 #include <peony-qt/file-info-job.h>
 #include <peony-qt/file-item-model.h>
-#include <peony-qt/connect-to-server-dialog.h>
 #include <peony-qt/file-item-proxy-filter-sort-model.h>
 
 #include <QMenu>
@@ -61,6 +60,10 @@ static GAsyncReadyCallback mount_enclosing_volume_callback(GFile *volume, GAsync
 
     if (nullptr != err) {
         g_error_free(err);
+    }
+
+    if (nullptr != p_this->m_dlg) {
+        p_this->m_dlg->deleteLater();
     }
 
     return nullptr;
@@ -104,7 +107,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             menu.addAction(tr("Connect a server"), [=](){
                 QString uri;
                 ConnectServerDialog* dlg = new ConnectServerDialog;
-                dlg->deleteLater();
+                m_dlg = dlg;
                 auto code = dlg->exec();
                 if (code == QDialog::Rejected) {
                     return;
@@ -112,21 +115,9 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
 
                 QUrl url = dlg->uri();
 
-                ConnectServerLogin* dlgLogin = new ConnectServerLogin(url.host());
-                dlgLogin->deleteLater();
-                code = dlgLogin->exec();
-                if (code == QDialog::Rejected) {
-                    return;
-                }
-
-                g_mount_operation_set_username(m_op, dlgLogin->user().toUtf8().constData());
-                g_mount_operation_set_password(m_op, dlgLogin->password().toUtf8().constData());
-//                g_mount_operation_set_domain(m_op, dlg->domain().toUtf8().constData());
-                g_mount_operation_set_anonymous(m_op, dlgLogin->anonymous());
-                g_mount_operation_set_password_save(m_op, dlgLogin->savePassword()? G_PASSWORD_SAVE_NEVER: G_PASSWORD_SAVE_FOR_SESSION);
-
                 GFile* m_volume = g_file_new_for_uri(dlg->uri().toUtf8().constData());
                 m_remote_uri = dlg->uri();
+
                 g_file_mount_enclosing_volume(m_volume, G_MOUNT_MOUNT_NONE, m_op, nullptr, GAsyncReadyCallback(mount_enclosing_volume_callback), this);
                 g_signal_connect (m_op, "ask-question", G_CALLBACK(ask_question_cb), this);
                 g_signal_connect (m_op, "ask-password", G_CALLBACK (ask_password_cb), this);
@@ -192,6 +183,25 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
 
 static void ask_question_cb(GMountOperation *op, char *message, char **choices, Peony::ComputerViewContainer *p_this)
 {
+    qDebug()<<"ask question cb:"<<message;
+    Q_UNUSED(p_this);
+    QMessageBox *msg_box = new QMessageBox;
+    msg_box->setText(message);
+    char **choice = choices;
+    int i = 0;
+    while (*choice) {
+        qDebug()<<*choice;
+        QPushButton *button = msg_box->addButton(QString(*choice), QMessageBox::ActionRole);
+        p_this->m_dlg->connect(button, &QPushButton::clicked, [=]() {
+            g_mount_operation_set_choice(op, i);
+        });
+        *choice++;
+        i++;
+    }
+    //block ui
+    msg_box->exec();
+    msg_box->deleteLater();
+    qDebug()<<"msg_box done";
     g_mount_operation_reply (op, G_MOUNT_OPERATION_HANDLED);
 }
 
@@ -202,6 +212,20 @@ static void ask_password_cb(GMountOperation *op, const char *message, const char
     Q_UNUSED(default_domain);
     Q_UNUSED(flags);
     Q_UNUSED(p_this);
+
+    Peony::ConnectServerLogin dlgLogin (p_this->m_remote_uri);
+    int code = dlgLogin.exec();
+    if (code == QDialog::Rejected) {
+        return;
+    }
+
+    if (!dlgLogin.anonymous()) {
+        g_mount_operation_set_username(p_this->m_op, dlgLogin.user().toUtf8().constData());
+        g_mount_operation_set_password(p_this->m_op, dlgLogin.password().toUtf8().constData());
+        g_mount_operation_set_domain(p_this->m_op, dlgLogin.domain().toUtf8().constData());
+        g_mount_operation_set_anonymous(p_this->m_op, dlgLogin.anonymous());
+    }
+    g_mount_operation_set_password_save(p_this->m_op, dlgLogin.savePassword()? G_PASSWORD_SAVE_NEVER: G_PASSWORD_SAVE_FOR_SESSION);
 
     g_mount_operation_reply (op, G_MOUNT_OPERATION_HANDLED);
 }
