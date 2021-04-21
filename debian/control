@@ -15,7 +15,9 @@ Build-Depends: debhelper-compat (= 12),
                qtbase5-dev-tools,
                libpoppler-qt5-dev,
                libpeony-dev,
-               libgsettings-qt-dev
+               libgsettings-qt-dev,
+               libudisks2-dev,
+               libnotify-dev
 Standards-Version: 4.5.0
 Rules-Requires-Root: no
 Homepage: https://github.com/ukui/peony-extensions
@@ -28,6 +30,7 @@ Depends: ${misc:Depends},
          ${shlibs:Depends},
 Recommends: samba-common-bin,
             samba
+Break: peony-admin
 Description: Allows one to quickly share a folder from the Peony file manager
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
@@ -83,17 +86,17 @@ Description: Peony plugin for right click a picture to set as wallpaper
  In addition to set wallpaper in ukui-control-center, you can select a
  picture and right click to quickly set as wallpaper.
 
-Package: peony-admin
-Architecture: any
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         policykit-1
-Description: Peony plugin for open files or directories as admin
- Peony is the official file manager for the UKUI desktop. This
- package adds extended functionality to the Peony file manager.
- .
- peony-extionsion-computer-view is a proof-of-concept Peony extension
- which allows user open files or directories with higher permission.
+#Package: peony-admin
+#Architecture: any
+#Depends: ${misc:Depends},
+#         ${shlibs:Depends},
+#         policykit-1
+#Description: Peony plugin for open files or directories as admin
+# Peony is the official file manager for the UKUI desktop. This
+# package adds extended functionality to the Peony file manager.
+# .
+# peony-extionsion-computer-view is a proof-of-concept Peony extension
+# which allows user open files or directories with higher permission.
 
 Package: peony-bluetooth
 Architecture: any
@@ -115,7 +118,7 @@ Depends: ${misc:Depends},
          peony-share,
          peony-open-terminal,
          peony-extension-computer-view,
-         peony-admin,
+#         peony-admin,
          peony-set-wallpaper
 Recommends: ukui-bluetooth
 Description: Peony qt extensions
