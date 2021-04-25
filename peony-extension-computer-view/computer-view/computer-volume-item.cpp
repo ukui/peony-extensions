@@ -95,7 +95,11 @@ void ComputerVolumeItem::updateInfoAsync()
     QString unixDeviceName;
 
     m_displayName = m_volume->name();
-    m_icon = QIcon::fromTheme(m_volume->iconName());
+    //fix u-disk show as hard-disk icon issue, task#25343
+    if (m_volume->iconName() == "drive-harddisk-usb")
+        m_icon = QIcon::fromTheme("drive-removable-media-usb");
+    else
+        m_icon = QIcon::fromTheme(m_volume->iconName());
     //qDebug()<<m_displayName;
 
     check();
