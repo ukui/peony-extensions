@@ -215,7 +215,9 @@ static void ask_password_cb(GMountOperation *op, const char *message, const char
 
     Peony::ConnectServerLogin dlgLogin (p_this->m_remote_uri);
     int code = dlgLogin.exec();
+    g_mount_operation_set_anonymous(p_this->m_op, dlgLogin.anonymous());
     if (code == QDialog::Rejected) {
+        g_mount_operation_reply (op, G_MOUNT_OPERATION_ABORTED);
         return;
     }
 
@@ -223,7 +225,6 @@ static void ask_password_cb(GMountOperation *op, const char *message, const char
         g_mount_operation_set_username(p_this->m_op, dlgLogin.user().toUtf8().constData());
         g_mount_operation_set_password(p_this->m_op, dlgLogin.password().toUtf8().constData());
         g_mount_operation_set_domain(p_this->m_op, dlgLogin.domain().toUtf8().constData());
-        g_mount_operation_set_anonymous(p_this->m_op, dlgLogin.anonymous());
     }
     g_mount_operation_set_password_save(p_this->m_op, dlgLogin.savePassword()? G_PASSWORD_SAVE_NEVER: G_PASSWORD_SAVE_FOR_SESSION);
 
