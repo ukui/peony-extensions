@@ -137,8 +137,8 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
         auto total = item->totalSpace();
         auto used = item->usedSpace();
         if (total > 0) {
-            auto totalFormat = g_format_size_full(total, G_FORMAT_SIZE_IEC_UNITS);
-            auto usedFormat = g_format_size_full(used, G_FORMAT_SIZE_IEC_UNITS);
+            char *totalFormat = strtok(g_format_size_full(total,G_FORMAT_SIZE_IEC_UNITS),"iB");
+            char *usedFormat = strtok(g_format_size_full(used,G_FORMAT_SIZE_IEC_UNITS),"iB");
             spaceInfo = QString("%1/%2").arg(usedFormat).arg(totalFormat);
             g_free(totalFormat);
             g_free(usedFormat);
