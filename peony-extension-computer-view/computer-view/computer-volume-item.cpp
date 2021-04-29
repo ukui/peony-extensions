@@ -413,11 +413,12 @@ void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *re
     auto info = g_file_query_info_finish(file, res, &err);
     if (info) {
         quint64 used = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_USED);
-        quint64 total = g_file_info_get_attribute_int64(info, G_FILE_ATTRIBUTE_FILESYSTEM_SIZE);
-        p_this->m_totalSpace = calcVolumeCapacity(p_this);
-        if (p_this->m_totalSpace == 0) {
-            p_this->m_totalSpace = total;
-        }
+        quint64 total = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_SIZE);
+//        p_this->m_totalSpace = calcVolumeCapacity(p_this);
+//        if (p_this->m_totalSpace == 0) {
+//            p_this->m_totalSpace = total;
+//        }
+        p_this->m_totalSpace = total;
         p_this->m_usedSpace = used;
 
         /***************************collect info when gparted open*************************/
