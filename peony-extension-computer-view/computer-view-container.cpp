@@ -149,12 +149,18 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             }
             auto mount = VolumeManager::getMountFromUri(info->targetUri());
 
-            auto fdMenu = menu.addAction(tr("format"), [=] () {
-                auto fd = new Format_Dialog(info->uri(), nullptr, m_view);
-                fd->show();
-            });
-            if (!mount) {
-                fdMenu->setEnabled(false);
+            //fix bug#52491, CDROM and DVD can format issue
+            if (!(info->targetUri().startsWith("file:///media") &&
+                  (info->uri().contains("DVD") || info->uri().contains("CDROM")))
+                 && !(info->targetUri().startsWith("burn:///")))
+            {
+                auto fdMenu = menu.addAction(tr("format"), [=] () {
+                    auto fd = new Format_Dialog(info->uri(), nullptr, m_view);
+                    fd->show();
+                });
+                if (!mount) {
+                    fdMenu->setEnabled(false);
+                }
             }
 
             auto a = menu.addAction(tr("Property"), [=](){
