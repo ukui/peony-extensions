@@ -203,13 +203,26 @@ DriverAction::DriverAction(const QStringList& uris, QObject *parent) : QAction(p
 
     connect(this, &DriverAction::driverAdded, this, [=] (QString uri, QString name, QString icon) {
         if (!mDrivers.contains(uri)) {
-            // filter system drivers
-            QUrl sysData("file:///data");
-            QUrl sysBackup("file:///backup");
-            QUrl addUri = uri;
+            QString curUri = uri;
+            if (curUri.endsWith("/")) {
+                curUri.chop(1);
+            }
 
-            if (addUri == sysData
-                    || addUri == sysData) {
+            QString usrName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation).section("/", -1, -1);
+
+            if ("file:///data" == curUri
+                    || "file:///backup" == curUri
+                    || "file:///boot" == curUri
+                    || "file:///tmp" == curUri
+                    || "file:///var" == curUri
+                    || "file:///media/" + usrName + "/SYSBOOT" == curUri
+                    || "file:///media/" + usrName + "/sysboot" == curUri
+                    || "file:///media/" + usrName + "/data" == curUri
+                    || "file:///media/" + usrName + "/DATA" == curUri
+                    || curUri.startsWith("burn://")
+                    || curUri.startsWith("file:///media/" + usrName + "/KYLIN-")
+                    || curUri.startsWith("file:///media/" + usrName + "/kylin-")
+                    ) {
                 return ;
             }
 
