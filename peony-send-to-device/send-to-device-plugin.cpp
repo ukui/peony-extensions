@@ -220,6 +220,8 @@ DriverAction::DriverAction(const QStringList& uris, QObject *parent) : QAction(p
                     || "file:///media/" + usrName + "/data" == curUri
                     || "file:///media/" + usrName + "/DATA" == curUri
                     || curUri.startsWith("burn://")
+                    || curUri.startsWith("ftp://")
+                    || curUri.startsWith("smb://")
                     || curUri.startsWith("file:///media/" + usrName + "/KYLIN-")
                     || curUri.startsWith("file:///media/" + usrName + "/kylin-")
                     ) {
