@@ -61,6 +61,8 @@ MateTerminalMenuPlugin::MateTerminalMenuPlugin(QObject *parent) : QObject (paren
                     break;
                 }
                 else if (terminal_cmd == "mate-terminal"){
+                    //fix endless loop issue
+                    l = l->next;
                     continue;
                 }
                 else
