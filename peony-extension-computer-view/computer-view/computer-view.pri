@@ -10,6 +10,7 @@ HEADERS += \
     $$PWD/computer-remote-volume-item.h \
     $$PWD/computer-view-style.h \
     $$PWD/computer-view.h \
+    $$PWD/computer-user-share-item.h \
     $$PWD/computer-volume-item.h
 
 SOURCES += \
@@ -22,5 +23,6 @@ SOURCES += \
     $$PWD/computer-remote-volume-item.cpp \
     $$PWD/computer-view-style.cpp \
     $$PWD/computer-view.cpp \
+    $$PWD/computer-user-share-item.cpp \
     $$PWD/computer-volume-item.cpp
 

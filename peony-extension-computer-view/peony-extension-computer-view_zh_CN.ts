@@ -26,15 +26,23 @@
     </message>
 </context>
 <context>
+    <name>ComputerUserShareItem</name>
+    <message>
+        <location filename="computer-view/computer-user-share-item.cpp" line="16"/>
+        <source>User Share</source>
+        <translation>共享数据</translation>
+    </message>
+</context>
+<context>
     <name>ComputerVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="35"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="39"/>
         <source>Volume</source>
         <translation>本地分区</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="43"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="81"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="48"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="88"/>
         <source>File System</source>
         <translation>文件系统</translation>
     </message>
@@ -150,7 +158,7 @@
 <context>
     <name>Peony::ComputerViewContainer</name>
     <message>
-        <location filename="computer-view-container.cpp" line="104"/>
+        <location filename="computer-view-container.cpp" line="107"/>
         <source>Connect a server</source>
         <translation>连接远程服务器</translation>
     </message>
@@ -167,28 +175,28 @@
         <translation type="vanished">确定</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="137"/>
+        <location filename="computer-view-container.cpp" line="128"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="143"/>
+        <location filename="computer-view-container.cpp" line="134"/>
         <source>Eject</source>
         <translation>弹出</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="161"/>
+        <location filename="computer-view-container.cpp" line="157"/>
         <source>format</source>
         <translation>格式化</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="169"/>
-        <location filename="computer-view-container.cpp" line="185"/>
+        <location filename="computer-view-container.cpp" line="166"/>
+        <location filename="computer-view-container.cpp" line="182"/>
         <source>Property</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="171"/>
+        <location filename="computer-view-container.cpp" line="168"/>
         <source>You have to mount this volume first</source>
         <translation>需要首先挂载分区</translation>
     </message>
@@ -206,50 +214,50 @@
         <translation>显示设备分区, 网络目录和个人目录.</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="487"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="513"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation>一个或多个程序阻止卸载操作。</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="489"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="498"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="504"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="515"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="524"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="530"/>
         <source>Unmount failed</source>
         <translation>卸载失败</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="490"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="505"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="516"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="531"/>
         <source>Error: %1
 Do you want to unmount forcely?</source>
         <translation>错误：%1
 是否强制卸载？</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="497"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="523"/>
         <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
         <translation>无法卸载，您可能需要先关闭一些程序，如分区编辑器等。</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="499"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="525"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="534"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="555"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="560"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="581"/>
         <source>Eject failed</source>
         <translation>弹出失败</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="535"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="556"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="561"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="582"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="536"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="557"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="562"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="583"/>
         <source>Eject Anyway</source>
         <translation>无论如何弹出</translation>
     </message>

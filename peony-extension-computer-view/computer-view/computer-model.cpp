@@ -28,8 +28,8 @@
 #include "computer-network-item.h"
 
 #include "file-info.h"
-#include "file-operation-utils.h"
 #include "file-utils.h"
+#include "file-operation-utils.h"
 
 #include <QMimeData>
 #include <QUrl>
@@ -40,7 +40,7 @@ ComputerModel::ComputerModel(QObject *parent)
     beginResetModel();
 
     m_parentNode = new AbstractComputerItem(this, nullptr, this);
-    auto computerItem = new ComputerVolumeItem(nullptr, this, m_parentNode);;
+    auto computerItem = new ComputerVolumeItem(nullptr, this, m_parentNode);
     computerItem->findChildren();
 
     auto remoteItem = new ComputerRemoteVolumeItem("computer:///", this, m_parentNode);
