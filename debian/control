@@ -30,7 +30,7 @@ Depends: ${misc:Depends},
          ${shlibs:Depends},
 Recommends: samba-common-bin,
             samba
-Break: peony-admin
+Breaks: peony-admin
 Description: Allows one to quickly share a folder from the Peony file manager
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
