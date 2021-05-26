@@ -22,6 +22,7 @@
 #include "computer-volume-item.h"
 #include <peony-qt/file-utils.h>
 #include "computer-model.h"
+#include "computer-user-share-item.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QApplication>
@@ -186,6 +187,10 @@ void ComputerVolumeItem::findChildren()
 //    connect(m_watcher, &Peony::FileWatcher::fileCreated, this, &ComputerVolumeItem::onFileAdded);
 //    connect(m_watcher, &Peony::FileWatcher::fileDeleted, this, &ComputerVolumeItem::onFileRemoved);
 //    m_watcher->startMonitor();
+
+    if (Peony::FileUtils::isFileExsit("file:///data/usershare")) {
+        new ComputerUserShareItem(nullptr, m_model, this);
+    }
 }
 
 void ComputerVolumeItem::check()
