@@ -147,7 +147,12 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 FileInfoJob j(info);
                 j.querySync();
             }
-            auto mount = VolumeManager::getMountFromUri(info->targetUri());
+
+            QString targetUri = info->targetUri();
+            if (targetUri.isEmpty()) {
+                targetUri = uri;
+            }
+            auto mount = VolumeManager::getMountFromUri(targetUri);
 
             //fix bug#52491, CDROM and DVD can format issue
             if (!(info->targetUri().startsWith("file:///media") &&
