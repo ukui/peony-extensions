@@ -147,10 +147,13 @@ static QString exectueCommand (QStringList& args, bool* retb /* out */)
     proc.write(cmd.toUtf8() + "\n");
     proc.waitForFinished(500);
 //    qDebug() << "command: " << args.join(" ");
-    if (proc.readAllStandardError().isEmpty()) {
-        *retb = true;
-    } else {
-        *retb = false;
+
+    if (retb) {
+        if (proc.readAllStandardError().isEmpty()) {
+            *retb = true;
+        } else {
+            *retb = false;
+        }
     }
 
     QString all = proc.readAllStandardOutput();
@@ -266,5 +269,4 @@ void UserShareInfoManager::removeShareInfo(QString &name)
     args << "usershare" << "delete" << name;
 
     exectueCommand (args, nullptr);
-
 }
