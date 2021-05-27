@@ -29,6 +29,15 @@
 #include <QPushButton>
 #include <QDBusConnection>
 #include <QDBusInterface>
+#include <QDir>
+#include <QStringList>
+#include <QFileInfoList>
+
+#ifdef signals
+#undef signals
+#endif
+
+#include <gio/gunixmounts.h>
 
 ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, AbstractComputerItem *parentNode, QObject *parent) : AbstractComputerItem(model, parentNode, parent)
 {
@@ -412,6 +421,37 @@ void ComputerVolumeItem::volume_removed_callback(GVolume *volume, ComputerVolume
     parentNode->m_model->endRemoveItem();
 }
 
+QString iconFileFromMountpoint(const QString& mountpoint){
+    bool isReadOnly;
+    QDir mountDir;
+    QString iconPath;
+    GUnixMountEntry* entry;
+
+    if(mountpoint.isEmpty())
+        return iconPath;
+
+    entry = g_unix_mount_for(mountpoint.mid(7).toUtf8().constData(),NULL);
+    if(entry){
+       isReadOnly = g_unix_mount_is_readonly(entry);
+       g_unix_mount_free(entry);
+       if(!isReadOnly)//is not a boot disk
+           return iconPath;
+    }
+
+    mountDir.setPath(mountpoint.mid(7));//remove 'file://'
+    if(mountDir.exists()){
+        QStringList filters;
+        filters << "*.ico";
+        mountDir.setNameFilters(filters);
+
+        QFileInfoList list = mountDir.entryInfoList();
+        if(0 != list.length())
+            iconPath = list.at(0).absoluteFilePath();
+	}
+
+    return iconPath;
+}
+
 void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *res, ComputerVolumeItem *p_this)
 {
     GError *err = nullptr;
@@ -425,6 +465,11 @@ void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *re
 //        }
         p_this->m_totalSpace = total;
         p_this->m_usedSpace = used;
+
+        QString iconPath = iconFileFromMountpoint(p_this->m_uri);
+        if(!iconPath.isEmpty())
+            p_this->m_icon = QIcon::fromTheme(iconPath);
+
 
         /***************************collect info when gparted open*************************/
 //        if(p_this->m_icon.name().isEmpty()){

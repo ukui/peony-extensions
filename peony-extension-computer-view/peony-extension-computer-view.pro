@@ -27,6 +27,10 @@ TRANSLATIONS = peony-extension-computer-view_zh_CN.ts \
 
 include(computer-view/computer-view.pri)
 
+CONFIG += link_pkgconfig
+
+PKGCONFIG += gio-unix-2.0
+
 SOURCES += \
     computer-view-container.cpp \
     login-remote-filesystem.cpp \
