@@ -171,6 +171,11 @@ QString ComputerView::tryGetVolumeUriFromMountTarget(const QString &mountTargetU
     return m_model->tryGetVolumeUriFromMountTarget(mountTargetUri);
 }
 
+QString ComputerView::tryGetVolumeRealUriFromUri(const QString &uri)
+{
+    return m_model->tryGetVolumeRealUriFromUri(uri);
+}
+
 void ComputerView::refresh()
 {
     m_model->refresh();

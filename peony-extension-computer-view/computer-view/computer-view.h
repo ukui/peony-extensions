@@ -53,6 +53,7 @@ public:
     virtual QRegion visualRegionForSelection(const QItemSelection &selection) const;
 
     QString tryGetVolumeUriFromMountTarget(const QString &mountTargetUri);
+    QString tryGetVolumeRealUriFromUri(const QString &uri);
 
     void refresh();
 

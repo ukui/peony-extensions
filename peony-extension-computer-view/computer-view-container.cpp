@@ -137,7 +137,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             ejectAction->setEnabled(item->canEject());
 
             auto uri = item->uri();
-            auto realUri = m_view->tryGetVolumeUriFromMountTarget(uri);
+            auto realUri = m_view->tryGetVolumeRealUriFromUri(uri);
             if (!realUri.isEmpty()) {
                 uri = realUri;
             }
@@ -148,11 +148,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 j.querySync();
             }
 
-            QString targetUri = info->targetUri();
-            if (targetUri.isEmpty()) {
-                targetUri = uri;
-            }
-            auto mount = VolumeManager::getMountFromUri(targetUri);
+            auto mount = VolumeManager::getMountFromUri(info->targetUri());
 
             //fix bug#52491, CDROM and DVD can format issue
             if (!(info->targetUri().startsWith("file:///media") &&

@@ -39,7 +39,7 @@ public:
     AbstractComputerItem *itemFromIndex(const QModelIndex &proxyIndex);
 
     QString tryGetVolumeUriFromMountTarget(const QString &mountTargetUri);
-
+    QString tryGetVolumeRealUriFromUri(const QString &uri);
     void refresh();
 
 Q_SIGNALS:

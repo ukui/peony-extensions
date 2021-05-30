@@ -186,6 +186,69 @@ QString ComputerModel::tryGetVolumeUriFromMountRoot(const QString &mountRootUri)
     return value;
 }
 
+QString ComputerModel::tryGetVolumeRealUriFromUri(const QString &uri)
+{
+    QString realUri = "";
+
+    if (uri.isEmpty()) {
+        return realUri;
+    }
+
+    QList<QString>::iterator iter;
+    for(iter = m_volumeRealUri.begin(); iter != m_volumeRealUri.end(); iter++) {
+        realUri = *iter;
+
+        auto info = Peony::FileInfo::fromUri(realUri);
+        QString targetUri = info->targetUri();
+        qDebug()<<"real uri"<<realUri<<"target uri"<<targetUri<<"uri"<<uri;
+        if (!targetUri.isEmpty() && targetUri == uri){
+            return realUri;
+        }
+    }
+
+    realUri.clear();
+
+    return realUri;
+}
+
+void ComputerModel::addRealUri(const QString &realUri)
+{
+    qDebug()<<"add volume real uri"<<realUri;
+    if (realUri.isEmpty()) {
+        return;
+    }
+
+    QList<QString>::iterator iter;
+    for(iter = m_volumeRealUri.begin(); iter != m_volumeRealUri.end(); iter++){
+        if (*iter == realUri) {
+            return;
+        }
+    }
+
+    m_volumeRealUri.append(realUri);
+
+    return;
+}
+void ComputerModel::removeRealUri(const QString &realUri)
+{
+    qDebug()<<"remove volume real uri"<<realUri;
+    if (realUri.isEmpty()) {
+        return;
+    }
+
+    QList<QString>::iterator iter;
+    int index = 0;
+    for(iter = m_volumeRealUri.begin(); iter != m_volumeRealUri.end(); iter++){
+        if (*iter == realUri) {
+            m_volumeRealUri.removeAt(index);
+            return;
+        }
+        index++;
+    }
+
+    return;
+}
+
 void ComputerModel::refresh()
 {
     for (auto child : m_parentNode->m_children) {
