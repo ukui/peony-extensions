@@ -21,6 +21,7 @@
  */
 #include "computer-volume-item.h"
 #include <peony-qt/file-utils.h>
+#include <peony-qt/datacdrom.h>
 #include "computer-model.h"
 #include "computer-user-share-item.h"
 #include <QMessageBox>
@@ -102,9 +103,17 @@ void ComputerVolumeItem::updateInfoAsync()
     }
 
     char *deviceName;
-    QString unixDeviceName;
 
     m_displayName = m_volume->name();
+    //Handle the Chinese name of fat32 udisk.
+    deviceName = g_volume_get_identifier(m_volume->getGVolume(),G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
+    if(deviceName){
+        m_unixDeviceName = QString(deviceName);
+        qDebug()<<"unix Device Name"<< m_unixDeviceName;
+        Peony::FileUtils::handleVolumeLabelForFat32(m_displayName, m_unixDeviceName);
+        g_free(deviceName);
+    }
+
     //fix u-disk show as hard-disk icon issue, task#25343
     if (m_volume->iconName() == "drive-harddisk-usb")
         m_icon = QIcon::fromTheme("drive-removable-media-usb");
@@ -138,14 +147,6 @@ void ComputerVolumeItem::updateInfoAsync()
         //mount first
         //FIXME: check auto mount
 //        this->mount();
-    }
-
-    //Handle the Chinese name of fat32 udisk.
-    deviceName = g_volume_get_identifier(m_volume->getGVolume(),G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
-    if(deviceName){
-        unixDeviceName = QString(deviceName);
-        Peony::FileUtils::handleVolumeLabelForFat32(m_displayName,unixDeviceName);
-        g_free(deviceName);
     }
 
     auto index = this->itemIndex();
@@ -455,22 +456,37 @@ QString iconFileFromMountpoint(const QString& mountpoint){
 void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *res, ComputerVolumeItem *p_this)
 {
     GError *err = nullptr;
-    auto info = g_file_query_info_finish(file, res, &err);
+    auto info = g_file_query_filesystem_info_finish(file, res, &err);
     if (info) {
-        quint64 used = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_USED);
-        quint64 total = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_SIZE);
-//        p_this->m_totalSpace = calcVolumeCapacity(p_this);
-//        if (p_this->m_totalSpace == 0) {
-//            p_this->m_totalSpace = total;
-//        }
-        p_this->m_totalSpace = total;
-        p_this->m_usedSpace = used;
+        if (p_this->m_unixDeviceName.startsWith("/dev/sr")) {
+            Peony::DataCDROM *cdrom = new Peony::DataCDROM(p_this->m_unixDeviceName);
+            if (cdrom) {
+                cdrom->getCDROMInfo();
+                p_this->m_usedSpace = cdrom->getCDROMUsedCapacity();
+                p_this->m_totalSpace = cdrom->getCDROMCapacity();
+                delete cdrom;
+                cdrom = nullptr;
+            }
+        }
 
-        QString iconPath = iconFileFromMountpoint(p_this->m_uri);
-        if(!iconPath.isEmpty())
-            p_this->m_icon = QIcon::fromTheme(iconPath);
+        if (0 == p_this->m_totalSpace) {
+            quint64 used = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_USED);
+            quint64 total = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_SIZE);
+            quint64 free = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_FREE);
+            if (total > 0 && (used > 0 || free > 0)) {
+                if (used > 0 && used <= total) {
+                    p_this->m_usedSpace = used;
+                    p_this->m_totalSpace = total;
+                } else if(free > 0 && free <= total) {
+                    p_this->m_usedSpace = total - free;
+                    p_this->m_totalSpace = total;
+                }
+             }
+         }
 
-
+        qWarning()<<"udisk name"<<p_this->m_volume->name();
+        qWarning()<<"udisk used space"<<p_this->m_usedSpace;
+        qWarning()<<"udisk total space"<<p_this->m_totalSpace;
         /***************************collect info when gparted open*************************/
 //        if(p_this->m_icon.name().isEmpty()){
 //            QString iconName = Peony::FileUtils::getFileIconName(p_this->m_uri);

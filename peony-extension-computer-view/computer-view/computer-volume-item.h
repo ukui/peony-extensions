@@ -103,6 +103,7 @@ private:
 
     //info
     QString m_displayName;
+    QString m_unixDeviceName;
     QIcon m_icon;
     qint64 m_totalSpace = 0;
     qint64 m_usedSpace = 0;
