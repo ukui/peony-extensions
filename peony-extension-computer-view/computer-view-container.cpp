@@ -168,27 +168,30 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 }
             }
 
-            auto a = menu.addAction(tr("Property"), [=](){
-                if (uri.isNull()) {
-                    QMessageBox::warning(0, 0, tr("You have to mount this volume first"));
-                } else {
-                    QProcess p;
-                    p.setProgram("peony");
-                    QStringList args;
-                    args<<"-p"<<uri;
-                    p.setArguments(args);
+            if (!item->uri().startsWith("network://")) {
+                auto a = menu.addAction(tr("Property"), [=]() {
+                    if (uri.isNull()) {
+                        QMessageBox::warning(0, 0, tr("You have to mount this volume first"));
+                    } else {
+                        QProcess p;
+                        p.setProgram("peony");
+                        QStringList args;
+                        args << "-p" << uri;
+                        p.setArguments(args);
 //                    p.startDetached();
-                    p.startDetached(p.program(), p.arguments());
-                }
-            });
-            a->setEnabled(!uri.isNull());
+                        p.startDetached(p.program(), p.arguments());
+                    }
+                });
+                a->setEnabled(!uri.isNull());
+            }
         } else if(items.first()->uri() != "" && items.first()->uri() != "network:///"){
             qDebug() << "unable Property uri:" <<items.first()->uri();
             menu.addAction(tr("Property"));
             menu.actions().first()->setEnabled(false);
         }
 
-        menu.exec(QCursor::pos());
+        if (!menu.isEmpty())
+            menu.exec(QCursor::pos());
     });
 }
 
