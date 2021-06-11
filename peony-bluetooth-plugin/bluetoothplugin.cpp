@@ -39,6 +39,11 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
 {
     qDebug() << Q_FUNC_INFO << uri << selectionUris;
     QList<QAction*> actions;
+    QStringList target;
+    for (auto str : selectionUris) {
+        qDebug() << Q_FUNC_INFO << str << "   =   " << Peony::FileUtils::urlEncode(str);
+        target << Peony::FileUtils::urlEncode(str);
+    }
 
     QProcess process;
     process.start("rfkill list");
@@ -66,7 +71,7 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
                     connect(compress, &QAction::triggered, [=](){
                         QString path = selectionUris.at(0);
                         QDBusMessage m = QDBusMessage::createMethodCall("org.ukui.bluetooth","/org/ukui/bluetooth","org.ukui.bluetooth","file_transfer");
-                        m << path.split("//").at(1);
+                        m << target;
                         qDebug() << Q_FUNC_INFO << m.arguments().at(0).value<QString>() <<__LINE__;
                         // 发送Message
                         QDBusConnection::sessionBus().call(m);

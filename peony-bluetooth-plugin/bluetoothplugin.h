@@ -24,6 +24,7 @@
 #define BLUETOOTHPLUGIN_H
 
 #include <file-info.h>
+#include <file-utils.h>
 
 #include "peony-bluetooth-plugin_global.h"
 #include <menu-plugin-iface.h>
