@@ -13,7 +13,7 @@
     <message>
         <location filename="../share-properties-page-plugin.h" line="48"/>
         <source>Peony Qt Share Extension</source>
-        <translation>Peony Qt Share Eklentisi</translation>
+        <translation>Peony Qt Paylaşma Eklentisi</translation>
     </message>
     <message>
         <location filename="../share-properties-page-plugin.h" line="49"/>
@@ -30,24 +30,24 @@
     </message>
     <message>
         <source>Share:</source>
-        <translation type="vanished">Paylaş:</translation>
+        <translation>Paylaş:</translation>
     </message>
     <message>
         <location filename="../share-page.cpp" line="134"/>
         <location filename="../share-page.cpp" line="177"/>
         <source>share this folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu dizini paylaş</translation>
     </message>
     <message>
         <location filename="../share-page.cpp" line="134"/>
         <location filename="../share-page.cpp" line="184"/>
         <source>don`t share this folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu dizini paylaşma</translation>
     </message>
     <message>
         <location filename="../share-page.cpp" line="210"/>
         <source>Share name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Paylaşım adı:</translation>
     </message>
     <message>
         <location filename="../share-page.cpp" line="215"/>
