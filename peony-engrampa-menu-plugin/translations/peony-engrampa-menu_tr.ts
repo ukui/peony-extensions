@@ -6,7 +6,7 @@
     <message>
         <location filename="../engrampa-menu-plugin.cpp" line="61"/>
         <source>compress...</source>
-        <translation>Arşivle...</translation>
+        <translation>Sıkıştır...</translation>
     </message>
     <message>
         <location filename="../engrampa-menu-plugin.cpp" line="77"/>
@@ -16,7 +16,7 @@
     <message>
         <location filename="../engrampa-menu-plugin.cpp" line="88"/>
         <source>uncompress to specific path...</source>
-        <translation>Arşivle...</translation>
+        <translation>Özel bir yere ayıkla...</translation>
     </message>
     <message>
         <source>uncompress to specific path</source>
@@ -33,12 +33,12 @@
     <message>
         <location filename="../engrampa-menu-plugin.h" line="40"/>
         <source>Peony-Qt engrampa Extension</source>
-        <translation>Peony-Qt engrampa Menü Uzantısı</translation>
+        <translation>Peony-Qt engrampa Eklentisi</translation>
     </message>
     <message>
         <location filename="../engrampa-menu-plugin.h" line="41"/>
         <source>engrampa Menu Extension.</source>
-        <translation>Engrampa Menü Uzantısı</translation>
+        <translation>Engrampa Menü Eklentisi</translation>
     </message>
 </context>
 </TS>
