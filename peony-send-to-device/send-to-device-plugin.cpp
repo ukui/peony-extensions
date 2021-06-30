@@ -34,6 +34,7 @@
 #include <QApplication>
 #include <file-copy-operation.h>
 #include <file-operation-manager.h>
+#include <file-info-job.h>
 
 #ifdef KYLIN_COMMON
 #include <ukuisdk/kylin-com4cxx.h>
@@ -154,7 +155,7 @@ static void mounted_func (gpointer data, gpointer udata)
     GIcon*              icons = nullptr;
     QString             icon = nullptr;
 
-    if (!data || !udata) return;
+    if (!data || !udata || !static_cast<DriverAction*>(udata)) return;
 
     if (mount) {
         name = g_mount_get_name(mount);
@@ -165,10 +166,15 @@ static void mounted_func (gpointer data, gpointer udata)
         }
     }
 
+    // check permission
+    FileInfoJob fileInfo(uri);
+    fileInfo.querySync();
+    std::shared_ptr<FileInfo> info = fileInfo.getInfo();
+
     icon = getIconName (icons);
 
-    if (uri && name) {
-        ((DriverAction*)udata)->driverAdded(uri, name, icon);
+    if (uri && name && info.get()->canExecute() && info.get()->canWrite()) {
+        (static_cast<DriverAction*>(udata))->driverAdded(uri, name, icon);
     }
 
     qDebug() << "name:" << name << " uri:" << uri << " icons:" << icons << " icon:" << icon;
@@ -271,6 +277,7 @@ DriverAction::DriverAction(const QStringList& uris, QObject *parent) : QAction(p
 
     setMenu(mMenu);
     setText(tr("Send to a removable device"));
+    showAction();
 }
 
 DriverAction::~DriverAction()
