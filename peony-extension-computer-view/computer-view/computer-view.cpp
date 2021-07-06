@@ -36,6 +36,8 @@
 #include <QDragMoveEvent>
 #include <QDropEvent>
 #include <QApplication>
+#include <QGSettings/qgsettings.h>
+#include <global-settings.h>
 
 #include <QDebug>
 
@@ -65,6 +67,26 @@ ComputerView::ComputerView(QWidget *parent) : QAbstractItemView(parent)
     connect(volumeManager,&Peony::VolumeManager::volumeRemoved,this,[=](const std::shared_ptr<Peony::Volume> volume){
         this->viewport()->update();
     });
+
+    if (QGSettings::isSchemaInstalled("org.ukui.style"))
+    {
+        //font monitor, adjust to font size to fix lauout issue, link to bug#65238
+        QGSettings *fontSetting = new QGSettings(FONT_SETTINGS, QByteArray(), this);
+        connect(fontSetting, &QGSettings::changed, this, [=](const QString &key){
+            qDebug() << "fontSetting changed:" << key;
+            if (key == "systemFontSize") {
+                int fontSize = fontSetting->get("systemFontSize").toInt();
+                int width = 256 + (fontSize -11) * 64/5;
+                int height = 108 + (fontSize -11) * 36/5;
+                m_volumeItemFixedSize = QSize(width, height);
+
+                int other_width = 108 + (fontSize -11) * 36/5;
+                int other_height = 144 + (fontSize -11) * 48/5;
+                m_remoteItemFixedSize = QSize(other_width, other_height);
+                m_networkItemFixedSize = QSize(other_width, other_height);
+            }
+        });
+    }
 
     setSelectionMode(QAbstractItemView::ExtendedSelection);
     this->viewport()->setMouseTracking(true);
