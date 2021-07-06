@@ -28,8 +28,8 @@ Package: peony-share
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-Recommends: samba-common-bin,
-            samba
+         samba-common-bin,
+         samba
 Breaks: peony-admin
 Description: Allows one to quickly share a folder from the Peony file manager
  Peony is the official file manager for the UKUI desktop. This
@@ -126,13 +126,13 @@ Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          parchives,
-         peony-share,
          peony-open-terminal,
          peony-extension-computer-view,
 #         peony-admin,
          peony-set-wallpaper,
          peony-send-to-device
-Recommends: ukui-bluetooth
+Recommends: peony-share,
+            ukui-bluetooth
 Description: Peony qt extensions
  Peony is the official file manager for the UKUI desktop. This
  package is a metapackage, which adds extended functionality to
