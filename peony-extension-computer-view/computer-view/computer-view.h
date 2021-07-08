@@ -80,6 +80,8 @@ protected:
     void layoutRemoteIndexes(const QModelIndex &remoteParentIndex);
     void layoutNetworkIndexes(const QModelIndex &networkParentIndex);
 
+    void adjustLayout();
+
 private:
     ComputerProxyModel *m_model;
     QRubberBand *m_rubberBand;
