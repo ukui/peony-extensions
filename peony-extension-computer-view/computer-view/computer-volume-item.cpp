@@ -469,6 +469,7 @@ void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *re
         *由于对DVD+RW或者是DVD-RW类型的光盘，无法通过cdromdata类获取到使用的容量，所以使用的容量统一使用gio函数获取
         */
         quint64 used = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_USED);
+        bool bNotDisk = true;
         if (p_this->m_unixDeviceName.startsWith("/dev/sr")) {
             Peony::DataCDROM *cdrom = new Peony::DataCDROM(p_this->m_unixDeviceName);
             if (cdrom) {
@@ -477,10 +478,12 @@ void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *re
                 p_this->m_totalSpace = cdrom->getCDROMCapacity();
                 delete cdrom;
                 cdrom = nullptr;
+                bNotDisk = false;
             }
         }
 
-        if (0 == p_this->m_totalSpace) {
+        //fix block not update volume issue, link to bug#63326
+        if (bNotDisk || 0 == p_this->m_totalSpace) {
             quint64 total = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_SIZE);
             quint64 free = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_FREE);
             if (total > 0 && (used > 0 || free > 0)) {
