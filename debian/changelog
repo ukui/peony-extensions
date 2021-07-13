@@ -1,3 +1,14 @@
+peony-extensions (3.2.2+0713) v101; urgency=medium
+
+  * 0710正式版本。
+    - BUG号：无.
+    - 需求号：无.
+    - 其他改动说明：计算机视图更新分区容量显示。
+    - 影响域：计算机视图。
+  * New upstream release.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Tue, 13 Jul 2021 10:27:18 +0800
+
 peony-extensions (3.2.2+0707) v101; urgency=medium
 
   * 0710正式版本。
