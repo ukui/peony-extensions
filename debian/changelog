@@ -1,3 +1,29 @@
+peony-extensions (3.2.2+0723) v101; urgency=medium
+
+  * 0610-2版本更新
+    * BUG号：
+     - bug#65521:手机通过USB设备传输文件，拷贝到桌面报错。
+    * 需求号：无
+    * 其他改动说明：无。
+    * 影响域：
+     - 手机文件拷贝。
+
+  * New upstream release.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Fri, 23 Jul 2021 17:24:18 +0800
+
+peony-extensions (3.2.2+0721-1) v101; urgency=medium
+
+  * 0610-2版本更新
+    - BUG号：bug#66516:在文件管理器中格式化U盘，弹出的提示未汉化。.
+    - 需求号：无。
+    - 其他改动说明：无。
+    - 影响域：格式化汉化。
+
+  * New upstream release.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Tue, 20 Jul 2021 16:49:18 +0800
+
 peony-extensions (3.2.2+0716) v101; urgency=medium
 
   * 0610-2版本更新
