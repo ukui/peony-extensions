@@ -53,7 +53,7 @@ static GAsyncReadyCallback mount_enclosing_volume_callback(GFile *volume, GAsync
     if ((nullptr == err) || (g_error_matches (err, G_IO_ERROR, G_IO_ERROR_ALREADY_MOUNTED))) {
         qDebug() << "login successful!";
         Q_EMIT p_this->updateWindowLocationRequest(p_this->m_remote_uri);
-    } else {
+    } else if (err->message) {
         qDebug() << "login remote error: " <<err->code<<err->message<<err->domain;
         QMessageBox::warning(nullptr, "log remote error", err->message, QMessageBox::Ok);
     }
@@ -64,6 +64,7 @@ static GAsyncReadyCallback mount_enclosing_volume_callback(GFile *volume, GAsync
 
     if (nullptr != p_this->m_dlg) {
         p_this->m_dlg->deleteLater();
+        p_this->m_dlg = nullptr;
     }
 
     return nullptr;
