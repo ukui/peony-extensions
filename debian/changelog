@@ -1,3 +1,17 @@
+peony-extensions (3.2.2+0727) v101; urgency=medium
+
+  * 0610-2版本更新
+    * BUG号：
+     - bug#69348:格式化2.0U盘，弹出无法挂载文件后闪退。
+    * 需求号：无
+    * 其他改动说明：无。
+    * 影响域：
+     - U盘格式化。
+
+  * New upstream release.
+
+ -- MeihongHe <hemeihong@kylinos.cn>  Wed, 28 Jul 2021 10:41:18 +0800
+
 peony-extensions (3.2.2+0723) v101; urgency=medium
 
   * 0610-2版本更新
