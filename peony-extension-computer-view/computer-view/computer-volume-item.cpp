@@ -117,11 +117,9 @@ void ComputerVolumeItem::updateInfoAsync()
     //fix u-disk show as hard-disk icon issue, task#25343
     if (m_volume->iconName() == "drive-harddisk-usb")
     {
-        //用挂载设备唯一标识区分U盘和移动硬盘，目前只适用于V10-sp1, 990不一样
-        //FIXME with a better solution, fix bug#57660
-        if (! m_unixDeviceName.isNull() && m_unixDeviceName.startsWith("/dev/sdc"))
-            m_icon = QIcon::fromTheme("drive-harddisk-usb");
-        else
+        //用设备容量区分U盘和移动硬盘，大于128GiB为移动硬盘
+        //FIXME with a better solution, fix bug#57660, #70014
+        if (m_totalSpace <= 128 * 1024 * 1024 *1024)
             m_icon = QIcon::fromTheme("drive-removable-media-usb");
     }
     else
