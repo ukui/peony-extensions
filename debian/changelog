@@ -1,4 +1,4 @@
-peony-extensions (3.2.2+0729) v101; urgency=medium
+peony-extensions (3.2.2+0730) v101; urgency=medium
 
   * 0610-2版本更新
     * BUG号：
@@ -11,7 +11,7 @@ peony-extensions (3.2.2+0729) v101; urgency=medium
 
   * New upstream release.
 
- -- MeihongHe <hemeihong@kylinos.cn>  Thu, 29 Jul 2021 19:06:18 +0800
+ -- MeihongHe <hemeihong@kylinos.cn>  Fri, 30 Jul 2021 14:18:18 +0800
 
 peony-extensions (3.2.2+0727) v101; urgency=medium
 
