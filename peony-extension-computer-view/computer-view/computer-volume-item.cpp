@@ -21,6 +21,7 @@
  */
 #include "computer-volume-item.h"
 #include <peony-qt/file-utils.h>
+#include <peony-qt/datacdrom.h>
 #include "computer-model.h"
 #include "computer-user-share-item.h"
 #include <QMessageBox>
@@ -102,12 +103,25 @@ void ComputerVolumeItem::updateInfoAsync()
     }
 
     char *deviceName;
-    QString unixDeviceName;
 
     m_displayName = m_volume->name();
+    //Handle the Chinese name of fat32 udisk.
+    deviceName = g_volume_get_identifier(m_volume->getGVolume(),G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
+    if(deviceName){
+        m_unixDeviceName = QString(deviceName);
+        qDebug()<<"unix Device Name"<< m_unixDeviceName;
+        Peony::FileUtils::handleVolumeLabelForFat32(m_displayName, m_unixDeviceName);
+        g_free(deviceName);
+    }
+
     //fix u-disk show as hard-disk icon issue, task#25343
     if (m_volume->iconName() == "drive-harddisk-usb")
-        m_icon = QIcon::fromTheme("drive-removable-media-usb");
+    {
+        //用设备容量区分U盘和移动硬盘，大于128GiB为移动硬盘
+        //FIXME with a better solution, fix bug#57660, #70014
+        if (m_totalSpace <= 128 * 1024 * 1024 *1024)
+            m_icon = QIcon::fromTheme("drive-removable-media-usb");
+    }
     else
         m_icon = QIcon::fromTheme(m_volume->iconName());
     //qDebug()<<m_displayName;
@@ -138,14 +152,6 @@ void ComputerVolumeItem::updateInfoAsync()
         //mount first
         //FIXME: check auto mount
 //        this->mount();
-    }
-
-    //Handle the Chinese name of fat32 udisk.
-    deviceName = g_volume_get_identifier(m_volume->getGVolume(),G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
-    if(deviceName){
-        unixDeviceName = QString(deviceName);
-        Peony::FileUtils::handleVolumeLabelForFat32(m_displayName,unixDeviceName);
-        g_free(deviceName);
     }
 
     auto index = this->itemIndex();
@@ -455,22 +461,43 @@ QString iconFileFromMountpoint(const QString& mountpoint){
 void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *res, ComputerVolumeItem *p_this)
 {
     GError *err = nullptr;
-    auto info = g_file_query_info_finish(file, res, &err);
+    auto info = g_file_query_filesystem_info_finish(file, res, &err);
     if (info) {
+        /*
+        *由于对DVD+RW或者是DVD-RW类型的光盘，无法通过cdromdata类获取到使用的容量，所以使用的容量统一使用gio函数获取
+        */
         quint64 used = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_USED);
-        quint64 total = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_SIZE);
-//        p_this->m_totalSpace = calcVolumeCapacity(p_this);
-//        if (p_this->m_totalSpace == 0) {
-//            p_this->m_totalSpace = total;
-//        }
-        p_this->m_totalSpace = total;
-        p_this->m_usedSpace = used;
+        bool bNotDisk = true;
+        if (p_this->m_unixDeviceName.startsWith("/dev/sr")) {
+            Peony::DataCDROM *cdrom = new Peony::DataCDROM(p_this->m_unixDeviceName);
+            if (cdrom) {
+                cdrom->getCDROMInfo();
+                p_this->m_usedSpace = used;
+                p_this->m_totalSpace = cdrom->getCDROMCapacity();
+                delete cdrom;
+                cdrom = nullptr;
+                bNotDisk = false;
+            }
+        }
 
-        QString iconPath = iconFileFromMountpoint(p_this->m_uri);
-        if(!iconPath.isEmpty())
-            p_this->m_icon = QIcon::fromTheme(iconPath);
+        //fix block not update volume issue, link to bug#63326
+        if (bNotDisk || 0 == p_this->m_totalSpace) {
+            quint64 total = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_SIZE);
+            quint64 free = g_file_info_get_attribute_uint64(info, G_FILE_ATTRIBUTE_FILESYSTEM_FREE);
+            if (total > 0 && (used > 0 || free > 0)) {
+                if (used > 0 && used <= total) {
+                    p_this->m_usedSpace = used;
+                    p_this->m_totalSpace = total;
+                } else if(free > 0 && free <= total) {
+                    p_this->m_usedSpace = total - free;
+                    p_this->m_totalSpace = total;
+                }
+             }
+         }
 
-
+        qWarning()<<"udisk name"<<p_this->m_volume->name();
+        qWarning()<<"udisk used space"<<p_this->m_usedSpace;
+        qWarning()<<"udisk total space"<<p_this->m_totalSpace;
         /***************************collect info when gparted open*************************/
 //        if(p_this->m_icon.name().isEmpty()){
 //            QString iconName = Peony::FileUtils::getFileIconName(p_this->m_uri);
@@ -556,28 +583,15 @@ void ComputerVolumeItem::unmount_async_callback(GObject* object,GAsyncResult *re
         errorMsg = err->message;
         if(strstr(err->message,"target is busy")){
             errorMsg = QObject::tr("One or more programs prevented the unmount operation.");
-
-            auto button = QMessageBox::warning(nullptr, QObject::tr("Unmount failed"),
-                                           QObject::tr("Error: %1\n"
-                                                       "Do you want to unmount forcely?").arg(errorMsg),
-                                           QMessageBox::Yes, QMessageBox::No);
-            if (button == QMessageBox::Yes)
-                p_this->unmount(G_MOUNT_UNMOUNT_FORCE);
+            QMessageBox::warning(nullptr, QObject::tr("Unmount failed"), QObject::tr("Error: %1\n").arg(errorMsg), QMessageBox::Yes);
         }else if(strstr(err->message,"umount: /media/")){
             //chinese name need to be converted,this may be a error that from glib2/gio2.
             errorMsg = QObject::tr("Unable to unmount it, you may need to close some programs, such as: GParted etc.");
-            QMessageBox::warning(nullptr, QObject::tr("Unmount failed"),
-                                 QObject::tr("%1").arg(errorMsg),
-                                 QMessageBox::Yes);
+            QMessageBox::warning(nullptr, QObject::tr("Unmount failed"), QObject::tr("%1").arg(errorMsg), QMessageBox::Yes);
         } else if (err->code == G_IO_ERROR_PERMISSION_DENIED || errorMsg.contains("authorized", Qt::CaseInsensitive)) {
             // do nothing because we have requested polkit dialog yet.
         } else {
-            auto button = QMessageBox::warning(nullptr, QObject::tr("Unmount failed"),
-                                           QObject::tr("Error: %1\n"
-                                                       "Do you want to unmount forcely?").arg(err->message),
-                                           QMessageBox::Yes, QMessageBox::No);
-            if (button == QMessageBox::Yes)
-                p_this->unmount(G_MOUNT_UNMOUNT_FORCE);
+            QMessageBox::warning(nullptr, QObject::tr("Unmount failed"), QObject::tr("Error: %1\n").arg(err->message), QMessageBox::Yes);
         }
 
         g_error_free(err);
@@ -600,14 +614,8 @@ void ComputerVolumeItem::eject_async_callback(GObject *object, GAsyncResult *res
     if (err) {
         QString errMsg = err->message;
         if (!errMsg.contains("authorized", Qt::CaseInsensitive)) {
-            // do nothing because we have requested polkit dialog yet.
-            //QMessageBox::critical(0, 0, err->message);
-            QMessageBox warningBox(QMessageBox::Warning,QObject::tr("Eject failed"),QString(err->message));
-            QPushButton *cancelBtn = (warningBox.addButton(QObject::tr("Cancel"),QMessageBox::RejectRole));
-            QPushButton *ensureBtn = (warningBox.addButton(QObject::tr("Eject Anyway"),QMessageBox::YesRole));
+            QMessageBox warningBox(QMessageBox::Warning,QObject::tr("Eject failed"),QString(err->message), QMessageBox::Ok);
             warningBox.exec();
-            if(warningBox.clickedButton() == ensureBtn)
-                p_this->eject(G_MOUNT_UNMOUNT_FORCE);
         }
 
         g_error_free(err);
@@ -620,15 +628,9 @@ void ComputerVolumeItem::stop_async_callback(GDrive *drive, GAsyncResult *res, C
     bool successed;
 
     successed = g_drive_stop_finish(drive, res, &err);
-    if (successed) {
-
-    } else {
-        QMessageBox warningBox(QMessageBox::Warning,QObject::tr("Eject failed"),QString(err->message));
-        QPushButton *cancelBtn = (warningBox.addButton(QObject::tr("Cancel"),QMessageBox::RejectRole));
-        QPushButton *ensureBtn = (warningBox.addButton(QObject::tr("Eject Anyway"),QMessageBox::YesRole));
+    if (!successed) {
+        QMessageBox warningBox(QMessageBox::Warning,QObject::tr("Eject failed"),QString(err->message), QMessageBox::Ok);
         warningBox.exec();
-        if(warningBox.clickedButton() == ensureBtn)
-            p_this->eject(G_MOUNT_UNMOUNT_FORCE);
 
         g_error_free(err);
     }

@@ -34,8 +34,9 @@ ComputerRemoteVolumeItem::ComputerRemoteVolumeItem(const QString &uri, ComputerM
     updateInfo();
 
     m_model->m_volumeTargetMap.insert(Peony::FileUtils::getTargetUri(uri), uri);
+    m_model->addRealUri(uri);
 
-    qDebug()<<"test";
+    qDebug()<<"create remote volume item:"<<uri;
 }
 
 ComputerRemoteVolumeItem::~ComputerRemoteVolumeItem()
@@ -46,6 +47,7 @@ ComputerRemoteVolumeItem::~ComputerRemoteVolumeItem()
     }
 
     m_model->m_volumeTargetMap.remove(m_uri);
+    m_model->removeRealUri(m_uri);
 }
 
 const QString ComputerRemoteVolumeItem::displayName()
@@ -107,6 +109,9 @@ void ComputerRemoteVolumeItem::onFileAdded(const QString &uri)
     QString targetUri;
     targetUri = Peony::FileUtils::getTargetUri(uri);
     m_model->m_volumeTargetMap.insert(uri, targetUri);
+
+    m_model->addRealUri(uri);
+
     if(!targetUri.isEmpty() && targetUri.contains("file:///"))
         return;
 
@@ -190,6 +195,7 @@ void ComputerRemoteVolumeItem::find_children_async_callback(GFileEnumerator *enu
         QString targetUri;
         targetUri = Peony::FileUtils::getTargetUri(uri);
         p_this->m_model->m_volumeTargetMap.insert(uri, targetUri);
+        p_this->m_model->addRealUri(uri);
         if(!targetUri.isEmpty() && targetUri.contains("file:///"))
             continue;
 

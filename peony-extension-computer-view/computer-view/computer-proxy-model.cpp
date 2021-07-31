@@ -56,6 +56,11 @@ QString ComputerProxyModel::tryGetVolumeUriFromMountTarget(const QString &mountT
     return m_model->tryGetVolumeUriFromMountRoot(mountTargetUri);
 }
 
+QString ComputerProxyModel::tryGetVolumeRealUriFromUri(const QString &uri)
+{
+    return m_model->tryGetVolumeRealUriFromUri(uri);
+}
+
 void ComputerProxyModel::refresh()
 {
     m_model->refresh();

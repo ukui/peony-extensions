@@ -53,7 +53,7 @@ static GAsyncReadyCallback mount_enclosing_volume_callback(GFile *volume, GAsync
     if ((nullptr == err) || (g_error_matches (err, G_IO_ERROR, G_IO_ERROR_ALREADY_MOUNTED))) {
         qDebug() << "login successful!";
         Q_EMIT p_this->updateWindowLocationRequest(p_this->m_remote_uri);
-    } else {
+    } else if (err->message) {
         qDebug() << "login remote error: " <<err->code<<err->message<<err->domain;
         QMessageBox::warning(nullptr, "log remote error", err->message, QMessageBox::Ok);
     }
@@ -64,6 +64,7 @@ static GAsyncReadyCallback mount_enclosing_volume_callback(GFile *volume, GAsync
 
     if (nullptr != p_this->m_dlg) {
         p_this->m_dlg->deleteLater();
+        p_this->m_dlg = nullptr;
     }
 
     return nullptr;
@@ -137,7 +138,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             ejectAction->setEnabled(item->canEject());
 
             auto uri = item->uri();
-            auto realUri = m_view->tryGetVolumeUriFromMountTarget(uri);
+            auto realUri = m_view->tryGetVolumeRealUriFromUri(uri);
             if (!realUri.isEmpty()) {
                 uri = realUri;
             }
@@ -148,11 +149,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 j.querySync();
             }
 
-            QString targetUri = info->targetUri();
-            if (targetUri.isEmpty()) {
-                targetUri = uri;
-            }
-            auto mount = VolumeManager::getMountFromUri(targetUri);
+            auto mount = VolumeManager::getMountFromUri(info->targetUri());
 
             //fix bug#52491, CDROM and DVD can format issue
             if (!(info->targetUri().startsWith("file:///media") &&

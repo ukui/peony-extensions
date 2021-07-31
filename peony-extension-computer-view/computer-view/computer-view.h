@@ -53,6 +53,7 @@ public:
     virtual QRegion visualRegionForSelection(const QItemSelection &selection) const;
 
     QString tryGetVolumeUriFromMountTarget(const QString &mountTargetUri);
+    QString tryGetVolumeRealUriFromUri(const QString &uri);
 
     void refresh();
 
@@ -78,6 +79,8 @@ protected:
     void layoutVolumeIndexes(const QModelIndex &volumeParentIndex);
     void layoutRemoteIndexes(const QModelIndex &remoteParentIndex);
     void layoutNetworkIndexes(const QModelIndex &networkParentIndex);
+
+    void adjustLayout();
 
 private:
     ComputerProxyModel *m_model;

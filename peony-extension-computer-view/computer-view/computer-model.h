@@ -66,6 +66,9 @@ public:
     bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 
     QString tryGetVolumeUriFromMountRoot(const QString &mountRootUri);
+    QString tryGetVolumeRealUriFromUri(const QString &uri);
+    void addRealUri(const QString &realUri);
+    void removeRealUri(const QString &realUri);
 
     void refresh();
 
@@ -77,6 +80,7 @@ private:
     AbstractComputerItem *m_parentNode;
 
     QMap<QString, QString> m_volumeTargetMap;
+    QList<QString> m_volumeRealUri;
 };
 
 #endif // COMPUTERMODEL_H
