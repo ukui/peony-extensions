@@ -1,11 +1,8 @@
-peony-extensions (3.2.2) focal; urgency=medium
-
-  * 20.04-pro版本更新
-    - 同步master修改。
+peony-extensions (3.2.3-1~0731) focal; urgency=medium
 
   * New upstream release.
 
- -- MeihongHe <hemeihong@kylinos.cn>  Fri, 11 Jun 2021 13:48:18 +0800
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Sat, 31 Jul 2021 15:16:53 +0800
 
 peony-extensions (3.0.2-1) unstable; urgency=medium
 
