@@ -91,6 +91,7 @@ protected:
 
 private Q_SLOTS:
     void onVolumeAdded(const std::shared_ptr<Peony::Volume> volume);
+    void updateBlockIcons();
 
 private:
     QString m_uri;
