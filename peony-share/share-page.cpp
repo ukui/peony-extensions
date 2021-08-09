@@ -58,7 +58,7 @@ void SharePage::init()
     m_shareInfo.name = m_fileInfo->displayName();
     m_shareInfo.originalPath = m_fileInfo->filePath();
 
-    const ShareInfo* stmp = UserShareInfoManager::getInstance().getShareInfo(m_shareInfo.name);
+    const ShareInfo* stmp = UserShareInfoManager::getInstance()->getShareInfo(m_shareInfo.name);
     if (nullptr != stmp) {
         m_shareInfo = stmp;
         m_shareInfo.isShared = true;
@@ -92,10 +92,10 @@ void SharePage::saveAllChange()
         m_shareInfo.allowGuest = m_shareAllowGuestCheckBox->isChecked();
         m_shareInfo.isShared = true;
 
-        UserShareInfoManager::getInstance().updateShareInfo(m_shareInfo);
+        UserShareInfoManager::getInstance()->updateShareInfo(m_shareInfo);
     } else {
         //FIXME:需要先判断存在共享吗 - Need to determine whether there is sharing first
-        UserShareInfoManager::getInstance().removeShareInfo(m_shareInfo.name);
+        UserShareInfoManager::getInstance()->removeShareInfo(m_shareInfo.name);
     }
 }
 
