@@ -231,7 +231,7 @@ static void ask_password_cb(GMountOperation *op, const char *message, const char
         g_mount_operation_reply (op, G_MOUNT_OPERATION_ABORTED);
         return;
     }
-
+    dlgLogin.slot_syncRemoteServer();
     if (!dlgLogin.anonymous()) {
         g_mount_operation_set_username(p_this->m_op, dlgLogin.user().toUtf8().constData());
         g_mount_operation_set_password(p_this->m_op, dlgLogin.password().toUtf8().constData());
