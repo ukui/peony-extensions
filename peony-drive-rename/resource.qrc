@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>translations/peony-drive-rename_cs.ts</file>
+        <file>translations/peony-drive-rename_tr.ts</file>
+        <file>translations/peony-drive-rename_zh_CN.ts</file>
+        <file>translations/peony-drive-rename_zh_CN.qm</file>
+    </qresource>
+</RCC>

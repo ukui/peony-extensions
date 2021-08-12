@@ -1,0 +1,159 @@
+/*
+ * Peony-Qt's Library
+ *
+ * Copyright (C) 2021, KylinSoft Co., Ltd.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this library.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * Authors: deng hao <denghao@kylinos.cn>
+ *
+ */
+
+#include "drive-rename.h"
+
+#include <QDebug>
+#include <file-info.h>
+#include <QMessageBox>
+#include <QInputDialog>
+#include <gio/gio.h>
+#include <glib.h>
+#include <glib/gi18n.h>
+#include <sys/stat.h>
+#include <udisks/udisks.h>
+#include <QTranslator>
+#include <QFile>
+#include <QApplication>
+
+int device_rename(const char* devName, const char* name);
+UDisksObject* getObjectFromBlockDevice(UDisksClient* client, const gchar* bdevice);
+
+Peony::DriveRename::DriveRename(QObject *parent) : QObject(parent), mEnable(true)
+{
+
+    QTranslator *t = new QTranslator(this);
+    t->load(":/translations/peony-drive-rename_"+QLocale::system().name());
+    QFile file(":/translations/peony-drive-rename_"+QLocale::system().name()+".ts");
+    QApplication::installTranslator(t);
+}
+
+QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri, const QStringList &selectionUris)
+{
+    QList<QAction *> l;
+
+    if (selectionUris.count() != 1 || types != SideBar) {
+        return l;
+    }
+
+    QString suri = selectionUris.first();
+
+    g_autoptr(GFile) file = g_file_new_for_uri(suri.toUtf8().constData());
+    g_return_val_if_fail(file, l);
+
+    g_autoptr(GError) error = NULL;
+    g_autoptr(GFileInfo) fileInfo = g_file_query_info(file, "mountable::unix-device-file", G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, nullptr, &error);
+    if (error) {
+        qDebug() << "error: " << error->message;
+    }
+    g_return_val_if_fail(fileInfo && !error, l);
+
+    g_autofree char* devName = g_file_info_get_attribute_as_string(fileInfo, G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE);
+    g_return_val_if_fail(devName, l);
+
+    // 注意要筛选的设备，块设备、非根设备
+    // 判断是否为光盘设备(光盘设备不允许重命名)
+    if (suri.startsWith("computer:///") && suri.endsWith(".drive")
+            && 0 != g_strncasecmp("/dev/sr", devName, 7)) {
+        mDevName = devName;
+        QAction* action = new QAction(tr("Rename"));
+        if (action) {
+            l << action;
+        }
+
+        // 这里 action 弹框并执行重命名函数
+        connect(action, &QAction::triggered, this, [=] () {
+
+            // 输入框出来，提示用户U盘重命名为 ...
+            // 获取到用户的输入
+            // 执行重命名
+            bool ok = false;
+            QString text = QInputDialog::getText(nullptr, tr("Rename"), tr("Device name:"), QLineEdit::Normal, "", &ok);
+            if (ok && !text.isNull() && !text.isEmpty()) {
+                // 修改名字
+                int ret = device_rename(mDevName.toUtf8().constData(), text.toUtf8().constData());
+                if (0 != ret) {
+                    QMessageBox::warning(nullptr, tr("Warning"), tr("Failed to rename!"),QMessageBox::Ok);
+                }
+            }
+        });
+    }
+
+    Q_UNUSED(uri)
+    Q_UNUSED(types)
+
+    return l;
+}
+
+
+int device_rename(const char* devName, const char* name)
+{
+    //判断参数个数是否合法
+    g_return_val_if_fail(devName && name, -1);
+
+    UDisksClient* client = udisks_client_new_sync(NULL, NULL);
+    g_return_val_if_fail(client, -1);
+
+
+    UDisksObject* udiskObj = getObjectFromBlockDevice(client, devName);
+    g_return_val_if_fail(udiskObj, -1);
+
+    //从设备名获取文件系统类型
+    UDisksFilesystem* diskFilesystem = udisks_object_get_filesystem(udiskObj);
+    g_return_val_if_fail(diskFilesystem, -1);
+    GVariantBuilder optionsBuilder;
+    g_variant_builder_init(&optionsBuilder, G_VARIANT_TYPE_VARDICT);
+    g_variant_builder_add (&optionsBuilder, "{sv}", "label", g_variant_new_string (devName));
+    g_variant_builder_add (&optionsBuilder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
+
+    udisks_filesystem_call_set_label_sync (diskFilesystem, name, g_variant_builder_end(&optionsBuilder), NULL, NULL);
+
+    return 0;
+}
+
+
+UDisksObject* getObjectFromBlockDevice(UDisksClient* client, const gchar* bdevice)
+{
+    struct stat statbuf;
+    UDisksBlock* block = NULL;
+    UDisksObject* object = NULL;
+    UDisksObject* cryptoBackingObject = NULL;
+    g_autofree const gchar* cryptoBackingDevice = NULL;
+
+    g_return_val_if_fail(stat(bdevice, &statbuf) == 0, object);
+
+    block = udisks_client_get_block_for_dev (client, statbuf.st_rdev);
+    g_return_val_if_fail(block != NULL, object);
+
+    object = UDISKS_OBJECT (g_dbus_interface_dup_object (G_DBUS_INTERFACE (block)));
+
+    cryptoBackingDevice = udisks_block_get_crypto_backing_device ((udisks_object_peek_block (object)));
+    cryptoBackingObject = udisks_client_get_object (client, cryptoBackingDevice);
+    if (cryptoBackingObject != NULL) {
+        g_object_unref (object);
+        object = cryptoBackingObject;
+    }
+
+    g_object_unref (block);
+
+    return object;
+}
