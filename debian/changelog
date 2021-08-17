@@ -1,3 +1,15 @@
+peony-extensions (3.2.2+0817) v101; urgency=medium
+
+  * 0820版本更新
+    - Bug号: 无
+    - 需求号: 无
+    - 其它改动说明:
+      适配ConnectToServerDialog的API改变
+    - 影响域:
+      计算机视图、连接到服务器
+
+ -- Yue Lan <lanyue@kylinos.cn>  Tue, 17 Aug 2021 10:20:42 +0800
+
 peony-extensions (3.2.2+0801) v101; urgency=medium
 
   * 0610-2版本更新
