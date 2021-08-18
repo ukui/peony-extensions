@@ -6,6 +6,51 @@ Files: *
 Copyright: 2020, Tianjin KYLIN Information Technology Co., Ltd.
 License: LGPL-3+
 
+Files: peony-admin/*
+Copyright: 2019, 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
+Files: peony-admin/org.freedesktop.peony-admin.policy.in
+Copyright: 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
+Files: peony-bluetooth-plugin/*
+Copyright: 2019, 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
+Files: peony-engrampa-menu-plugin/*
+Copyright: 2019, 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
+Files: peony-extension-computer-view/*
+Copyright: 2019, 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
+Files: peony-extension-computer-view/computer-view/computer-user-share-item.cpp
+  peony-extension-computer-view/computer-view/computer-view-style.h
+Copyright: 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
+Files: peony-menu-plugin-mate-terminal/*
+Copyright: 2019, 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
+Files: peony-send-to-device/*
+Copyright: 2019, 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
+Files: peony-set-wallpaper/*
+Copyright: 2019, 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
+Files: peony-share/*
+Copyright: 2019, 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
+Files: peony-share/peony-share.sh
+Copyright: 2020, Tianjin KYLIN Information Technology Co., Ltd.
+License: LGPL-3+
+
 License: LGPL-3+
  This software is Copyright (c) 2020 by X. Ample.
  .

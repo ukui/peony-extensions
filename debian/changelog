@@ -1,8 +1,8 @@
-peony-extensions (3.2.3-1~0731) focal; urgency=medium
+peony-extensions (3.2.3-1) unstable; urgency=medium
 
   * New upstream release.
 
- -- handsome_feng <jianfengli@ubuntukylin.com>  Sat, 31 Jul 2021 15:16:53 +0800
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Wed, 18 Aug 2021 11:20:52 +0800
 
 peony-extensions (3.0.2-1) unstable; urgency=medium
 
