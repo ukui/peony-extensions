@@ -115,15 +115,7 @@ void ComputerVolumeItem::updateInfoAsync()
     }
 
     //fix u-disk show as hard-disk icon issue, task#25343
-    if (m_volume->iconName() == "drive-harddisk-usb")
-    {
-        //用设备容量区分U盘和移动硬盘，大于128GiB为移动硬盘
-        //FIXME with a better solution, fix bug#57660, #70014
-        if (m_totalSpace <= 128 * 1024 * 1024 *1024)
-            m_icon = QIcon::fromTheme("drive-removable-media-usb");
-    }
-    else
-        m_icon = QIcon::fromTheme(m_volume->iconName());
+    updateBlockIcons();
     //qDebug()<<m_displayName;
 
     check();
@@ -492,6 +484,8 @@ void ComputerVolumeItem::qeury_info_async_callback(GFile *file, GAsyncResult *re
                     p_this->m_usedSpace = total - free;
                     p_this->m_totalSpace = total;
                 }
+
+                p_this->updateBlockIcons();
              }
          }
 
@@ -640,6 +634,22 @@ void ComputerVolumeItem::onVolumeAdded(const std::shared_ptr<Peony::Volume> volu
 {
     auto g_volume = volume->getGVolume();
     auto item = new ComputerVolumeItem(g_volume, m_model, this);
+}
+
+void ComputerVolumeItem::updateBlockIcons()
+{
+    if (m_volume->iconName() != "drive-harddisk-usb")
+    {
+       m_icon = QIcon::fromTheme(m_volume->iconName());
+       return;
+    }
+
+    //用设备容量区分U盘和移动硬盘，大于128GiB为移动硬盘
+    //FIXME with a better solution, fix bug#57660, #70014
+    if (m_totalSpace/(1024 * 1024 *1024) > 128)
+        m_icon = QIcon::fromTheme("drive-harddisk-usb");
+    else
+        m_icon = QIcon::fromTheme("drive-removable-media-usb");
 }
 
 /* Usage scenarios:
