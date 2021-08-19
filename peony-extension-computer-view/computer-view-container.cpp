@@ -81,6 +81,8 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
     setContextMenuPolicy(Qt::CustomContextMenu);
     m_op = g_mount_operation_new();
     g_signal_connect (m_op, "aborted", G_CALLBACK (aborted_cb), this);
+    g_signal_connect (m_op, "ask-question", G_CALLBACK(ask_question_cb), this);
+    g_signal_connect (m_op, "ask-password", G_CALLBACK (ask_password_cb), this);
 
     connect(this, &QWidget::customContextMenuRequested, this, [=](const QPoint &pos){
         auto selectedIndexes = m_view->selectionModel()->selectedIndexes();
@@ -105,6 +107,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
         }
 
         if (items.count() == 0) {
+
             menu.addAction(tr("Connect a server"), [=](){
                 QString uri;
                 ConnectServerDialog* dlg = new ConnectServerDialog;
@@ -113,15 +116,10 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 if (code == QDialog::Rejected) {
                     return;
                 }
-
                 QUrl url = dlg->uri();
-
                 GFile* m_volume = g_file_new_for_uri(dlg->uri().toUtf8().constData());
                 m_remote_uri = dlg->uri();
-
                 g_file_mount_enclosing_volume(m_volume, G_MOUNT_MOUNT_NONE, m_op, nullptr, GAsyncReadyCallback(mount_enclosing_volume_callback), this);
-                g_signal_connect (m_op, "ask-question", G_CALLBACK(ask_question_cb), this);
-                g_signal_connect (m_op, "ask-password", G_CALLBACK (ask_password_cb), this);
             });
         } else if (items.count() == 1 && items.first()->uri() != "" && items.first()->uri() != "network:///") {
             auto item = items.first();
