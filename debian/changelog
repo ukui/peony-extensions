@@ -1,3 +1,14 @@
+peony-extensions (3.2.2+0824) v101; urgency=medium
+
+  * 0820版本更新
+    - Bug号:
+      #74242 连接ftp、sftp 登录窗口输入用户名后取消再连接，会重复弹框
+    - 需求号: 无
+    - 其它改动说明: 无
+    - 影响域: 连接到服务器
+
+ -- Yue Lan <lanyue@kylinos.cn>  Tue, 24 Aug 2021 10:59:26 +0800
+
 peony-extensions (3.2.2+0817) v101; urgency=medium
 
   * 0820版本更新
