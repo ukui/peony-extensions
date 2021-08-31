@@ -1,3 +1,14 @@
+peony-extensions (3.2.2+0831) v101; urgency=medium
+
+  * 0820-1版本更新
+    - Bug号:
+      #77250 开始菜单卸载终端后，文件管理器无法打开终端
+    - 需求号: 无
+    - 其它改动说明: 无
+    - 影响域: 打开终端
+
+ -- Yue Lan <lanyue@kylinos.cn>  Tue, 31 Aug 2021 15:25:22 +0800
+
 peony-extensions (3.2.2+0824) v101; urgency=medium
 
   * 0820版本更新
