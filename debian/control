@@ -54,7 +54,7 @@ Package: peony-open-terminal
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         mate-terminal
+Recommends: mate-terminal
 Description: Peony plugin for opening terminals in arbitrary local paths
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
