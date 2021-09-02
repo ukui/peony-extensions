@@ -54,6 +54,7 @@ QList<QAction*> EngrampaMenuPlugin::menuActions(Types types, const QString &uri,
             if (selectionUris.first().startsWith("computer:///") ||
                 selectionUris.first().startsWith("trash:///") ||
                 selectionUris.first().startsWith("recent:///") ||
+                selectionUris.first().startsWith("filesafe:///") ||
                 info->isVirtual())
                   return actions;
 
