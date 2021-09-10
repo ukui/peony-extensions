@@ -4,7 +4,7 @@
 <context>
     <name>ComputerItemDelegate</name>
     <message>
-        <location filename="computer-view/computer-item-delegate.cpp" line="148"/>
+        <location filename="computer-view/computer-item-delegate.cpp" line="155"/>
         <source>You should mount volume first</source>
         <translation>Önce bölümü bağlamalısınız</translation>
     </message>
@@ -20,7 +20,7 @@
 <context>
     <name>ComputerRemoteVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-remote-volume-item.cpp" line="54"/>
+        <location filename="computer-view/computer-remote-volume-item.cpp" line="56"/>
         <source>Remote</source>
         <translation>Uzak</translation>
     </message>
@@ -36,13 +36,13 @@
 <context>
     <name>ComputerVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="39"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="49"/>
         <source>Volume</source>
         <translation>Bölüm</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="48"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="88"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="58"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="98"/>
         <source>File System</source>
         <translation>Dosya Sistemi</translation>
     </message>
@@ -158,7 +158,7 @@
 <context>
     <name>Peony::ComputerViewContainer</name>
     <message>
-        <location filename="computer-view-container.cpp" line="107"/>
+        <location filename="computer-view-container.cpp" line="111"/>
         <source>Connect a server</source>
         <translation>Servere bağlan</translation>
     </message>
@@ -167,12 +167,12 @@
         <translation type="vanished">sftp://, gibi...</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="128"/>
+        <location filename="computer-view-container.cpp" line="127"/>
         <source>Unmount</source>
         <translation>Bağlantıyı kes</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="134"/>
+        <location filename="computer-view-container.cpp" line="133"/>
         <source>Eject</source>
         <translation type="unfinished">Çıkar</translation>
     </message>
@@ -182,13 +182,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="166"/>
-        <location filename="computer-view-container.cpp" line="182"/>
+        <location filename="computer-view-container.cpp" line="167"/>
+        <location filename="computer-view-container.cpp" line="184"/>
         <source>Property</source>
         <translation>Özellik</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="168"/>
+        <location filename="computer-view-container.cpp" line="169"/>
         <source>You have to mount this volume first</source>
         <translation>Önce bu bölümü bağlamalısınız</translation>
     </message>
@@ -206,52 +206,53 @@
         <translation>Sürücüleri, ağı ve kişisel dizinleri göster.</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="513"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="579"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="515"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="524"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="530"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="580"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="584"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="588"/>
         <source>Unmount failed</source>
         <translation type="unfinished">Bağlantıyı kesme başarısız</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="516"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="531"/>
         <source>Error: %1
 Do you want to unmount forcely?</source>
-        <translation type="unfinished">Hata: %1
+        <translation type="obsolete">Hata: %1
         Zorla ayrılmak ister misin?</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="523"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="580"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="588"/>
+        <source>Error: %1
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="583"/>
         <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="525"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="584"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="560"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="581"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="611"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="626"/>
         <source>Eject failed</source>
         <translation type="unfinished">Çıkarma başarısız</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="561"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="582"/>
         <source>Cancel</source>
-        <translation type="unfinished">İptal</translation>
+        <translation type="obsolete">İptal</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="562"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="583"/>
         <source>Eject Anyway</source>
-        <translation type="unfinished">Yine de Çıkar</translation>
+        <translation type="obsolete">Yine de Çıkar</translation>
     </message>
 </context>
 </TS>

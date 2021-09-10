@@ -4,17 +4,17 @@
 <context>
     <name>Peony::BluetoothPlugin</name>
     <message>
-        <location filename="../bluetoothplugin.cpp" line="29"/>
+        <location filename="../bluetoothplugin.cpp" line="69"/>
         <source>Send from bluetooth to...</source>
         <translation>从蓝牙发送文件到...</translation>
     </message>
     <message>
-        <location filename="../bluetoothplugin.h" line="30"/>
+        <location filename="../bluetoothplugin.h" line="53"/>
         <source>Peony-Qt bluetooth Extension</source>
         <translation>蓝牙插件</translation>
     </message>
     <message>
-        <location filename="../bluetoothplugin.h" line="31"/>
+        <location filename="../bluetoothplugin.h" line="54"/>
         <source>bluetooth Menu Extension.</source>
         <translation>蓝牙菜单扩展.</translation>
     </message>

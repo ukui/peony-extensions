@@ -4,17 +4,17 @@
 <context>
     <name>Peony::EngrampaMenuPlugin</name>
     <message>
-        <location filename="../engrampa-menu-plugin.cpp" line="61"/>
+        <location filename="../engrampa-menu-plugin.cpp" line="62"/>
         <source>compress...</source>
         <translation>zkomprimovat…</translation>
     </message>
     <message>
-        <location filename="../engrampa-menu-plugin.cpp" line="77"/>
+        <location filename="../engrampa-menu-plugin.cpp" line="78"/>
         <source>uncompress to current path</source>
         <translation>rozbalit do stávajícího umístění</translation>
     </message>
     <message>
-        <location filename="../engrampa-menu-plugin.cpp" line="88"/>
+        <location filename="../engrampa-menu-plugin.cpp" line="89"/>
         <source>uncompress to specific path...</source>
         <translation>rozbalit do zadaného umístění…</translation>
     </message>
