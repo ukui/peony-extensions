@@ -29,7 +29,7 @@
     </message>
     <message>
         <location filename="../mate-terminal-menu-plugin.cpp" line="120"/>
-        <source>Open terminal failed, did you removed the default terminal?  If you have reinstalled it please logout and relogin.</source>
+        <source>Open terminal failed, did you removed the default terminal?  If it&apos;s true please reinstall it.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

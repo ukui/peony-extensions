@@ -33,8 +33,12 @@
     </message>
     <message>
         <location filename="../mate-terminal-menu-plugin.cpp" line="120"/>
+        <source>Open terminal failed, did you removed the default terminal?  If it&apos;s true please reinstall it.</source>
+        <translation>打开终端失败，您是否卸载过默认终端？如果是的请重新安装。</translation>
+    </message>
+    <message>
         <source>Open terminal failed, did you removed the default terminal?  If you have reinstalled it please logout and relogin.</source>
-        <translation>打开终端失败，您是否卸载过默认终端？如果已经重新安装了，请注销并重新登录后生效。</translation>
+        <translation type="vanished">打开终端失败，您是否卸载过默认终端？如果已经重新安装了，请注销并重新登录后生效。</translation>
     </message>
     <message>
         <source>Open terminal failed, did you removed the default terminal?</source>

@@ -118,7 +118,7 @@ void MateTerminalMenuPlugin::tryOpenAgain()
     {
         QMessageBox::critical(nullptr, QObject::tr("Open terminal fail"),
                               QObject::tr("Open terminal failed, did you removed the default terminal? "
-                                          " If you have reinstalled it please logout and relogin."));
+                                          " If it's true please reinstall it."));
     }
 }
 
