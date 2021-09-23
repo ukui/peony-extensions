@@ -30,6 +30,7 @@
 #include "file-info.h"
 #include "file-utils.h"
 #include "file-operation-utils.h"
+#include "file-operation-manager.h"
 
 #include <QMimeData>
 #include <QUrl>
@@ -50,6 +51,8 @@ ComputerModel::ComputerModel(QObject *parent)
     auto networkItem = new ComputerNetworkItem("network:///", this, m_parentNode);
     m_parentNode->m_children<<networkItem;
     networkItem->findChildren();
+
+    connect(Peony::FileOperationManager::getInstance(), &Peony::FileOperationManager::operationFinished, this, &ComputerModel::refresh);
 
     endResetModel();
 }
