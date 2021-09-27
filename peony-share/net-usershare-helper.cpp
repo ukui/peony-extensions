@@ -139,7 +139,7 @@ static QString exectueCommand (QStringList& args, bool* retb /* out */)
     QProcess proc;
     proc.open();
 
-    args.prepend("/usr/bin/peony-share.sh");
+    args.prepend("/usr/share/peony-extensions/peony-share");
     args.prepend("pkexec");
     proc.start("bash");
     proc.waitForStarted();

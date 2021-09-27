@@ -47,7 +47,7 @@ Files: peony-share/*
 Copyright: 2019, 2020, Tianjin KYLIN Information Technology Co., Ltd.
 License: LGPL-3+
 
-Files: peony-share/peony-share.sh
+Files: peony-share/peony-share
 Copyright: 2020, Tianjin KYLIN Information Technology Co., Ltd.
 License: LGPL-3+
 

@@ -4,7 +4,7 @@
     "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
 <policyconfig>
     <vendor>Peony share</vendor>
-    <vendor_url>https://github.com/explorer-cs/peony-qt-extensions</vendor_url>
+    <vendor_url>https://github.com/ukui/peony-extensions</vendor_url>
     <action id="org.freedesktop.pkexec.peony_share">
         <description>Peony Share</description>
         <description xml:lang="zh_CN">peony 文件共享</description>
@@ -16,7 +16,7 @@
             <allow_inactive>yes</allow_inactive>
             <allow_active>yes</allow_active>
         </defaults>
-        <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/peony-share.sh</annotate>
+        <annotate key="org.freedesktop.policykit.exec.path">/usr/share/peony-extensions/peony-share</annotate>
         <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
     </action>
 </policyconfig>

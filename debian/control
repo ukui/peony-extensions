@@ -18,7 +18,7 @@ Build-Depends: debhelper-compat (= 12),
                libgsettings-qt-dev,
                libudisks2-dev,
                libnotify-dev
-Standards-Version: 4.5.0
+Standards-Version: 4.6.0
 Rules-Requires-Root: no
 Homepage: https://github.com/ukui/peony-extensions
 Vcs-Git: https://github.com/ukui/peony-extensions.git
@@ -30,7 +30,6 @@ Depends: ${misc:Depends},
          ${shlibs:Depends},
          samba-common-bin,
          samba
-Breaks: peony-admin
 Description: Allows one to quickly share a folder from the Peony file manager
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
