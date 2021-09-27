@@ -98,29 +98,6 @@ Description: Peony plugin for right click a picture to set as wallpaper
 # peony-extionsion-computer-view is a proof-of-concept Peony extension
 # which allows user open files or directories with higher permission.
 
-Package: peony-bluetooth
-Architecture: any
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-Recommends: ukui-bluetooth
-Description: Peony plugin for right click a file to send to other devices via Bluetooth
- Peony is the official file manager for the UKUI desktop. This
- package adds extended functionality to the Peony file manager.
- .
- In addition to sending files in ukui-bluetooth, you can also choose one
- File, then right-click to quickly send the file.
-
-Package: peony-send-to-device
-Architecture: any
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-Description: Peony plugin for right click a file to send to mobile devices
- Peony is the official file manager for the UKUI desktop. This
- package adds extended functionality to the Peony file manager.
- .
- In addition to copy files to mobile device, you can also choose one
- File, then right-click to quickly send the file.
-
 Package: peony-extensions
 Architecture: any
 Depends: ${misc:Depends},
@@ -129,10 +106,9 @@ Depends: ${misc:Depends},
          peony-open-terminal,
          peony-extension-computer-view,
 #         peony-admin,
-         peony-set-wallpaper,
-         peony-send-to-device
-Recommends: peony-share,
-            ukui-bluetooth
+         peony-set-wallpaper
+Recommends: peony-share
+Suggests: ukui-bluetooth
 Description: Peony qt extensions
  Peony is the official file manager for the UKUI desktop. This
  package is a metapackage, which adds extended functionality to
