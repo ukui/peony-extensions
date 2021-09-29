@@ -4,7 +4,7 @@
 <context>
     <name>Peony::DriverAction</name>
     <message>
-        <location filename="../send-to-device-plugin.cpp" line="260"/>
+        <location filename="../send-to-device-plugin.cpp" line="261"/>
         <source>Send to a removable device</source>
         <translation type="unfinished"></translation>
     </message>
