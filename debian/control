@@ -17,7 +17,8 @@ Build-Depends: debhelper-compat (= 12),
                libpeony-dev,
                libgsettings-qt-dev,
                libudisks2-dev,
-               libnotify-dev
+               libnotify-dev,
+               libukui-common-dev
 Standards-Version: 4.5.0
 Rules-Requires-Root: no
 Homepage: https://github.com/ukui/peony-extensions
