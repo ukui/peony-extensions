@@ -1,3 +1,10 @@
+peony-extensions (3.2.2+0929ukui3.1) v101; urgency=medium
+
+  * Intel & sp1 合并版本
+    根据平台显示不同的计算机视图
+
+ -- Yue Lan <lanyue@kylinos.cn>  Wed, 29 Sep 2021 15:55:39 +0800
+
 peony-extensions (3.2.2+0924) v101; urgency=medium
 
   * 0820-2版本更新
