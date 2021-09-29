@@ -26,6 +26,7 @@ TRANSLATIONS = peony-extension-computer-view_zh_CN.ts \
 	       peony-extension-computer-view_tr.ts
 
 include(computer-view/computer-view.pri)
+include(computer-view-intel/computer-view-intel.pri)
 
 CONFIG += link_pkgconfig
 
