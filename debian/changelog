@@ -1,8 +1,15 @@
-peony-extensions (3.2.2+0917ukui3.1) v101; urgency=medium
+peony-extensions (3.2.2+0924) v101; urgency=medium
 
-  * UKUI3.1版本更新，版本号更新
+  * 0820-2版本更新
+    - Bug号:
+      #76202 计算机视图中，共享数据盘提示的使用大小与文件内
+       的大小不一致(兰悦、插件更新)
+    - 需求号: 无
+    - 其它改动说明: 无
+    - 影响域:
+      计算机视图显示，共享数据盘容量
 
- -- Yue Lan <lanyue@kylinos.cn>  Fri, 17 Sep 2021 16:02:09 +0800
+ -- MeihongHe <hemeihong@kylinos.cn> Fri, 24 Sep 2021 15:38:55 +0800
 
 peony-extensions (3.2.2+0917) v101; urgency=medium
 

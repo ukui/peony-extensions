@@ -63,6 +63,7 @@ QList<QAction *> SendToPlugin::menuActions(Types types, const QString &uri, cons
 
     if (selectionUris.first().startsWith("computer:///")
             || selectionUris.first().startsWith("trash:///")
+            || selectionUris.first().startsWith("filesafe:///")
             || info->isVirtual()) {
         return l;
     }
