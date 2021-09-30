@@ -35,6 +35,12 @@
 #include <file-copy-operation.h>
 #include <file-operation-manager.h>
 
+#ifdef KYLIN_COMMON
+#include <ukuisdk/kylin-com4cxx.h>
+#endif
+
+#define V10_SP1_EDU "V10SP1-edu"
+
 static QString getIconName (GIcon* icons);
 static void mounted_func (gpointer data, gpointer udata);
 static void handle_mount_added  (GVolumeMonitor* monitor, GMount* mount, gpointer data);
@@ -53,6 +59,12 @@ SendToPlugin::SendToPlugin(QObject *parent) : QObject(parent), mEnable(true)
 
 QList<QAction *> SendToPlugin::menuActions(Types types, const QString &uri, const QStringList &selectionUris)
 {
+#ifdef KYLIN_COMMON
+    if (QString::fromStdString(KDKGetPrjCodeName()) == V10_SP1_EDU) {
+        return QList<QAction*>();
+    }
+#endif
+
     QList<QAction *> l;
 
     if (selectionUris.count() <= 0) {

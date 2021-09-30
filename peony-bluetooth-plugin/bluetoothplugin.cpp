@@ -25,6 +25,12 @@
 #include <QFileInfo>
 #include <QProcess>
 
+#ifdef KYLIN_COMMON
+#include <ukuisdk/kylin-com4cxx.h>
+#endif
+
+#define V10_SP1_EDU "V10SP1-edu"
+
 using namespace Peony;
 
 BluetoothPlugin::BluetoothPlugin(QObject *parent)
@@ -37,6 +43,12 @@ BluetoothPlugin::BluetoothPlugin(QObject *parent)
 
 QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types types, const QString &uri, const QStringList &selectionUris)
 {
+#ifdef KYLIN_COMMON
+    if (QString::fromStdString(KDKGetPrjCodeName()) == V10_SP1_EDU) {
+        return QList<QAction*>();
+    }
+#endif
+
     qDebug() << Q_FUNC_INFO << uri << selectionUris;
     QList<QAction*> actions;
     QStringList target;
