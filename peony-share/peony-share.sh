@@ -14,7 +14,7 @@ then
     then
         umsk=$(umask)
         set umask 0
-        chmod o+x $HOME
+        chmod o+x "/home/$1"
         set umask umsk
     fi
 fi
