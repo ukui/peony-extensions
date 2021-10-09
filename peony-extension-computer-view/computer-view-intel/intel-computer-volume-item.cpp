@@ -22,6 +22,10 @@
 #include "intel-computer-volume-item.h"
 #include <peony-qt/file-utils.h>
 #include "intel-computer-model.h"
+
+#include <peony-qt/file-info.h>
+#include <peony-qt/file-info-job.h>
+
 #include <QMessageBox>
 #include <QDebug>
 #include <QApplication>
@@ -58,6 +62,13 @@ ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, Ab
 ComputerVolumeItem::ComputerVolumeItem(const QString uri,ComputerModel *model,AbstractComputerItem *parentNode,QObject *parent) : AbstractComputerItem(model,parentNode,parent){
     if(uri.isNull() || uri.isEmpty())
         return;
+
+    auto info = Peony::FileInfo::fromUri(uri);
+    if (info.get()->isEmptyInfo()) {
+        Peony::FileInfoJob j(info);
+        j.querySync();
+    }
+    m_info = info;
 
     collectInfoWhenGpartedOpen(uri);
 }
@@ -563,6 +574,11 @@ void ComputerVolumeItem::collectInfoWhenGpartedOpen(QString uri)
  */
 void ComputerVolumeItem::onFileAdded(const QString &uri)
 {
+    auto info = Peony::FileInfo::fromUri(uri);
+    if (info.get()->isEmptyInfo()) {
+        Peony::FileInfoJob j(info);
+        j.querySync();
+    }
     QString targetUri = Peony::FileUtils::getTargetUri(uri);
     if(!targetUri.contains("file:///") || targetUri.isEmpty())
         return;
