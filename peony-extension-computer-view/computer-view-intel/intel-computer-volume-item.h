@@ -26,6 +26,11 @@
 #include "intel-abstract-computer-item.h"
 #include <peony-qt/volume-manager.h>
 #include <peony-qt/PeonyFileWatcher>
+#include <memory>
+
+namespace Peony {
+class FileInfo;
+}
 
 namespace Intel {
 
@@ -105,6 +110,7 @@ private:
 
     Peony::FileWatcher *m_watcher = nullptr;
     QString m_targetUri;
+    std::shared_ptr<Peony::FileInfo> m_info = nullptr;
 };
 
 }
