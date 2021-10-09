@@ -68,6 +68,7 @@ private:
     QString m_uri;
     GCancellable *m_cancellable = nullptr;
     bool m_isUnixDevice = false;
+    bool m_isHidden = true;
 
     QString m_displayName;
     QIcon m_icon;
