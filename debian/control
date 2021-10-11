@@ -30,7 +30,8 @@ Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          samba-common-bin,
-         samba
+         samba,
+         kylin-status-manager
 Breaks: peony-admin
 Description: Allows one to quickly share a folder from the Peony file manager
  Peony is the official file manager for the UKUI desktop. This
@@ -44,6 +45,7 @@ Package: parchives
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
+         kylin-status-manager
 Recommends: engrampa
 Description: Peony qt plugin for file compress and uncompress
  Parchives is an archive manager for the UKUI environment. You can use
@@ -55,6 +57,7 @@ Package: peony-open-terminal
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
+         kylin-status-manager
 Recommends: mate-terminal
 Description: Peony plugin for opening terminals in arbitrary local paths
  Peony is the official file manager for the UKUI desktop. This
@@ -66,7 +69,8 @@ Description: Peony plugin for opening terminals in arbitrary local paths
 Package: peony-extension-computer-view
 Architecture: any
 Depends: ${misc:Depends},
-         ${shlibs:Depends}
+         ${shlibs:Depends},
+         kylin-status-manager
 Description: Peony plugin for displaying computer:/// with more information
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
@@ -79,7 +83,8 @@ Package: peony-set-wallpaper
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         qt5-image-formats-plugins
+         qt5-image-formats-plugins,
+         kylin-status-manager
 Description: Peony plugin for right click a picture to set as wallpaper
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
@@ -103,6 +108,7 @@ Package: peony-bluetooth
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
+         kylin-status-manager
 Recommends: ukui-bluetooth
 Description: Peony plugin for right click a file to send to other devices via Bluetooth
  Peony is the official file manager for the UKUI desktop. This
@@ -115,6 +121,7 @@ Package: peony-send-to-device
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
+         kylin-status-manager
 Description: Peony plugin for right click a file to send to mobile devices
  Peony is the official file manager for the UKUI desktop. This
  package adds extended functionality to the Peony file manager.
@@ -131,7 +138,8 @@ Depends: ${misc:Depends},
          peony-extension-computer-view,
 #         peony-admin,
          peony-set-wallpaper,
-         peony-send-to-device
+         peony-send-to-device,
+         kylin-status-manager
 Recommends: peony-share,
             ukui-bluetooth
 Description: Peony qt extensions
