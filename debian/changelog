@@ -1,3 +1,14 @@
+peony-extensions (3.2.2+1011ukui3.1) v101; urgency=medium
+
+  * Intel & sp1 合并版本
+      #84084 计算机视图分区显示问题（兰悦）
+    - 需求号: 无
+    - 其它改动说明: 合并sp1改动（至3.2.2+1009）
+    - 影响域:
+      右键菜单、共享 、计算机视图
+
+ -- Yue Lan <lanyue@kylinos.cn>  Mon, 11 Oct 2021 09:27:42 +0800
+
 peony-extensions (3.2.2+0930ukui3.1) v101; urgency=medium
 
   * Intel & sp1 合并版本
