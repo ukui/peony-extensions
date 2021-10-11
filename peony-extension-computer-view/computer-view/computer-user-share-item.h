@@ -77,6 +77,7 @@ private:
     qint64                              m_usedSpace = 0;
 
     bool                                m_isHidden = false;
+    GCancellable                        *m_cancellable = nullptr;
 };
 
 #endif // COMPUTERUSERSHAREITEM_H
