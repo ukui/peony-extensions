@@ -30,6 +30,8 @@
 #include <QLocale>
 #include <QApplication>
 #include <QProcess>
+#include <QUrl>
+#include <QStandardPaths>
 #include <QDebug>
 
 using namespace Peony;
@@ -48,6 +50,12 @@ QList<QAction*> EngrampaMenuPlugin::menuActions(Types types, const QString &uri,
     if (types == MenuPluginInterface::DirectoryView || types == MenuPluginInterface::DesktopWindow)
     {
         if (! selectionUris.isEmpty()) {
+            QUrl url = selectionUris.first();
+            if (url.path() == QStandardPaths::writableLocation(QStandardPaths::HomeLocation)) {
+                if (types == MenuPluginInterface::DesktopWindow) {
+                    return actions;
+                }
+            }
             auto info = FileInfo::fromUri(selectionUris.first());
             //special type mountable, return
             qDebug()<<"info isVirtual:"<<info->isVirtual()<<info->mimeType();
