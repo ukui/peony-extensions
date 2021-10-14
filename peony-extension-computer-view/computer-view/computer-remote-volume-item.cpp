@@ -106,10 +106,9 @@ QModelIndex ComputerRemoteVolumeItem::itemIndex()
 
 bool ComputerRemoteVolumeItem::isHidden()
 {
-    if (m_isHidden)
-        return m_isUnixDevice || m_uri == "computer:///root.link";
-    else
-        return m_isHidden;
+//  return m_isUnixDevice || m_uri == "computer:///root.link";
+    //fix bug#82398, hide unknow devices
+    return m_isHidden;
 }
 
 void ComputerRemoteVolumeItem::onFileAdded(const QString &uri)
