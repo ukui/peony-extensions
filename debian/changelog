@@ -1,3 +1,16 @@
+peony-extensions (3.2.2+1014ukui3.1) v101; urgency=medium
+
+  * Intel & sp1 合并版本
+    - Bug号:
+      #84704 文件管理器右键菜单家目录存在压缩选项
+    - 需求号: 无
+    - 其它改动说明:
+      为所有包增加kylin-status-manager依赖
+    - 影响域:
+      系统升级、右键菜单
+
+ -- Yue Lan <lanyue@kylinos.cn>  Thu, 14 Oct 2021 11:54:04 +0800
+
 peony-extensions (3.2.2+1011ukui3.1) v101; urgency=medium
 
   * Intel & sp1 合并版本
