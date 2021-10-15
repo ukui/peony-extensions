@@ -1,3 +1,14 @@
+peony-extensions (3.2.2+1015) v101; urgency=medium
+
+  * 0820-2版本更新（需要重编1015版本peony包后构建）
+    - Bug号: 无
+    - 需求号: 无
+    - 其它改动说明: 无
+    - 影响域:
+      文件管理器插件、二进制兼容问题
+
+ -- Yue Lan <lanyue@kylinos.cn>  Fri, 15 Oct 2021 10:52:53 +0800
+
 peony-extensions (3.2.2+1013) v101; urgency=medium
 
   * 0820-2版本更新
