@@ -27,7 +27,7 @@
 
 #include <properties-window-tab-page-plugin-iface.h>
 
-#include "net-usershare-helper.h"
+#include "usershare-manager.h"
 
 namespace Peony {
 

@@ -33,6 +33,7 @@
 
 #include <QtConcurrent>
 #include <QProcess>
+#include <QMessageBox>
 
 #include <QDebug>
 
@@ -91,7 +92,7 @@ void MateTerminalMenuPlugin::openTerminal(){
                    nullptr,
                    &err);
     if (err) {
-        qDebug()<<err->message;
+        qDebug()<<"openTerminal failed:"<<err->message;
         g_error_free(err);
         err = nullptr;
         //try again to open terminal
@@ -110,8 +111,15 @@ void MateTerminalMenuPlugin::tryOpenAgain()
     p.setProgram(terminal_cmd);
     p.setArguments(QStringList()<<"--working-directory"<<absPath);
 //    p.startDetached();
-    p.startDetached(p.program(), p.arguments());
+    bool result = p.startDetached(p.program(), p.arguments());
     p.waitForFinished(-1);
+
+    if (! result)
+    {
+        QMessageBox::critical(nullptr, QObject::tr("Open terminal fail"),
+                              QObject::tr("Open terminal failed, did you removed the default terminal? "
+                                          " If it's true please reinstall it."));
+    }
 }
 
 QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString &uri, const QStringList &selectionUris)

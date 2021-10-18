@@ -81,6 +81,8 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
     setContextMenuPolicy(Qt::CustomContextMenu);
     m_op = g_mount_operation_new();
     g_signal_connect (m_op, "aborted", G_CALLBACK (aborted_cb), this);
+    g_signal_connect (m_op, "ask-question", G_CALLBACK(ask_question_cb), this);
+    g_signal_connect (m_op, "ask-password", G_CALLBACK (ask_password_cb), this);
 
     connect(this, &QWidget::customContextMenuRequested, this, [=](const QPoint &pos){
         auto selectedIndexes = m_view->selectionModel()->selectedIndexes();
@@ -105,6 +107,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
         }
 
         if (items.count() == 0) {
+
             menu.addAction(tr("Connect a server"), [=](){
                 QString uri;
                 ConnectServerDialog* dlg = new ConnectServerDialog;
@@ -113,15 +116,10 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 if (code == QDialog::Rejected) {
                     return;
                 }
-
                 QUrl url = dlg->uri();
-
                 GFile* m_volume = g_file_new_for_uri(dlg->uri().toUtf8().constData());
                 m_remote_uri = dlg->uri();
-
                 g_file_mount_enclosing_volume(m_volume, G_MOUNT_MOUNT_NONE, m_op, nullptr, GAsyncReadyCallback(mount_enclosing_volume_callback), this);
-                g_signal_connect (m_op, "ask-question", G_CALLBACK(ask_question_cb), this);
-                g_signal_connect (m_op, "ask-password", G_CALLBACK (ask_password_cb), this);
             });
         } else if (items.count() == 1 && items.first()->uri() != "" && items.first()->uri() != "network:///") {
             auto item = items.first();
@@ -150,18 +148,18 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             }
 
             auto mount = VolumeManager::getMountFromUri(info->targetUri());
-
             //fix bug#52491, CDROM and DVD can format issue
-            if (!(info->targetUri().startsWith("file:///media") &&
-                  (info->uri().contains("DVD") || info->uri().contains("CDROM")))
-                 && !(info->targetUri().startsWith("burn:///")))
-            {
-                auto fdMenu = menu.addAction(tr("format"), [=] () {
-                    auto fd = new Format_Dialog(info->uri(), nullptr, m_view);
-                    fd->show();
-                });
-                if (!mount) {
-                    fdMenu->setEnabled(false);
+            if (nullptr != mount) {
+                QString unixDevice = FileUtils::getUnixDevice(info->uri());
+                if (! unixDevice.isNull() && ! unixDevice.contains("/dev/sr")
+                    && info->isVolume() && info->canUnmount()) {
+                    auto fdMenu = menu.addAction(tr("format"), [=] () {
+                        auto fd = new Format_Dialog(info->uri(), nullptr, m_view);
+                        fd->show();
+                    });
+                    if (! mount) {
+                        fdMenu->setEnabled(false);
+                    }
                 }
             }
 
@@ -231,7 +229,7 @@ static void ask_password_cb(GMountOperation *op, const char *message, const char
         g_mount_operation_reply (op, G_MOUNT_OPERATION_ABORTED);
         return;
     }
-
+    dlgLogin.syncRemoteServer(p_this->m_remote_uri);
     if (!dlgLogin.anonymous()) {
         g_mount_operation_set_username(p_this->m_op, dlgLogin.user().toUtf8().constData());
         g_mount_operation_set_password(p_this->m_op, dlgLogin.password().toUtf8().constData());

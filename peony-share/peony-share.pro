@@ -15,12 +15,10 @@ CONFIG += link_pkgconfig \
 
 #DESTDIR += ../testdir
 
-SOURCES += net-usershare-helper.cpp \
-           share-page.cpp \
+SOURCES += share-page.cpp \
 	   share-properties-page-plugin.cpp
 
-HEADERS += net-usershare-helper.h \
-           share-page.h \
+HEADERS += share-page.h \
 	   share-properties-page-plugin.h
 
 TRANSLATIONS += translations/peony-share-extension_cs.ts \
