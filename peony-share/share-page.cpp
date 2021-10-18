@@ -112,6 +112,7 @@ void SharePage::initFloorOne()
 
     m_iconButton = new QPushButton(floor1);
     m_iconButton->setIcon(QIcon::fromTheme(m_fileInfo.get()->iconName()));
+    m_iconButton->setFixedSize(QSize(60,60));
     m_iconButton->setIconSize(QSize(48, 48));
 
     layout1->addWidget(m_iconButton);
