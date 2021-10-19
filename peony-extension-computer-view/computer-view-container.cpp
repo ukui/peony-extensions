@@ -124,11 +124,12 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
         } else if (items.count() == 1 && items.first()->uri() != "" && items.first()->uri() != "network:///") {
             auto item = items.first();
             bool unmountable = item->canUnmount();
-            menu.addAction(tr("Unmount"), [=](){
-                item->unmount(G_MOUNT_UNMOUNT_NONE);
-            });
-            menu.actions().first()->setEnabled(unmountable);
-
+            if(!item->canEject()){
+                menu.addAction(tr("Unmount"), [=](){
+                    item->unmount(G_MOUNT_UNMOUNT_NONE);
+                });
+                menu.actions().first()->setEnabled(unmountable);
+            }
             /*eject function for volume. fix #18216*/
             auto ejectAction = menu.addAction(tr("Eject"), [=](){
                 item->eject(G_MOUNT_UNMOUNT_NONE);
