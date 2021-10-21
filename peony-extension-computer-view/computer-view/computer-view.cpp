@@ -376,8 +376,8 @@ void ComputerView::layoutVolumeIndexes(const QModelIndex &volumeParentIndex)
         return;
 
     //add tab
-    m_rect_cache.insert(volumeParentIndex, QRect(QPoint(0, m_totalHeight), QSize(this->viewport()->width(), m_tabPadding)));
-    m_totalHeight += m_tabPadding + 10;
+//    m_rect_cache.insert(volumeParentIndex, QRect(QPoint(0, m_totalHeight), QSize(this->viewport()->width(), m_tabPadding)));
+    m_totalHeight += m_tabPadding;
 
     //layout indexes
     int tmpX = 0;
