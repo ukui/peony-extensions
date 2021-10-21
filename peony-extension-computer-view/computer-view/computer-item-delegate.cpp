@@ -126,7 +126,7 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
 
         //draw text
         auto textRect = option.rect;
-        textRect.adjust(84, 10, -5, -10);
+        textRect.adjust(84, 10, -5, -30);
         textRect.translate(0, -option.fontMetrics.ascent());
         auto elideText = opt.fontMetrics.elidedText(opt.text, Qt::ElideMiddle, textRect.width());
         qApp->style()->drawItemText(painter, textRect, Qt::AlignLeft|Qt::AlignVCenter, option.palette, enable, elideText, QPalette::Text);
@@ -155,40 +155,51 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
                 spaceInfo = tr("You should mount volume first");
             }
         }
-        qApp->style()->drawItemText(painter, textRect.translated(0, 2*option.fontMetrics.ascent()), Qt::AlignLeft|Qt::AlignVCenter|Qt::TextWordWrap, option.palette, enable, spaceInfo, QPalette::Dark);
+
+        QRect spaceInfoArea = textRect.translated(0, 1.5 * option.fontMetrics.ascent());
+        spaceInfoArea.setHeight (option.fontMetrics.height () + 3 * option.fontMetrics.ascent());
+        qApp->style()->drawItemText(painter, spaceInfoArea, Qt::AlignLeft|Qt::AlignVCenter|Qt::TextWordWrap, option.palette, enable, spaceInfo, QPalette::Dark);
 
         if (shouldDrawProgress) {
             painter->save();
 
+            QRect progressRect = spaceInfoArea.translated (0, spaceInfoArea.height ());
+            progressRect.adjust (0, -10, -10, 0);
+
             QPainterPath clipPath;
             clipPath.addRoundedRect(option.rect, 6, 6);
             painter->setClipPath(clipPath);
+
             qreal percent = used*1.0/total*1.0;
-            int progressBarWidth = option.rect.width() * percent;
+            int progressBarWidth = progressRect.width() * percent;
             painter->save();
             QPen pen;
-            //pen.setColor(percent < 0.8?Qt::blue:Qt::red);
+            pen.setWidth(6);
+            pen.setColor (option.palette.window ().color ());
+            pen.setCapStyle(Qt::PenCapStyle::RoundCap);
+            pen.setJoinStyle(Qt::PenJoinStyle::RoundJoin);
+
+            // background
+            painter->setPen (pen);
+            painter->drawLine(progressRect.topLeft (), progressRect.topRight ());
+
             if (percent < 0.8) {
                 pen.setColor(option.palette.highlight().color());
             } else {
                 pen.setColor(Qt::red);
             }
-            pen.setCapStyle(Qt::PenCapStyle::RoundCap);
-            pen.setJoinStyle(Qt::PenJoinStyle::RoundJoin);
-            pen.setWidth(6);
 
             painter->setPen(pen);
-            auto pos = option.rect.bottomLeft();
+            auto pos = progressRect.topLeft ();
             pos.setX(pos.x() + progressBarWidth);
-            pos.setY(pos.y() - 5);
-            painter->drawLine(option.rect.bottomLeft() + QPoint(5, -5), pos);
+            painter->drawLine(progressRect.topLeft (), pos);
             painter->restore();
             painter->restore();
         }
         painter->restore();
     } else {
         //auto textRect = qApp->style()->subElementRect(QStyle::SE_ItemViewItemText, &option, m_styleIconView);
-        drawTab(painter, option, index);
+        //drawTab(painter, option, index);
     }
 }
 

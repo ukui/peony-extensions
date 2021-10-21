@@ -98,7 +98,7 @@ private:
     int m_totalWidth = 0;
     int m_hSpacing = 20;
     int m_vSpacing = 20;
-    int m_tabPadding = 36;
+    int m_tabPadding = 16;
 
     QSize m_volumeItemFixedSize = QSize(256, 108);
     QSize m_remoteItemFixedSize = QSize(108, 144);
