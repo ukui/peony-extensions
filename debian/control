@@ -106,8 +106,11 @@ Depends: ${misc:Depends},
          peony-extension-computer-view,
 #         peony-admin,
          peony-set-wallpaper
-Recommends: peony-share
-Suggests: ukui-bluetooth
+Recommends: peony-share, 
+Breaks: peony-bluetooth, 
+                 peony-send-to-device
+Replaces: peony-bluetooth, 
+                      peony-send-to-device
 Description: Peony qt extensions
  Peony is the official file manager for the UKUI desktop. This
  package is a metapackage, which adds extended functionality to
