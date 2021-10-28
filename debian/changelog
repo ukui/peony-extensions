@@ -1,3 +1,15 @@
+peony-extensions (3.2.2+1028) v101; urgency=medium
+
+  * sp2 1108 版本（需首先构建完成peony 1028）
+    - Bug号:
+      #83206 U盘既有卸载又有弹出选项（杨玲）
+    - 需求号: 无
+    - 其它改动说明: 无
+    - 影响域:
+      计算机视图、U盘、文件管理器插件、二进制兼容问题
+
+ -- Yue Lan <lanyue@kylinos.cn>  Thu, 28 Oct 2021 12:01:12 +0800
+
 peony-extensions (3.2.2+1015) v101; urgency=medium
 
   * 0820-2版本更新（需要重编1015版本peony包后构建）
