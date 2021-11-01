@@ -122,7 +122,12 @@ void SharePage::initFloorOne()
     m_folderName = new QLabel(floor1);
     m_sharedState = new QLabel(floor1);
 
-    m_folderName->setText(m_fileInfo.get()->displayName());
+    //fix bug:#82320
+    if (QRegExp("^file:///data/usershare(/{,1})$").exactMatch(m_fileInfo->uri())) {
+        m_folderName->setText(tr("usershare"));
+    } else {
+        m_folderName->setText(m_fileInfo.get()->displayName());
+    }
     m_sharedState->setText(m_shareInfo.isShared ? tr("share this folder") : tr("don`t share this folder"));
 
     vBoxLayout->addStretch(1);
