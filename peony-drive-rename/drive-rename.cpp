@@ -135,6 +135,9 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
             if (ok && !text.isNull() && !text.isEmpty()) {
                 // 修改名字
                 if (mount) {
+                    int ret = QMessageBox::warning (nullptr, tr("Warning"), tr("Renaming will unmount the device. Do you want to continue?"), QMessageBox::Ok | QMessageBox::Cancel);
+                    if (QMessageBox::Cancel == ret) return;
+
                     // 释放、释放 GMount
                     DeviceRenameData* data = new DeviceRenameData;
                     data->devName = mDevName;
@@ -144,7 +147,7 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
                 } else {
                     int ret = device_rename(mDevName.toUtf8().constData(), text.toUtf8().constData());
                     if (0 != ret) {
-                        QMessageBox::warning(nullptr, tr("Warning"), tr("Failed to rename!"),QMessageBox::Ok);
+                        QMessageBox::warning (nullptr, tr("Warning"), tr("The device may not support the rename operation, rename failed!"), QMessageBox::Ok);
                     }
                 }
             }
@@ -224,12 +227,13 @@ static void udisk_umounted (GMount* mount, GAsyncResult *res, gpointer udata)
 
     if (g_mount_unmount_with_operation_finish (G_MOUNT (mount), res, &error)) {
         ret = device_rename (data->devName.toUtf8 ().constData (), data->rename.toUtf8 ().constData ());
+        error = g_error_new (1, G_IO_ERROR_FAILED, data->pThis->tr("The device may not support the rename operation, rename failed!").toUtf8 ().constData (), NULL);
     } else {
         if (error) qDebug() << error->message;
     }
 
-    if (ret != 0) {
-        QMessageBox::warning(nullptr, data->pThis->tr("Warning"), data->pThis->tr("Failed to rename!"),QMessageBox::Ok);
+    if (ret != 0 && error) {
+        QMessageBox::warning(nullptr, data->pThis->tr("Warning"), error->message, QMessageBox::Ok);
     }
 
     if (data)   delete data;
