@@ -6,6 +6,7 @@ DEFINES += VERSION='\\"$${VERSION}\\"'
 SUBDIRS = \
 #    peony-admin                         \
     peony-share                         \
+    peony-drive-rename                  \
     peony-send-to-device                \
     peony-set-wallpaper                 \
     peony-bluetooth-plugin              \
