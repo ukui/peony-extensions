@@ -35,8 +35,18 @@
 #include <QFile>
 #include <QApplication>
 
+typedef struct _DeviceRenameData        DeviceRenameData;
+
 int device_rename(const char* devName, const char* name);
+static void udisk_umounted (GMount* mount, GAsyncResult *res, gpointer udata);
 UDisksObject* getObjectFromBlockDevice(UDisksClient* client, const gchar* bdevice);
+
+struct _DeviceRenameData
+{
+    QString             devName;
+    QString             rename;
+    Peony::DriveRename* pThis;
+};
 
 Peony::DriveRename::DriveRename(QObject *parent) : QObject(parent), mEnable(true)
 {
@@ -60,20 +70,54 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
     g_autoptr(GFile) file = g_file_new_for_uri(suri.toUtf8().constData());
     g_return_val_if_fail(file, l);
 
-    g_autoptr(GError) error = NULL;
-    g_autoptr(GFileInfo) fileInfo = g_file_query_info(file, "mountable::unix-device-file", G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, nullptr, &error);
-    if (error) {
-        qDebug() << "error: " << error->message;
-    }
-    g_return_val_if_fail(fileInfo && !error, l);
+    // check is mount point and get dev name
+    g_autoptr (GError) error = NULL;
+    g_autoptr (GFileInfo) fileInfo = g_file_query_info (file, G_FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT "," G_FILE_ATTRIBUTE_MOUNTABLE_CAN_UNMOUNT "," G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE "," G_FILE_ATTRIBUTE_STANDARD_TARGET_URI, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL, &error);
+    if (error) qDebug() << error->message;
+    g_return_val_if_fail (G_IS_FILE_INFO (fileInfo) && !error, l);
 
-    g_autofree char* devName = g_file_info_get_attribute_as_string(fileInfo, G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE);
-    g_return_val_if_fail(devName, l);
+    gboolean canUmount = g_file_info_get_attribute_boolean (fileInfo, G_FILE_ATTRIBUTE_MOUNTABLE_CAN_UNMOUNT);
+    gboolean isMountPoint = g_file_info_get_attribute_boolean (fileInfo, G_FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT);
+
+    g_autofree char* devName = g_file_info_get_attribute_as_string (fileInfo, G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE);
+
+    bool canRename = (isMountPoint || canUmount || devName);
+
+    qDebug() << "uri: " << uri << "  " << (canRename ? "can rename" : "can not rename");
+    g_return_val_if_fail (canRename, l);
+
+    // if device has mounted
+    GMount* mount = NULL;
+    if (isMountPoint || canUmount) {
+        if (uri.startsWith ("computer://")) {
+            g_autofree char* targetUri = g_file_info_get_attribute_as_string (fileInfo, G_FILE_ATTRIBUTE_STANDARD_TARGET_URI);
+            if (targetUri) {
+                g_autoptr (GFile) tfile = g_file_new_for_uri (targetUri);
+                if (G_IS_FILE (tfile)) {
+                    mount = g_file_find_enclosing_mount (tfile, NULL, &error);
+                    if (error) qDebug() << error->message;
+                }
+            }
+        } else {
+            mount = g_file_find_enclosing_mount (file, NULL, &error);
+            if (error) qDebug() << error->message;
+        }
+
+        g_return_val_if_fail (G_IS_MOUNT (mount), l);
+
+        if (!devName) {
+            g_autoptr (GVolume) volume = g_mount_get_volume (mount);
+            g_return_val_if_fail (G_IS_VOLUME (volume), l);
+            devName = g_volume_get_identifier (volume, G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE);
+        }
+    }
+
+    g_return_val_if_fail (devName, l);
 
     // 注意要筛选的设备，块设备、非根设备
     // 判断是否为光盘设备(光盘设备不允许重命名)
     if (suri.startsWith("computer:///") && suri.endsWith(".drive")
-            && 0 != g_strncasecmp("/dev/sr", devName, 7)) {
+            && 0 != g_ascii_strncasecmp("/dev/sr", devName, 7)) {
         mDevName = devName;
         QAction* action = new QAction(tr("Rename"));
         if (action) {
@@ -90,9 +134,18 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
             QString text = QInputDialog::getText(nullptr, tr("Rename"), tr("Device name:"), QLineEdit::Normal, "", &ok);
             if (ok && !text.isNull() && !text.isEmpty()) {
                 // 修改名字
-                int ret = device_rename(mDevName.toUtf8().constData(), text.toUtf8().constData());
-                if (0 != ret) {
-                    QMessageBox::warning(nullptr, tr("Warning"), tr("Failed to rename!"),QMessageBox::Ok);
+                if (mount) {
+                    // 释放、释放 GMount
+                    DeviceRenameData* data = new DeviceRenameData;
+                    data->devName = mDevName;
+                    data->rename = text;
+                    data->pThis = this;
+                    g_mount_unmount_with_operation (mount, G_MOUNT_UNMOUNT_NONE, NULL, NULL, (GAsyncReadyCallback) udisk_umounted, data);
+                } else {
+                    int ret = device_rename(mDevName.toUtf8().constData(), text.toUtf8().constData());
+                    if (0 != ret) {
+                        QMessageBox::warning(nullptr, tr("Warning"), tr("Failed to rename!"),QMessageBox::Ok);
+                    }
                 }
             }
         });
@@ -125,9 +178,13 @@ int device_rename(const char* devName, const char* name)
     g_variant_builder_add (&optionsBuilder, "{sv}", "label", g_variant_new_string (devName));
     g_variant_builder_add (&optionsBuilder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
 
-    udisks_filesystem_call_set_label_sync (diskFilesystem, name, g_variant_builder_end(&optionsBuilder), NULL, NULL);
+    g_autoptr (GError) error = NULL;
+    gboolean ret = udisks_filesystem_call_set_label_sync (diskFilesystem, name, g_variant_builder_end(&optionsBuilder), NULL, &error);
+    if (error) {
+        qDebug() << error->message;
+    }
 
-    return 0;
+    return ret ? 0 : -1;
 }
 
 
@@ -156,4 +213,25 @@ UDisksObject* getObjectFromBlockDevice(UDisksClient* client, const gchar* bdevic
     g_object_unref (block);
 
     return object;
+}
+
+static void udisk_umounted (GMount* mount, GAsyncResult *res, gpointer udata)
+{
+    g_autoptr (GError) error = NULL;
+
+    int ret = -1;
+    DeviceRenameData* data = (DeviceRenameData*) udata;
+
+    if (g_mount_unmount_with_operation_finish (G_MOUNT (mount), res, &error)) {
+        ret = device_rename (data->devName.toUtf8 ().constData (), data->rename.toUtf8 ().constData ());
+    } else {
+        if (error) qDebug() << error->message;
+    }
+
+    if (ret != 0) {
+        QMessageBox::warning(nullptr, data->pThis->tr("Warning"), data->pThis->tr("Failed to rename!"),QMessageBox::Ok);
+    }
+
+    if (data)   delete data;
+    if (mount)  g_object_unref (mount);
 }
