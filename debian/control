@@ -121,6 +121,16 @@ Description: Peony plugin for right click a file to send to mobile devices
  In addition to copy files to mobile device, you can also choose one
  File, then right-click to quickly send the file.
 
+Package:peony-drive-rename
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+Description: Peony plugin for select a block device and rename it. This
+ package adds extended functionality to the Peony file manager.
+ .
+ In this way, we can right click the device and quickly rename it, no need
+ to rename it use other tools like gparted.
+
 Package: peony-extensions
 Architecture: any
 Depends: ${misc:Depends},
@@ -132,7 +142,8 @@ Depends: ${misc:Depends},
          peony-set-wallpaper,
          peony-send-to-device
 Recommends: peony-share,
-            ukui-bluetooth
+            ukui-bluetooth,
+            peony-drive-rename
 Description: Peony qt extensions
  Peony is the official file manager for the UKUI desktop. This
  package is a metapackage, which adds extended functionality to
