@@ -197,6 +197,10 @@ QString ComputerModel::tryGetVolumeRealUriFromUri(const QString &uri)
         return realUri;
     }
 
+    if (uri == "file:///data" && Peony::FileUtils::isFileExsit("file:///data/usershare")) {
+        return "computer:///ukui-data-volume";
+    }
+
     QList<QString>::iterator iter;
     for(iter = m_volumeRealUri.begin(); iter != m_volumeRealUri.end(); iter++) {
         realUri = *iter;
