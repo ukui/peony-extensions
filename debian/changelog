@@ -1,3 +1,16 @@
+peony-extensions (3.2.2+1111) v101; urgency=medium
+
+  * sp2 1108 版本
+    - Bug号: 无
+    - 需求号: 无
+    - 其它改动说明:
+      #00000 同步bluetooth右键发送文件的dbus接口（何美宏）
+      #57473 发送到移动设备屏蔽只读U盘（丁敬）
+    - 影响域:
+      蓝牙、发送到移动设备
+
+ -- Yue Lan <lanyue@kylinos.cn>  Thu, 11 Nov 2021 09:32:39 +0800
+
 peony-extensions (3.2.2+1105) v101; urgency=medium
 
   * sp2 1108 版本
