@@ -76,7 +76,7 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
                     actions << compress;
                     connect(compress, &QAction::triggered, [=](){
                         QString path = selectionUris.at(0);
-                        QDBusMessage m = QDBusMessage::createMethodCall("org.ukui.bluetooth","/org/ukui/bluetooth","org.ukui.bluetooth","file_transfer");
+                        QDBusMessage m = QDBusMessage::createMethodCall("com.ukui.bluetooth","/com/ukui/bluetooth","com.ukui.bluetooth","setSendTransferFileMesg");
                         m << target;
                         qDebug() << Q_FUNC_INFO << m.arguments().at(0).value<QString>() <<__LINE__;
                         // 发送Message
