@@ -28,9 +28,9 @@
 <context>
     <name>ComputerUserShareItem</name>
     <message>
-        <location filename="computer-view/computer-user-share-item.cpp" line="16"/>
+        <location filename="computer-view/computer-user-share-item.cpp" line="20"/>
         <source>User Share</source>
-        <translation>共享数据</translation>
+        <translation>本机共享</translation>
     </message>
 </context>
 <context>
@@ -175,12 +175,12 @@
         <translation type="vanished">确定</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="127"/>
+        <location filename="computer-view-container.cpp" line="128"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="133"/>
+        <location filename="computer-view-container.cpp" line="134"/>
         <source>Eject</source>
         <translation>弹出</translation>
     </message>
@@ -190,13 +190,13 @@
         <translation>格式化</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="167"/>
-        <location filename="computer-view-container.cpp" line="184"/>
+        <location filename="computer-view-container.cpp" line="168"/>
+        <location filename="computer-view-container.cpp" line="185"/>
         <source>Property</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="169"/>
+        <location filename="computer-view-container.cpp" line="170"/>
         <source>You have to mount this volume first</source>
         <translation>需要首先挂载分区</translation>
     </message>
