@@ -1,3 +1,14 @@
+peony-extensions (3.2.2+1122ukui3.1) v101; urgency=medium
+
+  * Intel & sp1 合并版本
+    - Bug号: 无
+    - 需求号: 无
+    - 其它改动说明: 
+      update with peony
+    - 影响域: 无
+     
+ -- hewenfei <hewenfei@kylinos.cn>  Mon, 22 Nov 2021 14:47:53 +0800
+
 peony-extensions (3.2.2+1028ukui3.1) v101; urgency=medium
 
   * Intel & sp1 合并版本
