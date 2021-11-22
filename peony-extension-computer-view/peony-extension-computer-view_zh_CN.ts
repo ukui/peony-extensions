@@ -28,9 +28,13 @@
 <context>
     <name>ComputerUserShareItem</name>
     <message>
-        <location filename="computer-view/computer-user-share-item.cpp" line="20"/>
         <source>User Share</source>
-        <translation>本机共享</translation>
+        <translation type="vanished">本机共享</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-user-share-item.cpp" line="20"/>
+        <source>Data</source>
+        <translation>数据盘</translation>
     </message>
 </context>
 <context>
@@ -236,7 +240,7 @@ Do you want to unmount forcely?</source>
         <location filename="computer-view/computer-volume-item.cpp" line="588"/>
         <source>Error: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>错误: %1\n</translation>
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="583"/>
