@@ -66,6 +66,7 @@ protected:
     //monitor
     static void volume_changed_callback(GVolume *volume, ComputerVolumeItem *p_this);
     static void volume_removed_callback(GVolume *volume, ComputerVolumeItem *p_this);
+    static void mount_changed_callback(GVolumeMonitor* volumeMonitor, GMount *gmount, ComputerVolumeItem *p_this);
 
     //info
     static void qeury_info_async_callback(GFile *file, GAsyncResult *res, ComputerVolumeItem *p_this);
@@ -97,10 +98,14 @@ private:
     QString m_uri;
     QString m_vfs_uri;
 
-    std::shared_ptr<Peony::Volume> m_volume;
-    std::shared_ptr<Peony::Mount> m_mount;
-    GCancellable *m_cancellable;
-    GCancellable *m_tmpCancellable;
+    std::shared_ptr<Peony::Volume> m_volume = nullptr;
+    std::shared_ptr<Peony::Mount> m_mount = nullptr;
+    GCancellable *m_cancellable = nullptr;
+    GCancellable *m_tmpCancellable = nullptr;
+
+    gulong m_volumeChangedHandle = 0;
+    gulong m_mountChangedHandle = 0;
+    gulong m_volumeRemovedHandle = 0;
 
     //info
     QString m_displayName;

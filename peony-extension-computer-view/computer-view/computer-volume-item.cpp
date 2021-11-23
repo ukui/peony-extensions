@@ -67,8 +67,10 @@ ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, Ab
 
     updateInfoAsync();
 
-    g_signal_connect(volume, "changed", G_CALLBACK(volume_changed_callback), this);
-    g_signal_connect(volume, "removed", G_CALLBACK(volume_removed_callback), this);
+    m_volumeChangedHandle = g_signal_connect(volume, "changed", G_CALLBACK(volume_changed_callback), this);
+    m_volumeRemovedHandle = g_signal_connect(volume, "removed", G_CALLBACK(volume_removed_callback), this);
+    m_mountChangedHandle = g_signal_connect(g_volume_monitor_get(), "mount_changed", G_CALLBACK(mount_changed_callback), this);
+
     m_model->endInsterItem();
 }
 
@@ -81,6 +83,11 @@ ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, Ab
 
 ComputerVolumeItem::~ComputerVolumeItem()
 {
+    g_signal_handler_disconnect(g_volume_monitor_get(), m_mountChangedHandle);
+    if(m_volume){
+        g_signal_handler_disconnect(m_volume->getGVolume(), m_volumeChangedHandle);
+        g_signal_handler_disconnect(m_volume->getGVolume(), m_volumeRemovedHandle);
+    }
     g_cancellable_cancel(m_cancellable);
     g_object_unref(m_cancellable);
 
@@ -397,6 +404,8 @@ bool ComputerVolumeItem::isHidden()
 void ComputerVolumeItem::volume_changed_callback(GVolume *volume, ComputerVolumeItem *p_this)
 {
     //QMessageBox::information(0, 0, tr("Volume Changed"));
+    if(!p_this)
+        return;
     p_this->m_mount = nullptr;
     p_this->m_uri = nullptr;
     p_this->m_icon = QIcon();
@@ -417,6 +426,16 @@ void ComputerVolumeItem::volume_removed_callback(GVolume *volume, ComputerVolume
     parentNode->m_children.removeAt(row);
     p_this->deleteLater();
     parentNode->m_model->endRemoveItem();
+}
+
+void ComputerVolumeItem::mount_changed_callback(GVolumeMonitor *volumeMonitor, GMount *gmount, ComputerVolumeItem *p_this)
+{
+    if (p_this){
+        p_this->m_usedSpace = 0;
+        p_this->m_totalSpace = 0;
+        p_this->updateInfo();
+        qDebug()<<"mount changed uri: "<<p_this->uri();
+    }
 }
 
 QString iconFileFromMountpoint(const QString& mountpoint){
