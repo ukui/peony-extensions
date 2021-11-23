@@ -28,8 +28,8 @@
 <context>
     <name>ComputerUserShareItem</name>
     <message>
-        <location filename="computer-view/computer-user-share-item.cpp" line="16"/>
-        <source>User Share</source>
+        <location filename="computer-view/computer-user-share-item.cpp" line="20"/>
+        <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -167,12 +167,12 @@
         <translation type="vanished">sftp://, atd…</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="127"/>
+        <location filename="computer-view-container.cpp" line="128"/>
         <source>Unmount</source>
         <translation>Odpojit</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="133"/>
+        <location filename="computer-view-container.cpp" line="134"/>
         <source>Eject</source>
         <translation type="unfinished"></translation>
     </message>
@@ -182,13 +182,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="167"/>
-        <location filename="computer-view-container.cpp" line="184"/>
+        <location filename="computer-view-container.cpp" line="168"/>
+        <location filename="computer-view-container.cpp" line="185"/>
         <source>Property</source>
         <translation>Vlastnost</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="169"/>
+        <location filename="computer-view-container.cpp" line="170"/>
         <source>You have to mount this volume first</source>
         <translation>Tento svazek je třeba nejprve připojit (mount)</translation>
     </message>
