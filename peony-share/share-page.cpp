@@ -88,7 +88,7 @@ void SharePage::saveAllChange()
     if (checked) {
         //FIXME:暂时不支持自定义共享名 - Currently does not support custom shared name
         m_shareInfo.name = m_fileInfo->displayName();
-        m_shareInfo.readOnly = m_shareReadOnlyCheckBox->isChecked();
+        m_shareInfo.readOnly = !m_allowGuestModify->isChecked();
         m_shareInfo.allowGuest = m_shareAllowGuestCheckBox->isChecked();
         m_shareInfo.isShared = true;
 
@@ -163,7 +163,7 @@ void SharePage::initFloorTwo()
         if (checked) {
             //FIXME:暂时不支持自定义共享名 - Currently does not support custom shared name
             m_shareInfo.name = m_fileInfo->displayName();
-            m_shareInfo.readOnly = m_shareReadOnlyCheckBox->isChecked();
+            m_shareInfo.readOnly = !m_allowGuestModify->isChecked();
             m_shareInfo.allowGuest = m_shareAllowGuestCheckBox->isChecked();
 
             if (m_floor3)
@@ -187,7 +187,7 @@ void SharePage::initFloorThree()
     m_floor3 = new QFrame(this);
 
     QVBoxLayout * layout3 = new QVBoxLayout(m_floor3);
-    layout3->setContentsMargins(24, 16, 24, 0);
+    layout3->setContentsMargins(24, 0, 24, 16);
 
     m_floor3->setLayout(layout3);
 
@@ -207,13 +207,13 @@ void SharePage::initFloorThree()
 
     layout3->addLayout(formLayout);
 
-    m_shareReadOnlyCheckBox = new QCheckBox(tr("Read Only"), this);
-    m_shareReadOnlyCheckBox->setChecked(m_shareInfo.readOnly);
+    m_allowGuestModify = new QCheckBox(tr("Allow others to create and delete files"), this);
+    m_allowGuestModify->setChecked(!m_shareInfo.readOnly);
 
     m_shareAllowGuestCheckBox = new QCheckBox(tr("Allow Anonymous"));
     m_shareAllowGuestCheckBox->setChecked(m_shareInfo.allowGuest);
 
-    layout3->addWidget(m_shareReadOnlyCheckBox);
+    layout3->addWidget(m_allowGuestModify);
     layout3->addWidget(m_shareAllowGuestCheckBox);
 
     m_floor3->setVisible(m_shareInfo.isShared);
@@ -225,8 +225,8 @@ void SharePage::initFloorThree()
         this->thisPageChanged();
     });
 
-    connect(m_shareReadOnlyCheckBox, &QCheckBox::clicked, this, [=](bool checked) {
-        m_shareInfo.readOnly = checked;
+    connect(m_allowGuestModify, &QCheckBox::clicked, this, [=](bool checked) {
+        m_shareInfo.readOnly = !checked;
         this->thisPageChanged();
     });
 

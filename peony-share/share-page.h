@@ -87,7 +87,7 @@ private:
     QLineEdit *m_shareNameEdit = nullptr;
     QLineEdit *m_commentEdit   = nullptr;
 
-    QCheckBox *m_shareReadOnlyCheckBox   = nullptr;
+    QCheckBox *m_allowGuestModify   = nullptr;
     QCheckBox *m_shareAllowGuestCheckBox = nullptr;
 
 };
