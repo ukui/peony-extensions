@@ -23,6 +23,8 @@
 #ifndef SHAREPAGE_H
 #define SHAREPAGE_H
 
+#include "SwitchButton/switchbutton.h"
+
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -79,7 +81,7 @@ private:
     QLabel      *m_sharedState = nullptr;
 
     //floor2
-    QCheckBox *m_shareCheckBox = nullptr;
+    SwitchButton *m_switchButton = nullptr;
     //floor3
     QFrame    *m_floor3        = nullptr;
     QLineEdit *m_shareNameEdit = nullptr;
