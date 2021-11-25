@@ -49,7 +49,9 @@ public:
     {
         QFrame * separate = new QFrame(this);
         separate->setFrameShape(QFrame::HLine);
-
+        QPalette palette = separate->palette();
+        palette.setColor(QPalette::WindowText,QColor("#F0F0F0FF"));
+        separate->setPalette(palette);
         m_layout->addWidget(separate);
     }
 
