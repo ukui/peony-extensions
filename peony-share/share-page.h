@@ -23,6 +23,8 @@
 #ifndef SHAREPAGE_H
 #define SHAREPAGE_H
 
+#include "SwitchButton/switchbutton.h"
+
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -47,7 +49,9 @@ public:
     {
         QFrame * separate = new QFrame(this);
         separate->setFrameShape(QFrame::HLine);
-
+        QPalette palette = separate->palette();
+        palette.setColor(QPalette::WindowText,QColor("#F0F0F0FF"));
+        separate->setPalette(palette);
         m_layout->addWidget(separate);
     }
 
@@ -79,13 +83,13 @@ private:
     QLabel      *m_sharedState = nullptr;
 
     //floor2
-    QCheckBox *m_shareCheckBox = nullptr;
+    SwitchButton *m_switchButton = nullptr;
     //floor3
     QFrame    *m_floor3        = nullptr;
     QLineEdit *m_shareNameEdit = nullptr;
     QLineEdit *m_commentEdit   = nullptr;
 
-    QCheckBox *m_shareReadOnlyCheckBox   = nullptr;
+    QCheckBox *m_allowGuestModify   = nullptr;
     QCheckBox *m_shareAllowGuestCheckBox = nullptr;
 
 };

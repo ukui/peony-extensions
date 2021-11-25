@@ -16,10 +16,12 @@ CONFIG += link_pkgconfig \
 #DESTDIR += ../testdir
 
 SOURCES += share-page.cpp \
-	   share-properties-page-plugin.cpp
+	   share-properties-page-plugin.cpp \
+	   SwitchButton/switchbutton.cpp
 
 HEADERS += share-page.h \
-	   share-properties-page-plugin.h
+	   share-properties-page-plugin.h \
+	   SwitchButton/switchbutton.h
 
 TRANSLATIONS += translations/peony-share-extension_cs.ts \
                 translations/peony-share-extension_tr.ts \
