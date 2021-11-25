@@ -24,7 +24,7 @@
 <context>
     <name>SharePage</name>
     <message>
-        <location filename="../share-page.cpp" line="150"/>
+        <location filename="../share-page.cpp" line="160"/>
         <source>Share folder</source>
         <translation>Klasör paylaş</translation>
     </message>
@@ -33,34 +33,43 @@
         <translation type="vanished">Paylaş:</translation>
     </message>
     <message>
-        <location filename="../share-page.cpp" line="125"/>
-        <location filename="../share-page.cpp" line="168"/>
+        <location filename="../share-page.cpp" line="127"/>
+        <source>usershare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../share-page.cpp" line="131"/>
+        <location filename="../share-page.cpp" line="177"/>
         <source>share this folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../share-page.cpp" line="125"/>
-        <location filename="../share-page.cpp" line="175"/>
+        <location filename="../share-page.cpp" line="131"/>
+        <location filename="../share-page.cpp" line="184"/>
         <source>don`t share this folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../share-page.cpp" line="201"/>
+        <location filename="../share-page.cpp" line="210"/>
         <source>Share name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../share-page.cpp" line="206"/>
-        <source>Read Only</source>
-        <translation>Sadece Okunabilir</translation>
+        <location filename="../share-page.cpp" line="215"/>
+        <source>Allow others to create and delete files</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../share-page.cpp" line="209"/>
+        <source>Read Only</source>
+        <translation type="vanished">Sadece Okunabilir</translation>
+    </message>
+    <message>
+        <location filename="../share-page.cpp" line="218"/>
         <source>Allow Anonymous</source>
         <translation>Herkese İzin Ver</translation>
     </message>
     <message>
-        <location filename="../share-page.cpp" line="202"/>
+        <location filename="../share-page.cpp" line="211"/>
         <source>Comment:</source>
         <translation>Yorum yap:</translation>
     </message>

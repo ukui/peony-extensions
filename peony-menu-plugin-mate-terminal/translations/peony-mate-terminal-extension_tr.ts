@@ -4,8 +4,8 @@
 <context>
     <name>Peony::MateTerminalMenuPlugin</name>
     <message>
-        <location filename="../mate-terminal-menu-plugin.cpp" line="150"/>
-        <location filename="../mate-terminal-menu-plugin.cpp" line="169"/>
+        <location filename="../mate-terminal-menu-plugin.cpp" line="162"/>
+        <location filename="../mate-terminal-menu-plugin.cpp" line="181"/>
         <source>Open Directory in Terminal</source>
         <translation>Dizini Terminalde Aç</translation>
     </message>
@@ -23,12 +23,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../mate-terminal-menu-plugin.cpp" line="119"/>
+        <location filename="../mate-terminal-menu-plugin.cpp" line="125"/>
         <source>Open terminal fail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mate-terminal-menu-plugin.cpp" line="120"/>
+        <location filename="../mate-terminal-menu-plugin.cpp" line="126"/>
         <source>Open terminal failed, did you removed the default terminal?  If it&apos;s true please reinstall it.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -28,9 +28,13 @@
 <context>
     <name>ComputerUserShareItem</name>
     <message>
-        <location filename="computer-view/computer-user-share-item.cpp" line="16"/>
         <source>User Share</source>
-        <translation>共享数据</translation>
+        <translation type="vanished">共享数据</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-user-share-item.cpp" line="20"/>
+        <source>Data</source>
+        <translation>数据盘</translation>
     </message>
 </context>
 <context>
@@ -42,7 +46,7 @@
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="58"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="98"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="105"/>
         <source>File System</source>
         <translation>文件系统</translation>
     </message>
@@ -103,18 +107,18 @@
 <context>
     <name>Intel::ComputerVolumeItem</name>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="35"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="39"/>
         <source>Volume</source>
         <translation>本地分区</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="43"/>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="92"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="47"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="103"/>
         <source>System Disk</source>
         <translation>系统盘</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="82"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="93"/>
         <source>User Disk</source>
         <translation>用户盘</translation>
     </message>
@@ -247,12 +251,12 @@
         <translation type="vanished">确定</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="127"/>
+        <location filename="computer-view-container.cpp" line="128"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="133"/>
+        <location filename="computer-view-container.cpp" line="134"/>
         <source>Eject</source>
         <translation>弹出</translation>
     </message>
@@ -262,13 +266,13 @@
         <translation>格式化</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="167"/>
-        <location filename="computer-view-container.cpp" line="184"/>
+        <location filename="computer-view-container.cpp" line="168"/>
+        <location filename="computer-view-container.cpp" line="185"/>
         <source>Property</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="169"/>
+        <location filename="computer-view-container.cpp" line="170"/>
         <source>You have to mount this volume first</source>
         <translation>需要首先挂载分区</translation>
     </message>
@@ -286,60 +290,60 @@
         <translation>显示设备分区, 网络目录和个人目录.</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="484"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="579"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="495"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="598"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation>一个或多个程序阻止卸载操作。</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="486"/>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="495"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="580"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="584"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="588"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="497"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="506"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="599"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
         <source>Unmount failed</source>
         <translation>卸载失败</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="487"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="498"/>
         <source>Error: %1
 Do you want to unmount forcely?</source>
         <translation>错误：%1
 是否强制卸载？</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="580"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="588"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="599"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
         <source>Error: %1
 </source>
         <translation>错误: %1\n</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="494"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="583"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="505"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="602"/>
         <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
         <translation>无法卸载，您可能需要先关闭一些程序，如分区编辑器等。</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="496"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="584"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="507"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="520"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="611"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="626"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="531"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="630"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="645"/>
         <source>Eject failed</source>
         <translation>弹出失败</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="521"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="532"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="522"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="533"/>
         <source>Eject Anyway</source>
         <translation>无论如何弹出</translation>
     </message>

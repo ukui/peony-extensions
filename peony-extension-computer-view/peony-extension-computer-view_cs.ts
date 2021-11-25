@@ -28,8 +28,8 @@
 <context>
     <name>ComputerUserShareItem</name>
     <message>
-        <location filename="computer-view/computer-user-share-item.cpp" line="16"/>
-        <source>User Share</source>
+        <location filename="computer-view/computer-user-share-item.cpp" line="20"/>
+        <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -42,7 +42,7 @@
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="58"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="98"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="105"/>
         <source>File System</source>
         <translation>Souborový systém</translation>
     </message>
@@ -103,18 +103,18 @@
 <context>
     <name>Intel::ComputerVolumeItem</name>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="35"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="39"/>
         <source>Volume</source>
         <translation type="unfinished">Svazek</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="43"/>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="92"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="47"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="103"/>
         <source>System Disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="82"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="93"/>
         <source>User Disk</source>
         <translation type="unfinished"></translation>
     </message>
@@ -239,12 +239,12 @@
         <translation type="vanished">sftp://, atd…</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="127"/>
+        <location filename="computer-view-container.cpp" line="128"/>
         <source>Unmount</source>
         <translation>Odpojit</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="133"/>
+        <location filename="computer-view-container.cpp" line="134"/>
         <source>Eject</source>
         <translation type="unfinished"></translation>
     </message>
@@ -254,13 +254,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="167"/>
-        <location filename="computer-view-container.cpp" line="184"/>
+        <location filename="computer-view-container.cpp" line="168"/>
+        <location filename="computer-view-container.cpp" line="185"/>
         <source>Property</source>
         <translation>Vlastnost</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="169"/>
+        <location filename="computer-view-container.cpp" line="170"/>
         <source>You have to mount this volume first</source>
         <translation>Tento svazek je třeba nejprve připojit (mount)</translation>
     </message>
@@ -278,59 +278,59 @@
         <translation>Zobrazit disky, síť a osobní složky.</translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="484"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="579"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="495"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="598"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="486"/>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="495"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="580"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="584"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="588"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="497"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="506"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="599"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
         <source>Unmount failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="580"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="588"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="599"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
         <source>Error: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="487"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="498"/>
         <source>Error: %1
 Do you want to unmount forcely?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="494"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="583"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="505"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="602"/>
         <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="496"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="584"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="507"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="520"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="611"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="626"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="531"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="630"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="645"/>
         <source>Eject failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="521"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="532"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="522"/>
+        <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="533"/>
         <source>Eject Anyway</source>
         <translation type="unfinished"></translation>
     </message>
