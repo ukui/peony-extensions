@@ -1,3 +1,15 @@
+peony-extensions (3.2.2+1129) v101; urgency=medium
+
+  * sp2 1122版本
+    - Bug号:
+      #90641:接入type-C拓展坞后，文件浏览器的计算机右侧界面或左侧边栏计算机下会显示两个Generic MassStorageClass（何美宏）
+    - 需求号: 无
+    - 其它改动说明: 无
+    - 影响域:
+      计算机视图设备显示
+
+ -- Yue Lan <lanyue@kylinos.cn>  Mon, 29 Nov 2021 14:58:50 +0800
+
 peony-extensions (3.2.2+1124) v101; urgency=medium
 
   * sp2 1122版本
