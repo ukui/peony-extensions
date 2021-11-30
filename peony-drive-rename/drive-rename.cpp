@@ -117,7 +117,9 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
     // 注意要筛选的设备，块设备、非根设备
     // 判断是否为光盘设备(光盘设备不允许重命名)
     if (suri.startsWith("computer:///") && suri.endsWith(".drive")
-            && 0 != g_ascii_strncasecmp("/dev/sr", devName, 7)) {
+            && 0 != g_ascii_strncasecmp ("/dev/cd", devName, 7)
+            && 0 != g_ascii_strncasecmp ("/dev/sr", devName, 7)
+            && 0 != g_ascii_strncasecmp ("/dev/loop", devName, 9)) {
         mDevName = devName;
         QAction* action = new QAction(tr("Rename"));
         if (action) {
