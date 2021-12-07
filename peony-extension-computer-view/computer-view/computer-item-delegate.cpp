@@ -126,7 +126,7 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
 
         //draw text
         auto textRect = option.rect;
-        textRect.adjust(84, 10, -5, -30);
+        textRect.adjust(84, 10, -5, -25);
         textRect.translate(0, -option.fontMetrics.ascent());
         auto elideText = opt.fontMetrics.elidedText(opt.text, Qt::ElideMiddle, textRect.width());
         qApp->style()->drawItemText(painter, textRect, Qt::AlignLeft|Qt::AlignVCenter, option.palette, enable, elideText, QPalette::Text);
@@ -157,7 +157,7 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
         }
 
         QRect spaceInfoArea = textRect.translated(0, 1.5 * option.fontMetrics.ascent());
-        spaceInfoArea.setHeight (option.fontMetrics.height () + 3 * option.fontMetrics.ascent());
+        spaceInfoArea.setHeight (option.fontMetrics.height () + 2.5 * option.fontMetrics.ascent());
         qApp->style()->drawItemText(painter, spaceInfoArea, Qt::AlignLeft|Qt::AlignVCenter|Qt::TextWordWrap, option.palette, enable, spaceInfo, QPalette::Dark);
 
         if (shouldDrawProgress) {
