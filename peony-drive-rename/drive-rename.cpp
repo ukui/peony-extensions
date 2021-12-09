@@ -135,8 +135,8 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
             bool ok = false;
             QString text = QInputDialog::getText(nullptr, tr("Rename"), tr("Device name:"), QLineEdit::Normal, "", &ok);
             if (ok && !text.isNull() && !text.isEmpty()) {
-                //包含字符.提示非法 bug#93280
-                if(text.contains(".")){
+                //首字符是.提示非法 bug#93280
+                if(text.at(0) == '.'){
                     QMessageBox::warning(nullptr, tr("Warning"), tr("The device may not support the rename operation, rename failed!"), QMessageBox::Ok);
                     return;
                 }
