@@ -135,6 +135,12 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
             bool ok = false;
             QString text = QInputDialog::getText(nullptr, tr("Rename"), tr("Device name:"), QLineEdit::Normal, "", &ok);
             if (ok && !text.isNull() && !text.isEmpty()) {
+                //首字符是.提示非法 bug#93280
+                if(text.at(0) == '.'){
+                    QMessageBox::warning(nullptr, tr("Warning"), tr("The device may not support the rename operation, rename failed!"), QMessageBox::Ok);
+                    return;
+                }
+
                 // 修改名字
                 if (mount) {
                     int ret = QMessageBox::warning (nullptr, tr("Warning"), tr("Renaming will unmount the device. Do you want to continue?"), QMessageBox::Ok | QMessageBox::Cancel);
