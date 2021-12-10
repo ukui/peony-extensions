@@ -286,10 +286,12 @@ void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
     GVolume *g_volume;
     GMount *g_mount;
 
+    g_autoptr(GMountOperation) mount_op = g_mount_operation_new();
+
     /*If udisk device is mounted,eject it from here*/
     if (m_mount && (g_mount = m_mount->getGMount())) {
         if (g_mount_can_eject(g_mount)) {
-            g_mount_eject_with_operation(g_mount, ejectFlag, nullptr, m_cancellable,
+            g_mount_eject_with_operation(g_mount, ejectFlag, mount_op, m_cancellable,
                                          GAsyncReadyCallback(eject_async_callback), this);
         } else {
             auto g_drive = g_mount_get_drive(g_mount);
@@ -297,7 +299,7 @@ void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
                 return;
 
             if (g_drive_can_stop(g_drive) || g_drive_is_removable(g_drive))
-                g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, nullptr, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
+                g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, mount_op, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
 
             g_object_unref(g_drive);
         }
@@ -308,7 +310,7 @@ void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
     /*If udisk device is unmounted,eject it from here*/
     if (m_volume && (g_volume = m_volume->getGVolume())) {
         if (g_volume_can_eject(g_volume)) {
-            g_volume_eject_with_operation(g_volume, ejectFlag, nullptr, m_cancellable,
+            g_volume_eject_with_operation(g_volume, ejectFlag, mount_op, m_cancellable,
                                          GAsyncReadyCallback(eject_async_callback), this);
         } else {
             auto g_drive = g_mount_get_drive(g_mount);
@@ -316,7 +318,7 @@ void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
                 return;
 
             if (g_drive_can_stop(g_drive))
-                g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, nullptr, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
+                g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, mount_op, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
 
             g_object_unref(g_drive);
         }
@@ -335,24 +337,26 @@ void ComputerVolumeItem::unmount(GMountUnmountFlags unmountFlag)
     GMount *g_mount = nullptr;
     GFile *file = nullptr;
 
+    g_autoptr(GMountOperation) mount_op = g_mount_operation_new();
+
     m_vfs_uri = m_model->m_volumeTargetMap.key(m_uri);
     if (!m_vfs_uri.isEmpty()) {
         file = g_file_new_for_uri(m_vfs_uri.toUtf8().constData());
         if(file)
             g_file_unmount_mountable_with_operation(file,unmountFlag,
-                                                    nullptr,nullptr,
+                                                    mount_op,nullptr,
                                                     GAsyncReadyCallback(unmount_async_callback),
                                                     this);
         g_object_unref(file);
     } else if (m_mount) {
         if (g_mount = m_mount->getGMount())
-            g_mount_unmount_with_operation(g_mount, unmountFlag, nullptr, m_cancellable,
+            g_mount_unmount_with_operation(g_mount, unmountFlag, mount_op, m_cancellable,
                                        GAsyncReadyCallback(unmount_async_callback), this);
     } else if (!m_uri.isEmpty()) {
         file = g_file_new_for_uri(m_uri.toUtf8().constData());
         if(file)
             g_file_unmount_mountable_with_operation(file,unmountFlag,
-                                                    nullptr,nullptr,
+                                                    mount_op,nullptr,
                                                     GAsyncReadyCallback(unmount_async_callback),
                                                     this);
         g_object_unref(file);
