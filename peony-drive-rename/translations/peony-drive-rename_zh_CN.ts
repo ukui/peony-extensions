@@ -9,29 +9,39 @@
         <translation>设备重命名</translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="122"/>
-        <location filename="../drive-rename.cpp" line="134"/>
+        <location filename="../drive-rename.cpp" line="124"/>
+        <location filename="../drive-rename.cpp" line="136"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="134"/>
+        <location filename="../drive-rename.cpp" line="136"/>
         <source>Device name:</source>
         <translation>设备名：</translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="138"/>
-        <location filename="../drive-rename.cpp" line="150"/>
+        <location filename="../drive-rename.cpp" line="140"/>
+        <location filename="../drive-rename.cpp" line="146"/>
+        <location filename="../drive-rename.cpp" line="158"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="138"/>
+        <source>Renaming cannot start with a decimal point, Please re-enter!</source>
+        <translation type="vanished">重命名时不支持首字符为.,请重新输入!</translation>
+    </message>
+    <message>
+        <location filename="../drive-rename.cpp" line="140"/>
+        <source>Renaming cannot start with a decimal point Please re-enter!</source>
+        <translation>重命名时不支持首字符为.请重新输入!</translation>
+    </message>
+    <message>
+        <location filename="../drive-rename.cpp" line="146"/>
         <source>Renaming will unmount the device. Do you want to continue?</source>
         <translation>重命名将会卸载设备，是否继续？</translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="150"/>
+        <location filename="../drive-rename.cpp" line="158"/>
         <source>The device may not support the rename operation, rename failed!</source>
         <translation>可能设备不支持重命名操作，重命名失败！</translation>
     </message>
