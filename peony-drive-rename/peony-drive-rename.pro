@@ -20,7 +20,9 @@ HEADERS += \
     drive-rename.h
 
 
-TRANSLATIONS += \
+TRANSLATIONS += translations/peony-drive-rename_zh_CN.ts \
+                translations/peony-drive-rename_tr.ts \
+                translations/peony-drive-rename_cs.ts
 
 RESOURCES += \
     resource.qrc
