@@ -137,7 +137,7 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
             if (ok && !text.isNull() && !text.isEmpty()) {
                 //首字符是.提示非法 bug#93280
                 if(text.at(0) == '.'){
-                    QMessageBox::warning(nullptr, tr("Warning"), tr("The device may not support the rename operation, rename failed!"), QMessageBox::Ok);
+                    QMessageBox::warning(nullptr, tr("Warning"), tr("Renaming cannot start with a decimal point Please re-enter!"), QMessageBox::Ok);
                     return;
                 }
 
