@@ -27,13 +27,9 @@
         <translation>警告</translation>
     </message>
     <message>
-        <source>Renaming cannot start with a decimal point, Please re-enter!</source>
-        <translation type="vanished">重命名时不支持首字符为.,请重新输入!</translation>
-    </message>
-    <message>
         <location filename="../drive-rename.cpp" line="140"/>
-        <source>Renaming cannot start with a decimal point Please re-enter!</source>
-        <translation>重命名时不支持首字符为.请重新输入!</translation>
+        <source>Renaming cannot start with a decimal point, Please re-enter!</source>
+        <translation>重命名时不支持首字符为小数点，请重新输入!</translation>
     </message>
     <message>
         <location filename="../drive-rename.cpp" line="146"/>
