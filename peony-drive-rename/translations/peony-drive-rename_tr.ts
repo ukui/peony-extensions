@@ -28,7 +28,7 @@
     </message>
     <message>
         <location filename="../drive-rename.cpp" line="140"/>
-        <source>Renaming cannot start with a decimal point Please re-enter!</source>
+        <source>Renaming cannot start with a decimal point, Please re-enter!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
