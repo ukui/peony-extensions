@@ -1,3 +1,16 @@
+peony-extensions (3.2.2+1215) v101; urgency=medium
+
+  * sp2 1220版本更新
+    - Bug号:
+      #96652 修复移动硬盘分区后小于128G显示的是U盘图标问题（向文杰）
+      #97478 修复翻译信息不准确的问题（向文杰）
+    - 需求号: 无
+    - 其它改动说明: 无
+    - 影响域:
+      U盘、设备重命名
+
+ -- Yue Lan <lanyue@kylinos.cn>  Wed, 15 Dec 2021 17:20:08 +0800
+
 peony-extensions (3.2.2+1210) v101; urgency=medium
 
   * sp2 1220版本更新
