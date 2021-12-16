@@ -1,3 +1,16 @@
+peony-extensions (3.2.2+1216) v101; urgency=medium
+
+  * UKUI 3.1.2 版本
+    - Bug号:
+      #89823 修复计算机右侧设备进度条和设备图标不在水平线上的问题
+    - 需求号:
+    - 其它改动说明:
+      合并sp2最新代码
+    - 影响域:
+      计算机视图
+
+ -- Yue Lan <lanyue@kylinos.cn>  Thu, 16 Dec 2021 12:10:15 +0800
+
 peony-extensions (3.2.2+1201ukui3.1) v101; urgency=medium
 
   * UKUI 3.1.2 版本
