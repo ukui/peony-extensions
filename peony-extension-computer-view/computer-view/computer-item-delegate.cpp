@@ -155,7 +155,7 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
                 spaceInfo = tr("You should mount volume first");
             }
         }
-        qApp->style()->drawItemText(painter, textRect.translated(0, 2*option.fontMetrics.ascent()), Qt::AlignLeft|Qt::AlignVCenter|Qt::TextWordWrap, option.palette, enable, spaceInfo, QPalette::Dark);
+        qApp->style()->drawItemText(painter, textRect.translated(0, 2*option.fontMetrics.ascent()), Qt::AlignLeft|Qt::AlignVCenter|Qt::TextWordWrap, option.palette, enable, spaceInfo, QPalette::PlaceholderText);
 
         if (shouldDrawProgress) {
             painter->save();
