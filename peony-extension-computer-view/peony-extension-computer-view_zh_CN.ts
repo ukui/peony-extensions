@@ -20,7 +20,7 @@
 <context>
     <name>ComputerRemoteVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-remote-volume-item.cpp" line="56"/>
+        <location filename="computer-view/computer-remote-volume-item.cpp" line="62"/>
         <source>Remote</source>
         <translation>远程目录</translation>
     </message>
@@ -46,7 +46,7 @@
     </message>
     <message>
         <location filename="computer-view/computer-volume-item.cpp" line="58"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="98"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="105"/>
         <source>File System</source>
         <translation>文件系统</translation>
     </message>
@@ -218,14 +218,14 @@
         <translation>显示设备分区, 网络目录和个人目录.</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="579"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="602"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation>一个或多个程序阻止卸载操作。</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="580"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="584"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="588"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="611"/>
         <source>Unmount failed</source>
         <translation>卸载失败</translation>
     </message>
@@ -236,25 +236,25 @@ Do you want to unmount forcely?</source>
 是否强制卸载？</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="580"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="588"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="611"/>
         <source>Error: %1
 </source>
         <translation>错误: %1\n</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="583"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="606"/>
         <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
         <translation>无法卸载，您可能需要先关闭一些程序，如分区编辑器等。</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="584"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="611"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="626"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="634"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="649"/>
         <source>Eject failed</source>
         <translation>弹出失败</translation>
     </message>
