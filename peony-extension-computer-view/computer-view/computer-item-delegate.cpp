@@ -181,7 +181,11 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
             auto pos = option.rect.bottomLeft();
             pos.setX(pos.x() + progressBarWidth);
             pos.setY(pos.y() - 5);
-            painter->drawLine(option.rect.bottomLeft() + QPoint(5, -5), pos);
+            //The percent is too small, resulting in incorrect coordinates.
+            if((option.rect.bottomLeft() + QPoint(8, -5)).x() >= pos.x()){
+                pos = option.rect.bottomLeft() + QPoint(9, -5);
+            }
+            painter->drawLine(option.rect.bottomLeft() + QPoint(8, -5), pos);
             painter->restore();
             painter->restore();
         }
