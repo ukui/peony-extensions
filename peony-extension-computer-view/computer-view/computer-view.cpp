@@ -135,8 +135,9 @@ QModelIndex ComputerView::indexAt(const QPoint &point) const
     auto pos = point + QPoint(horizontalOffset(), verticalOffset());
     for (auto index : m_rect_cache.keys()) {
         auto rect = m_rect_cache.value(index);
-        if (rect.contains(pos))
+        if (rect.contains(pos) && index.parent().isValid()){
             return index;
+        }
     }
     return QModelIndex();
 }
@@ -172,7 +173,8 @@ void ComputerView::setSelection(const QRect &rect, QItemSelectionModel::Selectio
 
         for (auto index : m_rect_cache.keys()) {
             auto indexRect = m_rect_cache.value(index);
-            if (realRect.contains(indexRect.center())) {
+            if (realRect.contains(indexRect.center())
+                    && index.parent().isValid()) {
                 selectionModel()->select(index, QItemSelectionModel::Select);
             } else {
                 selectionModel()->select(index, QItemSelectionModel::Deselect);

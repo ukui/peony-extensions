@@ -225,19 +225,22 @@ void ComputerItemDelegate::paintNetworkItem(QPainter *painter, const QStyleOptio
 
 void ComputerItemDelegate::drawTab(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    painter->save();
     auto opt = option;
     auto titleFont = opt.font;
     if (titleFont.pixelSize() > 0) {
-        titleFont.setPixelSize(titleFont.pixelSize()*1.5);
+        titleFont.setPixelSize(titleFont.pixelSize()*1.25);
     } else {
-        titleFont.setPointSizeF(titleFont.pointSizeF()*1.5);
+        titleFont.setPointSizeF(titleFont.pointSizeF()*1.25);
     }
     opt.icon = QIcon();
     opt.decorationPosition = QStyleOptionViewItem::Right;
     opt.displayAlignment = Qt::AlignLeft|Qt::AlignVCenter;
     opt.font = titleFont;
     opt.fontMetrics = QFontMetrics(opt.font);
+    painter->translate(QPoint(8, 0));
     qApp->style()->drawControl(QStyle::CE_ItemViewItem, &opt, painter);
+    painter->restore();
     //auto textRect = qApp->style()->subElementRect(QStyle::SE_ItemViewItemText, &opt, m_styleIconView);
     //qApp->style()->drawItemText(painter, opt.rect.adjusted(5, 0, 0, 0), Qt::AlignTop|Qt::AlignVCenter, option.palette, enable, option.text, selected? QPalette::HighlightedText: QPalette::Text);
 }
