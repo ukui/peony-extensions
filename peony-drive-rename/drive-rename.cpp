@@ -105,12 +105,33 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
 
         g_return_val_if_fail (G_IS_MOUNT (mount), l);
 
+        g_autoptr (GFile) root = g_mount_get_root (mount);
+        g_autoptr (GFileInfo) rootInfo = g_file_query_info (root, "access::", G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL, &error);
+        if (error)      qDebug() << "error: " << error->message;
+        bool canRename = true;
+        if (G_IS_FILE_INFO (rootInfo)) {
+            bool write = true;
+            if (g_file_info_has_attribute (rootInfo, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE)) {
+                write = g_file_info_get_attribute_boolean (rootInfo, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE);
+            }
+            bool execute = true;
+            if (g_file_info_has_attribute (rootInfo, G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE)) {
+                execute = g_file_info_get_attribute_boolean (rootInfo, G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE);
+            }
+
+            if (!write || !execute)   canRename = false;
+        }
+
+        g_return_val_if_fail (canRename, l);
+
+
         if (!devName) {
             g_autoptr (GVolume) volume = g_mount_get_volume (mount);
             g_return_val_if_fail (G_IS_VOLUME (volume), l);
             devName = g_volume_get_identifier (volume, G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE);
         }
     }
+
 
     g_return_val_if_fail (devName, l);
 
