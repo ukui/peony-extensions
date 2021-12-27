@@ -41,8 +41,8 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
     QList<QAction*> actions;
     QStringList target;
     for (auto str : selectionUris) {
-        qDebug() << Q_FUNC_INFO << str << "   =   " << Peony::FileUtils::urlEncode(str);
-        target << Peony::FileUtils::urlEncode(str);
+        qDebug() << Q_FUNC_INFO << str << "   =   " << Peony::FileUtils::urlDecode(str);
+        target << Peony::FileUtils::urlDecode(str);
     }
 
     QProcess process;
