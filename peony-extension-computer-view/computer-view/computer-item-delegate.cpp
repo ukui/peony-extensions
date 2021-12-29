@@ -159,12 +159,11 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
 
         if (shouldDrawProgress) {
             painter->save();
-
             QPainterPath clipPath;
             clipPath.addRoundedRect(option.rect, 6, 6);
             painter->setClipPath(clipPath);
             qreal percent = used*1.0/total*1.0;
-            int progressBarWidth = option.rect.width() * percent;
+            int progressBarWidth = (option.rect.width() - 8) * percent;
             painter->save();
             QPen pen;
             //pen.setColor(percent < 0.8?Qt::blue:Qt::red);
@@ -241,6 +240,7 @@ void ComputerItemDelegate::drawTab(QPainter *painter, const QStyleOptionViewItem
 void ComputerItemDelegate::drawStyledItem(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     painter->save();
+    painter->setRenderHint(QPainter::Antialiasing);
     //draw pix map
     QIcon icon = option.icon;
     bool enable = option.state & QStyle::State_Enabled;
