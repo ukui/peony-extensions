@@ -135,15 +135,16 @@ Package: peony-extensions
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         parchives,
-         peony-open-terminal,
-         peony-extension-computer-view,
+         parchives(>=3.2.2+1015),
+         peony-open-terminal(>=3.2.2+1015),
+         peony-extension-computer-view(>=3.2.2+1015),
 #         peony-admin,
-         peony-set-wallpaper,
-         peony-send-to-device
-Recommends: peony-share,
-            ukui-bluetooth,
-            peony-device-rename
+         peony-set-wallpaper(>=3.2.2+1015),
+         peony-send-to-device(>=3.2.2+1015),
+         peony-share(>=3.2.2+1015),
+         peony-vfs-kylin-kmre(>=1.1.8-3.2.2 )[!386  !armhf  !loongarch64  !mips64el  !sw64]
+Recommends: ukui-bluetooth,
+         peony-device-rename
 Description: Peony qt extensions
  Peony is the official file manager for the UKUI desktop. This
  package is a metapackage, which adds extended functionality to
