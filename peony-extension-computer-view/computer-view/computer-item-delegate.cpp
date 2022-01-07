@@ -158,7 +158,7 @@ void ComputerItemDelegate::paintVolumeItem(QPainter *painter, const QStyleOption
 
         QRect spaceInfoArea = textRect.translated(0, 1.5 * option.fontMetrics.ascent());
         spaceInfoArea.setHeight (option.fontMetrics.height () + 2.5 * option.fontMetrics.ascent());
-        qApp->style()->drawItemText(painter, spaceInfoArea, Qt::AlignLeft|Qt::AlignVCenter|Qt::TextWordWrap, option.palette, enable, spaceInfo, QPalette::Dark);
+        qApp->style()->drawItemText(painter, spaceInfoArea, Qt::AlignLeft|Qt::AlignVCenter|Qt::TextWordWrap, option.palette, enable, spaceInfo, QPalette::PlaceholderText);
 
         if (shouldDrawProgress) {
             painter->save();
