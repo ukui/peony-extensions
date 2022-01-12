@@ -131,10 +131,11 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 menu.actions().first()->setEnabled(unmountable);
             }
             /*eject function for volume. fix #18216*/
-            auto ejectAction = menu.addAction(tr("Eject"), [=](){
-                item->eject(G_MOUNT_UNMOUNT_NONE);
-            });
-            ejectAction->setEnabled(item->canEject());
+            if(item->canEject()){
+                auto ejectAction = menu.addAction(tr("Eject"), [=](){
+                    item->eject(G_MOUNT_UNMOUNT_NONE);
+                });
+            }
 
             auto uri = item->uri();
             auto realUri = m_view->tryGetVolumeRealUriFromUri(uri);
@@ -153,7 +154,8 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             if (nullptr != mount) {
                 QString unixDevice = FileUtils::getUnixDevice(info->uri());
                 if (! unixDevice.isNull() && ! unixDevice.contains("/dev/sr")
-                    && info->isVolume() && info->canUnmount()) {
+                        &&!unixDevice.startsWith("/dev/bus/usb")
+                        && info->isVolume() && info->canUnmount()) {
                     auto fdMenu = menu.addAction(tr("format"), [=] () {
                         auto fd = new Format_Dialog(info->uri(), nullptr, m_view);
                         fd->show();
