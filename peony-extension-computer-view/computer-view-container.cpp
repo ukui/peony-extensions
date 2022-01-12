@@ -299,8 +299,11 @@ void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony:
     connect(selectionModel, &QItemSelectionModel::selectionChanged, this, &DirectoryViewWidget::viewSelectionChanged);;
 
     connect(m_view, &QAbstractItemView::doubleClicked, this, [=](const QModelIndex &index){
-        if (!index.parent().isValid())
+        if (!index.parent().isValid() || m_view->getRightDoubleClickState()){
+            //qDebug() << "doubleClicked state" << m_view->getRightDoubleClickState();
+            m_view->setRightDoubleClickState(false);
             return;
+        }
 
         auto model = static_cast<ComputerProxyModel *>(m_view->model());
         auto item = model->itemFromIndex(index);

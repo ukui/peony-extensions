@@ -187,8 +187,9 @@ void ComputerView::setSelection(const QRect &rect, QItemSelectionModel::Selectio
             clearSelection();
             return;
         }
-        if (!selectedIndexes().contains(index))
-            selectionModel()->select(index, QItemSelectionModel::SelectCurrent);
+//        if (!selectedIndexes().contains(index))
+//            selectionModel()->select(index, QItemSelectionModel::SelectCurrent);
+            setCurrentIndex(index);
     }
 }
 
@@ -210,6 +211,16 @@ QString ComputerView::tryGetVolumeRealUriFromUri(const QString &uri)
 void ComputerView::refresh()
 {
     m_model->refresh();
+}
+
+bool ComputerView::getRightDoubleClickState()
+{
+    return m_isRightButonDClick;
+}
+
+void ComputerView::setRightDoubleClickState(bool flag)
+{
+    m_isRightButonDClick = flag;
 }
 
 void ComputerView::updateEditorGeometries()
@@ -339,6 +350,16 @@ void ComputerView::mouseReleaseEvent(QMouseEvent *event)
     m_rubberBand->hide();
     m_isLeftButtonPressed = false;
     QAbstractItemView::mouseReleaseEvent(event);
+}
+
+void ComputerView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    QAbstractItemView::mouseDoubleClickEvent(event);
+    if(event->button() == Qt::RightButton){
+        m_isRightButonDClick = true;
+    }else{
+        m_isRightButonDClick = false;
+    }
 }
 
 void ComputerView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
