@@ -139,15 +139,12 @@ static void mounted_func (gpointer data, gpointer udata)
     GMount*             mount = (GMount*)data;
     GFile*              location = nullptr;
     char*               uri = nullptr;
-    char*               name = nullptr;
-    GIcon*              icons = nullptr;
-    QString             icon = nullptr;
 
-    if (!data || !udata || !static_cast<DriverAction*>(udata)) return;
+    DriverAction* act = (static_cast<DriverAction*>(udata));
+
+    if (!data || !udata || !act) return;
 
     if (mount) {
-        name = g_mount_get_name(mount);
-        icons = g_mount_get_icon(mount);
         location = g_mount_get_default_location(mount);
         if (location) {
             uri = g_file_get_uri(location);
@@ -155,20 +152,29 @@ static void mounted_func (gpointer data, gpointer udata)
     }
 
     // check permission
-    FileInfoJob fileInfo(uri);
-    fileInfo.querySync();
-    std::shared_ptr<FileInfo> info = fileInfo.getInfo();
+    FileInfoJob* fileInfo = new FileInfoJob(uri);
+    fileInfo->setAutoDelete ();
+    fileInfo->queryAsync ();
 
-    icon = getIconName (icons);
+    act->connect(fileInfo, &FileInfoJob::queryAsyncFinished, act, [=] (bool success) {
+        if (success) {
+            GMount* mount = (GMount*)data;
+            if (G_IS_MOUNT (mount)) {
+                g_autofree char* name = g_mount_get_name(mount);
+                GIcon* icons = g_mount_get_icon(mount);
+                QString icon = getIconName (icons);
 
-    if (uri && name && info.get()->canExecute() && info.get()->canWrite()) {
-        (static_cast<DriverAction*>(udata))->driverAdded(uri, name, icon);
-    }
+                std::shared_ptr<FileInfo> info = fileInfo->getInfo();
+                if (uri && name && info.get()->canExecute() && info.get()->canWrite()) {
+                    Q_EMIT (static_cast<DriverAction*>(udata))->driverAdded(uri, name, icon);
+                }
 
-    qDebug() << "name:" << name << " uri:" << uri << " icons:" << icons << " icon:" << icon;
+                qDebug() << "name:" << name << " uri:" << uri << " icons:" << icons << " icon:" << icon;
+            }
+        }
+    });
 
     if (!uri) g_free(uri);
-    if (!name) g_free(name);
     if (!location) g_object_unref(location);
 }
 
