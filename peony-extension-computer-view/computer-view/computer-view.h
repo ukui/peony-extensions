@@ -56,6 +56,8 @@ public:
     QString tryGetVolumeRealUriFromUri(const QString &uri);
 
     void refresh();
+    bool getRightDoubleClickState();
+    void setRightDoubleClickState(bool flag);
 
 Q_SIGNALS:
     void updateLocationRequest(const QString &uri);
@@ -69,6 +71,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
 
     void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
 
@@ -89,6 +92,7 @@ private:
     QPoint m_lastPressedLogicPoint;
     QRect m_logicRect;
     bool m_isLeftButtonPressed = false;
+    bool m_isRightButonDClick = false;
 
     QModelIndex m_hoverIndex;
 
