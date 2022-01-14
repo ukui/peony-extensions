@@ -250,7 +250,8 @@ void ComputerItemDelegate::drawStyledItem(QPainter *painter, const QStyleOptionV
 
     //draw text
     auto textRect = option.rect.adjusted(2, 74, -2, -2);
+    auto elideText = option.fontMetrics.elidedText(option.text, Qt::ElideRight, 2 * textRect.width() - 10);
     qApp->style()->drawItemText(painter, textRect, Qt::ElideRight|Qt::TextWrapAnywhere|Qt::AlignTop|Qt::AlignHCenter, option.palette,
-                                enable, option.text, selected? QPalette::HighlightedText: QPalette::Text);
+                                enable, elideText, selected? QPalette::HighlightedText: QPalette::Text);
     painter->restore();
 }
