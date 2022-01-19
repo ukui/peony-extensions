@@ -76,6 +76,26 @@ void aborted_cb(GMountOperation *op, Peony::ComputerViewContainer *p_this)
     p_this->disconnect();
 }
 
+#include "peony-qt/file-enumerator.h"
+static QString getComputerUriFromUri(const QString &uri){
+    /* volume item,遍历方式获取uri */
+    FileEnumerator e;
+    e.setEnumerateDirectory("computer:///");
+    e.enumerateSync();
+    QString computerUri;
+    for (auto fileInfo : e.getChildren()) {
+        FileInfoJob infoJob(fileInfo);
+        infoJob.querySync();
+        /* 由item的uri获取computer uir */
+        auto info = infoJob.getInfo();
+        if(fileInfo.get()->targetUri() == uri){
+            computerUri = fileInfo.get()->uri();
+            break;
+        }
+    }
+    return computerUri;
+}
+
 Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : DirectoryViewWidget(parent)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -143,6 +163,8 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 uri = realUri;
             }
 
+            if(uri.startsWith("file://"))
+                uri = getComputerUriFromUri(uri);
             auto info = FileInfo::fromUri(uri);
             if (info->displayName().isEmpty() || info->targetUri().isEmpty()) {
                 FileInfoJob j(info);
@@ -157,7 +179,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                         &&!unixDevice.startsWith("/dev/bus/usb")
                         && info->isVolume() && info->canUnmount()) {
                     auto fdMenu = menu.addAction(tr("format"), [=] () {
-                        auto fd = new Format_Dialog(info->uri(), nullptr, m_view);
+                        auto fd = new Format_Dialog(uri, nullptr, m_view);
                         fd->show();
                     });
                     if (! mount) {
