@@ -1,3 +1,16 @@
+peony-extensions (3.2.3+0120ukui3.1) v101; urgency=medium
+
+  * UKUI 3.1.3 版本
+    - Bug号:
+      #94323 【UKUI V3.1】【文件管理器】深色主题下，文管左侧二级目录前的图标没有反白、计算机右侧界面设备下的容量数据没有反白
+    - 需求号: 无
+    - 其它改动说明:
+      合并sp2最新代码
+    - 影响域:
+      计算机视图
+
+ -- Yue Lan <lanyue@kylinos.cn>  Thu, 20 Jan 2022 10:52:54 +0800
+
 peony-extensions (3.2.2+1216) v101; urgency=medium
 
   * UKUI 3.1.2 版本
