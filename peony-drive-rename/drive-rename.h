@@ -28,28 +28,21 @@
 #include <menu-plugin-iface.h>
 
 namespace Peony {
-class DriveRename : public QObject, public MenuPluginInterface
+
+class DriveRename : public QObject
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID MenuPluginInterface_iid FILE "common.json")
-    Q_INTERFACES(Peony::MenuPluginInterface)
 public:
     explicit DriveRename(QObject *parent = nullptr);
 
-    QString testPlugin() override {return "";}
-    bool isEnable() override {return mEnable;}
-    void setEnable(bool enable) override {mEnable = enable;}
-    const QString description() override {return tr("drive rename");}
-    const QString name() override {return "Peony Qt drive rename";}
-    const QIcon icon() override {return QIcon::fromTheme("system-users-symbolic");}
-    PluginInterface::PluginType pluginType() override {return PluginInterface::MenuPlugin;}
-    QList<QAction *> menuActions(Types types, const QString &uri, const QStringList &selectionUris) override;
+    QList<QAction *> menuActions(Peony::MenuPluginInterface::Types types, const QString &uri, const QStringList &selectionUris);
 
 private:
     bool                                mEnable;
     QString                             mDevName;
 
 };
-};
+
+}
 
 #endif // DRIVERENAME_H
