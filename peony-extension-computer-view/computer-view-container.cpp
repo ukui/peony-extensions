@@ -25,6 +25,7 @@
 #include "computer-proxy-model.h"
 #include "abstract-computer-item.h"
 #include "login-remote-filesystem.h"
+#include "peony-drive-rename/drive-rename.h"
 
 #include <peony-qt/file-utils.h>
 #include <peony-qt/format_dialog.h>
@@ -41,10 +42,10 @@
 #include <QInputDialog>
 #include <QStylePainter>
 #include <file-info.h>
+#include <QApplication>
 
 static void ask_question_cb(GMountOperation *op, char *message, char **choices, Peony::ComputerViewContainer *p_this);
 static void ask_password_cb(GMountOperation *op, const char *message, const char *default_user, const char *default_domain, GAskPasswordFlags flags, Peony::ComputerViewContainer *p_this);
-
 
 static GAsyncReadyCallback mount_enclosing_volume_callback(GFile *volume, GAsyncResult *res, Peony::ComputerViewContainer *p_this)
 {
@@ -142,9 +143,15 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 g_file_mount_enclosing_volume(m_volume, G_MOUNT_MOUNT_NONE, m_op, nullptr, GAsyncReadyCallback(mount_enclosing_volume_callback), this);
             });
         } else if (items.count() == 1 && items.first()->uri() != "" && items.first()->uri() != "network:///") {
+            bool isWayland = qApp->property("isWayland").toBool(); // related to #105070
             auto item = items.first();
             bool unmountable = item->canUnmount();
             if(!item->canEject()){
+                menu.addAction(tr("Unmount"), [=](){
+                    item->unmount(G_MOUNT_UNMOUNT_NONE);
+                });
+                menu.actions().first()->setEnabled(unmountable);
+            } else if (isWayland) {
                 menu.addAction(tr("Unmount"), [=](){
                     item->unmount(G_MOUNT_UNMOUNT_NONE);
                 });
@@ -177,7 +184,7 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 QString unixDevice = FileUtils::getUnixDevice(info->uri());
                 if (! unixDevice.isNull() && ! unixDevice.contains("/dev/sr")
                         &&!unixDevice.startsWith("/dev/bus/usb")
-                        && info->isVolume() && info->canUnmount()) {
+                        && info->isVolume() && info->canUnmount()/* && info->targetUri() != "file:///data"*/) {
                     auto fdMenu = menu.addAction(tr("format"), [=] () {
                         auto fd = new Format_Dialog(uri, nullptr, m_view);
                         fd->show();
@@ -187,6 +194,13 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                     }
                 }
             }
+
+            // add drive rename action, link to: #105070
+            auto driveRenamePlugin = new DriveRename(this);
+            QStringList fakeUrls;
+            fakeUrls<<uri;
+
+            menu.addActions(driveRenamePlugin->menuActions(Peony::MenuPluginInterface::Type::SideBar, "computer:///", fakeUrls));
 
             if (!item->uri().startsWith("network://")) {
                 auto a = menu.addAction(tr("Property"), [=]() {
