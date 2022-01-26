@@ -13,11 +13,13 @@ CONFIG += link_pkgconfig no_keywords c++11 plugin debug
 
 
 SOURCES += \
-    drive-rename.cpp
+    drive-rename.cpp \
+    driverenameplugin.cpp
 
 
 HEADERS += \
-    drive-rename.h
+    drive-rename.h \
+    driverenameplugin.h
 
 
 TRANSLATIONS += translations/peony-drive-rename_zh_CN.ts \

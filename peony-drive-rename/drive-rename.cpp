@@ -50,18 +50,16 @@ struct _DeviceRenameData
 
 Peony::DriveRename::DriveRename(QObject *parent) : QObject(parent), mEnable(true)
 {
-
     QTranslator *t = new QTranslator(this);
     t->load(":/translations/peony-drive-rename_"+QLocale::system().name());
-    QFile file(":/translations/peony-drive-rename_"+QLocale::system().name()+".ts");
     QApplication::installTranslator(t);
 }
 
-QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri, const QStringList &selectionUris)
+QList<QAction *> Peony::DriveRename::menuActions(Peony::MenuPluginInterface::Types types, const QString &uri, const QStringList &selectionUris)
 {
     QList<QAction *> l;
 
-    if (selectionUris.count() != 1 || types != SideBar) {
+    if (selectionUris.count() != 1 || types != Peony::MenuPluginInterface::Type::SideBar) {
         return l;
     }
 
@@ -92,6 +90,17 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
         if (uri.startsWith ("computer://")) {
             g_autofree char* targetUri = g_file_info_get_attribute_as_string (fileInfo, G_FILE_ATTRIBUTE_STANDARD_TARGET_URI);
             if (targetUri) {
+
+                // related to: #105070
+//                bool isWayland = qApp->property("isWayland").toBool();
+//                if (!isWayland) {
+//                    QString tmp = targetUri;
+//                    if (tmp == "file:///data") {
+//                        // 如果是data盘，则跳过
+//                        return l;
+//                    }
+//                }
+
                 g_autoptr (GFile) tfile = g_file_new_for_uri (targetUri);
                 if (G_IS_FILE (tfile)) {
                     mount = g_file_find_enclosing_mount (tfile, NULL, &error);
@@ -172,7 +181,8 @@ QList<QAction *> Peony::DriveRename::menuActions(Types types, const QString &uri
                     data->devName = mDevName;
                     data->rename = text;
                     data->pThis = this;
-                    g_mount_unmount_with_operation (mount, G_MOUNT_UNMOUNT_NONE, NULL, NULL, (GAsyncReadyCallback) udisk_umounted, data);
+                    g_autoptr (GMountOperation) mount_op = g_mount_operation_new();
+                    g_mount_unmount_with_operation (mount, G_MOUNT_UNMOUNT_NONE, mount_op, NULL, (GAsyncReadyCallback) udisk_umounted, data);
                 } else {
                     int ret = device_rename(mDevName.toUtf8().constData(), text.toUtf8().constData());
                     if (0 != ret) {

@@ -32,11 +32,13 @@ CONFIG += link_pkgconfig
 PKGCONFIG += gio-unix-2.0
 
 SOURCES += \
+    ../peony-drive-rename/drive-rename.cpp \
     computer-view-container.cpp \
     login-remote-filesystem.cpp \
     peony-computer-view-plugin.cpp \
 
 HEADERS += \
+    ../peony-drive-rename/drive-rename.h \
     computer-view-container.h \
     login-remote-filesystem.h \
     peony-computer-view-plugin.h \
