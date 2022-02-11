@@ -121,6 +121,11 @@ bool EngrampaMenuPlugin::is_compressed_file(QString file_name)
             return true;
     }
 
+    //process big package take apart to many small package issue, bug#55297, bug#102968
+    QFileInfo info(file_name.replace("file://", ""));
+    if (info.completeSuffix().contains("7z."))
+        return true;
+
     return false;
 }
 
