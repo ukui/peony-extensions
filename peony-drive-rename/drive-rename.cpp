@@ -34,6 +34,7 @@
 #include <QTranslator>
 #include <QFile>
 #include <QApplication>
+#include <file-utils.h>
 
 typedef struct _DeviceRenameData        DeviceRenameData;
 
@@ -168,6 +169,14 @@ QList<QAction *> Peony::DriveRename::menuActions(Peony::MenuPluginInterface::Typ
                 //首字符是.提示非法 bug#93280
                 if(text.at(0) == '.'){
                     QMessageBox::warning(nullptr, tr("Warning"), tr("Renaming cannot start with a decimal point, Please re-enter!"), QMessageBox::Ok);
+                    return;
+                }
+
+                QString type = Peony::FileUtils::getFileSystemType(suri);
+                if((type.compare(QString::fromLocal8Bit("vfat")) == 0 && text.toUtf8().length() > 11)
+                        || (type.compare(QString::fromLocal8Bit("exfat")) == 0 && text.toUtf8().length() > 15)
+                        || (type.compare(QString::fromLocal8Bit("ext4")) == 0 && text.toUtf8().length() > 16)){
+                    QMessageBox::warning(nullptr, tr("Warning"), tr("The device name exceeds the character limit, rename failed!"), QMessageBox::Ok);
                     return;
                 }
 
