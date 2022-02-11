@@ -4,7 +4,7 @@
 <context>
     <name>Peony::BluetoothPlugin</name>
     <message>
-        <location filename="../bluetoothplugin.cpp" line="69"/>
+        <location filename="../bluetoothplugin.cpp" line="104"/>
         <source>Send from bluetooth to...</source>
         <translation>从蓝牙发送文件到...</translation>
     </message>
