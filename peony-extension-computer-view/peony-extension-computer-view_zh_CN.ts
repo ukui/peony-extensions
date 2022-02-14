@@ -162,7 +162,7 @@
 <context>
     <name>Peony::ComputerViewContainer</name>
     <message>
-        <location filename="computer-view-container.cpp" line="111"/>
+        <location filename="computer-view-container.cpp" line="132"/>
         <source>Connect a server</source>
         <translation>连接远程服务器</translation>
     </message>
@@ -179,30 +179,73 @@
         <translation type="vanished">确定</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="128"/>
+        <location filename="computer-view-container.cpp" line="150"/>
+        <location filename="computer-view-container.cpp" line="155"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="134"/>
+        <location filename="computer-view-container.cpp" line="162"/>
         <source>Eject</source>
         <translation>弹出</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="157"/>
+        <location filename="computer-view-container.cpp" line="188"/>
         <source>format</source>
         <translation>格式化</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="168"/>
-        <location filename="computer-view-container.cpp" line="185"/>
+        <location filename="computer-view-container.cpp" line="206"/>
+        <location filename="computer-view-container.cpp" line="223"/>
         <source>Property</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="170"/>
+        <location filename="computer-view-container.cpp" line="208"/>
         <source>You have to mount this volume first</source>
         <translation>需要首先挂载分区</translation>
+    </message>
+</context>
+<context>
+    <name>Peony::DriveRename</name>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="155"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="167"/>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="167"/>
+        <source>Device name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="171"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="179"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="185"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="198"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="171"/>
+        <source>Renaming cannot start with a decimal point, Please re-enter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="179"/>
+        <source>The device name exceeds the character limit, rename failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="185"/>
+        <source>Renaming will unmount the device. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="198"/>
+        <source>The device may not support the rename operation, rename failed!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
