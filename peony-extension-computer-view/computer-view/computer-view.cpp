@@ -354,12 +354,12 @@ void ComputerView::mouseReleaseEvent(QMouseEvent *event)
 
 void ComputerView::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    QAbstractItemView::mouseDoubleClickEvent(event);
     if(event->button() == Qt::RightButton){
         m_isRightButonDClick = true;
     }else{
         m_isRightButonDClick = false;
     }
+    QAbstractItemView::mouseDoubleClickEvent(event);
 }
 
 void ComputerView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
