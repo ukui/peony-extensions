@@ -160,6 +160,9 @@ void ComputerVolumeItem::updateInfoAsync()
 
 const QString ComputerVolumeItem::displayName()
 {
+    if(m_uri == "file:///data"){
+        return tr("Data");
+    }
     return m_displayName;
 }
 

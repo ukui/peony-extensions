@@ -46,6 +46,11 @@
         <source>File System</source>
         <translation>Dosya Sistemi</translation>
     </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="164"/>
+        <source>Data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginRemoteFilesystem</name>
@@ -249,14 +254,14 @@
         <translation>Sürücüleri, ağı ve kişisel dizinleri göster.</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="602"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="605"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="611"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="606"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="610"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="614"/>
         <source>Unmount failed</source>
         <translation type="unfinished">Bağlantıyı kesme başarısız</translation>
     </message>
@@ -267,25 +272,25 @@ Do you want to unmount forcely?</source>
         Zorla ayrılmak ister misin?</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="611"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="606"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="614"/>
         <source>Error: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="606"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="609"/>
         <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="610"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="634"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="649"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="637"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="652"/>
         <source>Eject failed</source>
         <translation type="unfinished">Çıkarma başarısız</translation>
     </message>
