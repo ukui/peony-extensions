@@ -20,7 +20,7 @@
 <context>
     <name>ComputerRemoteVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-remote-volume-item.cpp" line="56"/>
+        <location filename="computer-view/computer-remote-volume-item.cpp" line="62"/>
         <source>Remote</source>
         <translation>远程目录</translation>
     </message>
@@ -49,6 +49,11 @@
         <location filename="computer-view/computer-volume-item.cpp" line="105"/>
         <source>File System</source>
         <translation>文件系统</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="164"/>
+        <source>Data</source>
+        <translation>数据盘</translation>
     </message>
 </context>
 <context>
@@ -234,7 +239,7 @@
 <context>
     <name>Peony::ComputerViewContainer</name>
     <message>
-        <location filename="computer-view-container.cpp" line="111"/>
+        <location filename="computer-view-container.cpp" line="132"/>
         <source>Connect a server</source>
         <translation>连接远程服务器</translation>
     </message>
@@ -251,30 +256,73 @@
         <translation type="vanished">确定</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="128"/>
+        <location filename="computer-view-container.cpp" line="150"/>
+        <location filename="computer-view-container.cpp" line="155"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="134"/>
+        <location filename="computer-view-container.cpp" line="162"/>
         <source>Eject</source>
         <translation>弹出</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="157"/>
+        <location filename="computer-view-container.cpp" line="188"/>
         <source>format</source>
         <translation>格式化</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="168"/>
-        <location filename="computer-view-container.cpp" line="185"/>
+        <location filename="computer-view-container.cpp" line="206"/>
+        <location filename="computer-view-container.cpp" line="223"/>
         <source>Property</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="170"/>
+        <location filename="computer-view-container.cpp" line="208"/>
         <source>You have to mount this volume first</source>
         <translation>需要首先挂载分区</translation>
+    </message>
+</context>
+<context>
+    <name>Peony::DriveRename</name>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="163"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="175"/>
+        <source>Rename</source>
+        <translation>重命名</translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="175"/>
+        <source>Device name:</source>
+        <translation>设备名:</translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="179"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="187"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="193"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="206"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="179"/>
+        <source>Renaming cannot start with a decimal point, Please re-enter!</source>
+        <translation>重命名不能以&quot;.&quot;开头, 请重新输入!</translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="187"/>
+        <source>The device name exceeds the character limit, rename failed!</source>
+        <translation>设备名称超过字符限制, 重命名失败!</translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="193"/>
+        <source>Renaming will unmount the device. Do you want to continue?</source>
+        <translation>重命名将会卸载此设备, 是否继续?</translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="206"/>
+        <source>The device may not support the rename operation, rename failed!</source>
+        <translation>设备可能不支持重命名操作, 重命名失败!</translation>
     </message>
 </context>
 <context>
@@ -291,16 +339,16 @@
     </message>
     <message>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="495"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="598"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="605"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation>一个或多个程序阻止卸载操作。</translation>
     </message>
     <message>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="497"/>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="506"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="599"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="606"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="610"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="614"/>
         <source>Unmount failed</source>
         <translation>卸载失败</translation>
     </message>
@@ -312,28 +360,28 @@ Do you want to unmount forcely?</source>
 是否强制卸载？</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="599"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="606"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="614"/>
         <source>Error: %1
 </source>
         <translation>错误: %1\n</translation>
     </message>
     <message>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="505"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="602"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="609"/>
         <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
         <translation>无法卸载，您可能需要先关闭一些程序，如分区编辑器等。</translation>
     </message>
     <message>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="507"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="610"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="531"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="630"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="645"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="637"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="652"/>
         <source>Eject failed</source>
         <translation>弹出失败</translation>
     </message>

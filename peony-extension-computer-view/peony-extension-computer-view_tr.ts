@@ -20,7 +20,7 @@
 <context>
     <name>ComputerRemoteVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-remote-volume-item.cpp" line="56"/>
+        <location filename="computer-view/computer-remote-volume-item.cpp" line="62"/>
         <source>Remote</source>
         <translation>Uzak</translation>
     </message>
@@ -45,6 +45,11 @@
         <location filename="computer-view/computer-volume-item.cpp" line="105"/>
         <source>File System</source>
         <translation>Dosya Sistemi</translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="164"/>
+        <source>Data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -230,7 +235,7 @@
 <context>
     <name>Peony::ComputerViewContainer</name>
     <message>
-        <location filename="computer-view-container.cpp" line="111"/>
+        <location filename="computer-view-container.cpp" line="132"/>
         <source>Connect a server</source>
         <translation>Servere bağlan</translation>
     </message>
@@ -239,30 +244,73 @@
         <translation type="vanished">sftp://, gibi...</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="128"/>
+        <location filename="computer-view-container.cpp" line="150"/>
+        <location filename="computer-view-container.cpp" line="155"/>
         <source>Unmount</source>
         <translation>Bağlantıyı kes</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="134"/>
+        <location filename="computer-view-container.cpp" line="162"/>
         <source>Eject</source>
         <translation type="unfinished">Çıkar</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="157"/>
+        <location filename="computer-view-container.cpp" line="188"/>
         <source>format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="168"/>
-        <location filename="computer-view-container.cpp" line="185"/>
+        <location filename="computer-view-container.cpp" line="206"/>
+        <location filename="computer-view-container.cpp" line="223"/>
         <source>Property</source>
         <translation>Özellik</translation>
     </message>
     <message>
-        <location filename="computer-view-container.cpp" line="170"/>
+        <location filename="computer-view-container.cpp" line="208"/>
         <source>You have to mount this volume first</source>
         <translation>Önce bu bölümü bağlamalısınız</translation>
+    </message>
+</context>
+<context>
+    <name>Peony::DriveRename</name>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="163"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="175"/>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="175"/>
+        <source>Device name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="179"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="187"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="193"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="206"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="179"/>
+        <source>Renaming cannot start with a decimal point, Please re-enter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="187"/>
+        <source>The device name exceeds the character limit, rename failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="193"/>
+        <source>Renaming will unmount the device. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="206"/>
+        <source>The device may not support the rename operation, rename failed!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -279,16 +327,16 @@
     </message>
     <message>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="495"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="598"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="605"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="497"/>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="506"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="599"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="606"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="610"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="614"/>
         <source>Unmount failed</source>
         <translation type="unfinished">Bağlantıyı kesme başarısız</translation>
     </message>
@@ -300,28 +348,28 @@ Do you want to unmount forcely?</source>
         Zorla ayrılmak ister misin?</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="599"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="607"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="606"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="614"/>
         <source>Error: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="505"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="602"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="609"/>
         <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="507"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="603"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="610"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="computer-view-intel/intel-computer-volume-item.cpp" line="531"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="630"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="645"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="637"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="652"/>
         <source>Eject failed</source>
         <translation type="unfinished">Çıkarma başarısız</translation>
     </message>
