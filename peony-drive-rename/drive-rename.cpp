@@ -102,6 +102,14 @@ QList<QAction *> Peony::DriveRename::menuActions(Peony::MenuPluginInterface::Typ
 //                    }
 //                }
 
+                bool isWayland = qApp->property("isWayland").toBool();
+                if (isWayland) {
+                    QString tmp = targetUri;
+                    if (tmp == "file:///data") {
+                        return l;
+                    }
+                }
+
                 g_autoptr (GFile) tfile = g_file_new_for_uri (targetUri);
                 if (G_IS_FILE (tfile)) {
                     mount = g_file_find_enclosing_mount (tfile, NULL, &error);
