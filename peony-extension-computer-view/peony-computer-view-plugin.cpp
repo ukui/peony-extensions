@@ -22,6 +22,13 @@
 
 #include "peony-computer-view-plugin.h"
 #include "computer-view-container.h"
+#include "intel-computer-view-container.h"
+
+#ifdef KYLIN_COMMON
+#include <ukuisdk/kylin-com4cxx.h>
+#endif
+
+#define V10_SP1_EDU "V10SP1-edu"
 
 #include <QTranslator>
 #include <QLocale>
@@ -43,5 +50,13 @@ int Peony::PeonyComputerViewPlugin::priority(const QString &directoryUri)
 
 Peony::DirectoryViewWidget *Peony::PeonyComputerViewPlugin::create()
 {
+#ifdef KYLIN_COMMON
+    if (QString::fromStdString(KDKGetPrjCodeName()) == V10_SP1_EDU) {
+        return new Intel::ComputerViewContainer;
+    } else {
+        return new ComputerViewContainer;
+    }
+#else
     return new ComputerViewContainer;
+#endif
 }

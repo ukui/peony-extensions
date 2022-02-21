@@ -44,13 +44,13 @@ ComputerModel::ComputerModel(QObject *parent)
     auto computerItem = new ComputerVolumeItem(nullptr, this, m_parentNode);
     computerItem->findChildren();
 
-    auto remoteItem = new ComputerRemoteVolumeItem("computer:///", this, m_parentNode);
-    m_parentNode->m_children<<remoteItem;
-    remoteItem->findChildren();
+//    auto remoteItem = new ComputerRemoteVolumeItem("computer:///", this, m_parentNode);
+//    m_parentNode->m_children<<remoteItem;
+//    remoteItem->findChildren();
 
-    auto networkItem = new ComputerNetworkItem("network:///", this, m_parentNode);
-    m_parentNode->m_children<<networkItem;
-    networkItem->findChildren();
+//    auto networkItem = new ComputerNetworkItem("network:///", this, m_parentNode);
+//    m_parentNode->m_children<<networkItem;
+//    networkItem->findChildren();
 
     connect(Peony::FileOperationManager::getInstance(), &Peony::FileOperationManager::operationFinished, this, &ComputerModel::refresh);
 
@@ -195,6 +195,10 @@ QString ComputerModel::tryGetVolumeRealUriFromUri(const QString &uri)
 
     if (uri.isEmpty()) {
         return realUri;
+    }
+
+    if (uri == "file:///data" && Peony::FileUtils::isFileExsit("file:///data/usershare")) {
+        return "computer:///ukui-data-volume";
     }
 
     QList<QString>::iterator iter;

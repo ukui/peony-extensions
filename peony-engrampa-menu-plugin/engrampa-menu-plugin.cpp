@@ -30,6 +30,8 @@
 #include <QLocale>
 #include <QApplication>
 #include <QProcess>
+#include <QUrl>
+#include <QStandardPaths>
 #include <QDebug>
 
 using namespace Peony;
@@ -48,6 +50,12 @@ QList<QAction*> EngrampaMenuPlugin::menuActions(Types types, const QString &uri,
     if (types == MenuPluginInterface::DirectoryView || types == MenuPluginInterface::DesktopWindow)
     {
         if (! selectionUris.isEmpty()) {
+            QUrl url = selectionUris.first();
+            if (url.path() == QStandardPaths::writableLocation(QStandardPaths::HomeLocation)) {
+                if (types == MenuPluginInterface::DesktopWindow) {
+                    return actions;
+                }
+            }
             auto info = FileInfo::fromUri(selectionUris.first());
             //special type mountable, return
             qDebug()<<"info isVirtual:"<<info->isVirtual()<<info->mimeType();
@@ -112,6 +120,11 @@ bool EngrampaMenuPlugin::is_compressed_file(QString file_name)
         if (file_name.endsWith(suffix))
             return true;
     }
+
+    //process big package take apart to many small package issue, bug#55297, bug#102968
+    QFileInfo info(file_name.replace("file://", ""));
+    if (info.completeSuffix().contains("7z."))
+        return true;
 
     return false;
 }

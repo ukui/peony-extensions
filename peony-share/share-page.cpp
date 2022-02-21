@@ -83,12 +83,12 @@ void SharePage::saveAllChange()
     if (!m_thisPageChanged)
         return;
 
-    bool checked = m_shareCheckBox->isChecked();
+    bool checked = m_switchButton->isChecked();
 
     if (checked) {
         //FIXME:暂时不支持自定义共享名 - Currently does not support custom shared name
         m_shareInfo.name = m_fileInfo->displayName();
-        m_shareInfo.readOnly = m_shareReadOnlyCheckBox->isChecked();
+        m_shareInfo.readOnly = !m_allowGuestModify->isChecked();
         m_shareInfo.allowGuest = m_shareAllowGuestCheckBox->isChecked();
         m_shareInfo.isShared = true;
 
@@ -105,15 +105,15 @@ void SharePage::initFloorOne()
     floor1->setMinimumHeight(90);
 
     QHBoxLayout * layout1 = new QHBoxLayout(floor1);
-    layout1->setContentsMargins(22, 14, 22, 0);
+    layout1->setContentsMargins(24, 16, 24, 16);
     layout1->setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
     floor1->setLayout(layout1);
 
     m_iconButton = new QPushButton(floor1);
+    m_iconButton->setFixedSize(64, 64);
     m_iconButton->setIcon(QIcon::fromTheme(m_fileInfo.get()->iconName()));
-    m_iconButton->setFixedSize(QSize(60,60));
-    m_iconButton->setIconSize(QSize(48, 48));
+    m_iconButton->setIconSize(QSize(64, 64));
 
     layout1->addWidget(m_iconButton);
 
@@ -122,7 +122,12 @@ void SharePage::initFloorOne()
     m_folderName = new QLabel(floor1);
     m_sharedState = new QLabel(floor1);
 
-    m_folderName->setText(m_fileInfo.get()->displayName());
+    //fix bug:#82320
+    if (QRegExp("^file:///data/usershare(/{,1})$").exactMatch(m_fileInfo->uri())) {
+        m_folderName->setText(tr("usershare"));
+    } else {
+        m_folderName->setText(m_fileInfo.get()->displayName());
+    }
     m_sharedState->setText(m_shareInfo.isShared ? tr("share this folder") : tr("don`t share this folder"));
 
     vBoxLayout->addStretch(1);
@@ -130,6 +135,7 @@ void SharePage::initFloorOne()
     vBoxLayout->addWidget(m_sharedState);
     vBoxLayout->addStretch(1);
 
+    layout1->addSpacing(16);
     layout1->addLayout(vBoxLayout);
     layout1->addStretch(1);
 
@@ -139,28 +145,30 @@ void SharePage::initFloorOne()
 void SharePage::initFloorTwo()
 {
     QFrame * floor2 = new QFrame(this);
-    floor2->setMinimumHeight(64);
 
-    QVBoxLayout * layout2 = new QVBoxLayout(floor2);
-    layout2->setContentsMargins(22, 0, 22, 0);
+    QHBoxLayout * layout2 = new QHBoxLayout(floor2);
+    layout2->setAlignment(Qt::AlignLeft);
+    layout2->setContentsMargins(24, 16, 24, 16);
 
     floor2->setLayout(layout2);
 
     bool shared = m_shareInfo.isShared;
 
-    m_shareCheckBox = new QCheckBox(tr("Share folder"), floor2);
-    m_shareCheckBox->setChecked(shared);
+    m_switchButton = new SwitchButton(floor2);
+    m_switchButton->setChecked(shared);
 
-    layout2->addWidget(m_shareCheckBox);
+    layout2->addWidget(new QLabel(tr("Share folder"), floor2));
+    layout2->addSpacing(16);
+    layout2->addWidget(m_switchButton);
 
     m_layout->addWidget(floor2);
 
-    connect(m_shareCheckBox, &QCheckBox::clicked, this, [=](bool checked) {
+    connect(m_switchButton, &SwitchButton::checkedChanged, this, [=](bool checked) {
         this->thisPageChanged();
         if (checked) {
             //FIXME:暂时不支持自定义共享名 - Currently does not support custom shared name
             m_shareInfo.name = m_fileInfo->displayName();
-            m_shareInfo.readOnly = m_shareReadOnlyCheckBox->isChecked();
+            m_shareInfo.readOnly = !m_allowGuestModify->isChecked();
             m_shareInfo.allowGuest = m_shareAllowGuestCheckBox->isChecked();
 
             if (m_floor3)
@@ -184,7 +192,7 @@ void SharePage::initFloorThree()
     m_floor3 = new QFrame(this);
 
     QVBoxLayout * layout3 = new QVBoxLayout(m_floor3);
-    layout3->setContentsMargins(22, 0, 22, 0);
+    layout3->setContentsMargins(24, 0, 24, 16);
 
     m_floor3->setLayout(layout3);
 
@@ -204,13 +212,13 @@ void SharePage::initFloorThree()
 
     layout3->addLayout(formLayout);
 
-    m_shareReadOnlyCheckBox = new QCheckBox(tr("Read Only"), this);
-    m_shareReadOnlyCheckBox->setChecked(m_shareInfo.readOnly);
+    m_allowGuestModify = new QCheckBox(tr("Allow others to create and delete files"), this);
+    m_allowGuestModify->setChecked(!m_shareInfo.readOnly);
 
     m_shareAllowGuestCheckBox = new QCheckBox(tr("Allow Anonymous"));
     m_shareAllowGuestCheckBox->setChecked(m_shareInfo.allowGuest);
 
-    layout3->addWidget(m_shareReadOnlyCheckBox);
+    layout3->addWidget(m_allowGuestModify);
     layout3->addWidget(m_shareAllowGuestCheckBox);
 
     m_floor3->setVisible(m_shareInfo.isShared);
@@ -222,8 +230,8 @@ void SharePage::initFloorThree()
         this->thisPageChanged();
     });
 
-    connect(m_shareReadOnlyCheckBox, &QCheckBox::clicked, this, [=](bool checked) {
-        m_shareInfo.readOnly = checked;
+    connect(m_allowGuestModify, &QCheckBox::clicked, this, [=](bool checked) {
+        m_shareInfo.readOnly = !checked;
         this->thisPageChanged();
     });
 

@@ -26,17 +26,20 @@ TRANSLATIONS = peony-extension-computer-view_zh_CN.ts \
 	       peony-extension-computer-view_tr.ts
 
 include(computer-view/computer-view.pri)
+include(computer-view-intel/computer-view-intel.pri)
 
 CONFIG += link_pkgconfig
 
 PKGCONFIG += gio-unix-2.0
 
 SOURCES += \
+    ../peony-drive-rename/drive-rename.cpp \
     computer-view-container.cpp \
     login-remote-filesystem.cpp \
     peony-computer-view-plugin.cpp \
 
 HEADERS += \
+    ../peony-drive-rename/drive-rename.h \
     computer-view-container.h \
     login-remote-filesystem.h \
     peony-computer-view-plugin.h \

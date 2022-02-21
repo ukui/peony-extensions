@@ -16,11 +16,11 @@ ComputerUserShareItem::ComputerUserShareItem(GVolume *volume, ComputerModel *mod
     parentNode->m_children<<this;
 
     m_icon = QIcon::fromTheme("drive-harddisk");
-    m_uri = "file:///data/usershare/";
-    m_displayName = tr("User Share");
+    m_uri = "file:///data";
+    m_displayName = tr("Data");
     m_model->endInsterItem();
 
-    m_file = g_file_new_for_uri("file:///data/usershare/");
+    m_file = g_file_new_for_uri("file:///data");
     GFile* file = g_file_new_for_uri("file:///data");
     GFileInfo* fileInfo = g_file_query_info(file, G_FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, nullptr, nullptr);
     if (g_file_info_get_attribute_boolean(fileInfo, G_FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT)) {

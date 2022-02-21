@@ -7,6 +7,11 @@ DEFINES += PEONYSHARE_LIBRARY
 
 include(../common.pri)
 
+exists(/usr/include/peony-qt/usershare-manager.h) {
+    message("usershare-manager.h for find.")
+    DEFINES += LIBPEONY_USERSHARE_MANAGER=true
+}
+
 PKGCONFIG += peony
 CONFIG += link_pkgconfig \
           c++11 \
@@ -16,10 +21,14 @@ CONFIG += link_pkgconfig \
 #DESTDIR += ../testdir
 
 SOURCES += share-page.cpp \
-	   share-properties-page-plugin.cpp
+	   net-usershare-helper.cpp \
+	   share-properties-page-plugin.cpp \
+	   SwitchButton/switchbutton.cpp
 
 HEADERS += share-page.h \
-	   share-properties-page-plugin.h
+	   net-usershare-helper.h \
+	   share-properties-page-plugin.h \
+	   SwitchButton/switchbutton.h
 
 TRANSLATIONS += translations/peony-share-extension_cs.ts \
                 translations/peony-share-extension_tr.ts \
@@ -29,10 +38,4 @@ RESOURCES += resources.qrc
 
 target.path = $$[QT_INSTALL_LIBS]/peony-extensions
 
-polkit1.files = $$PWD/org.freedesktop.peony-share.policy
-polkit1.path = /usr/share/polkit-1/actions/
-
-polkitbin.files = $$PWD/peony-share
-polkitbin.path = /usr/share/peony-extensions/
-
-INSTALLS += target polkit1 polkitbin
+INSTALLS += target

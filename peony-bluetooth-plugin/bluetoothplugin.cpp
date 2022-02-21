@@ -25,7 +25,42 @@
 #include <QFileInfo>
 #include <QProcess>
 
+#ifdef KYLIN_COMMON
+#include <ukuisdk/kylin-com4cxx.h>
+#endif
+
+#define V10_SP1_EDU "V10SP1-edu"
+
 using namespace Peony;
+
+static QString executeLinuxCmd(QString strCmd)
+{
+    QProcess p;
+    p.start("bash", QStringList() <<"-c" << strCmd);
+    p.waitForFinished();
+    QString strResult = p.readAllStandardOutput();
+    return strResult.toLower();
+}
+
+static bool IsHuawei()
+{
+    QString str = executeLinuxCmd("cat /proc/cpuinfo | grep Hardware");
+    if(str.length() == 0)
+    {
+        return false;
+    }
+
+    if(str.indexOf("huawei") != -1 || str.indexOf("pangu") != -1 ||
+            str.indexOf("kirin") != -1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+    return false;
+}
 
 BluetoothPlugin::BluetoothPlugin(QObject *parent)
 {
@@ -41,8 +76,8 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
     QList<QAction*> actions;
     QStringList target;
     for (auto str : selectionUris) {
-        qDebug() << Q_FUNC_INFO << str << "   =   " << Peony::FileUtils::urlEncode(str);
-        target << Peony::FileUtils::urlEncode(str);
+        qDebug() << Q_FUNC_INFO << str << "   =   " << Peony::FileUtils::urlDecode(str);
+        target << Peony::FileUtils::urlDecode(str);
     }
 
     QProcess process;
@@ -52,6 +87,11 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
     QString str_output = output;
     if(!str_output.contains(QString("bluetooth"), Qt::CaseInsensitive))
         return actions;
+
+    //华为机型不提供文件发送功能
+    if(IsHuawei()){
+        return actions;
+    }
 
     if(!QFileInfo::exists("/usr/bin/ukui-bluetooth")){
         return actions;
@@ -70,7 +110,7 @@ QList<QAction *> BluetoothPlugin::menuActions(Peony::MenuPluginInterface::Types 
                     actions << compress;
                     connect(compress, &QAction::triggered, [=](){
                         QString path = selectionUris.at(0);
-                        QDBusMessage m = QDBusMessage::createMethodCall("org.ukui.bluetooth","/org/ukui/bluetooth","org.ukui.bluetooth","file_transfer");
+                        QDBusMessage m = QDBusMessage::createMethodCall("com.ukui.bluetooth","/com/ukui/bluetooth","com.ukui.bluetooth","setSendTransferFileMesg");
                         m << target;
                         qDebug() << Q_FUNC_INFO << m.arguments().at(0).value<QString>() <<__LINE__;
                         // 发送Message

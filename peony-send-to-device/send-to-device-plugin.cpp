@@ -34,6 +34,13 @@
 #include <QApplication>
 #include <file-copy-operation.h>
 #include <file-operation-manager.h>
+#include <file-info-job.h>
+
+#ifdef KYLIN_COMMON
+#include <ukuisdk/kylin-com4cxx.h>
+#endif
+
+#define V10_SP1_EDU "V10SP1-edu"
 
 static QString getIconName (GIcon* icons);
 static void mounted_func (gpointer data, gpointer udata);
@@ -53,6 +60,12 @@ SendToPlugin::SendToPlugin(QObject *parent) : QObject(parent), mEnable(true)
 
 QList<QAction *> SendToPlugin::menuActions(Types types, const QString &uri, const QStringList &selectionUris)
 {
+#ifdef KYLIN_COMMON
+    if (QString::fromStdString(KDKGetPrjCodeName()) == V10_SP1_EDU) {
+        return QList<QAction*>();
+    }
+#endif
+
     QList<QAction *> l;
 
     if (selectionUris.count() <= 0) {
@@ -138,31 +151,42 @@ static void mounted_func (gpointer data, gpointer udata)
     GMount*             mount = (GMount*)data;
     GFile*              location = nullptr;
     char*               uri = nullptr;
-    char*               name = nullptr;
-    GIcon*              icons = nullptr;
-    QString             icon = nullptr;
 
-    if (!data || !udata) return;
+    DriverAction* act = (static_cast<DriverAction*>(udata));
+
+    if (!data || !udata || !act) return;
 
     if (mount) {
-        name = g_mount_get_name(mount);
-        icons = g_mount_get_icon(mount);
         location = g_mount_get_default_location(mount);
         if (location) {
             uri = g_file_get_uri(location);
         }
     }
 
-    icon = getIconName (icons);
+    // check permission
+    FileInfoJob* fileInfo = new FileInfoJob(uri);
+    fileInfo->setAutoDelete ();
+    fileInfo->queryAsync ();
 
-    if (uri && name) {
-        ((DriverAction*)udata)->driverAdded(uri, name, icon);
-    }
+    act->connect(fileInfo, &FileInfoJob::queryAsyncFinished, act, [=] (bool success) {
+        if (success) {
+            GMount* mount = (GMount*)data;
+            if (G_IS_MOUNT (mount)) {
+                g_autofree char* name = g_mount_get_name(mount);
+                GIcon* icons = g_mount_get_icon(mount);
+                QString icon = getIconName (icons);
 
-    qDebug() << "name:" << name << " uri:" << uri << " icons:" << icons << " icon:" << icon;
+                std::shared_ptr<FileInfo> info = fileInfo->getInfo();
+                if (uri && name && info.get()->canExecute() && info.get()->canWrite()) {
+                    Q_EMIT (static_cast<DriverAction*>(udata))->driverAdded(uri, name, icon);
+                }
+
+                qDebug() << "name:" << name << " uri:" << uri << " icons:" << icons << " icon:" << icon;
+            }
+        }
+    });
 
     if (!uri) g_free(uri);
-    if (!name) g_free(name);
     if (!location) g_object_unref(location);
 }
 
@@ -259,6 +283,7 @@ DriverAction::DriverAction(const QStringList& uris, QObject *parent) : QAction(p
 
     setMenu(mMenu);
     setText(tr("Send to a removable device"));
+    showAction();
 }
 
 DriverAction::~DriverAction()

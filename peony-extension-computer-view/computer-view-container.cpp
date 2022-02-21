@@ -25,6 +25,7 @@
 #include "computer-proxy-model.h"
 #include "abstract-computer-item.h"
 #include "login-remote-filesystem.h"
+#include "peony-drive-rename/drive-rename.h"
 
 #include <peony-qt/file-utils.h>
 #include <peony-qt/format_dialog.h>
@@ -41,10 +42,10 @@
 #include <QInputDialog>
 #include <QStylePainter>
 #include <file-info.h>
+#include <QApplication>
 
 static void ask_question_cb(GMountOperation *op, char *message, char **choices, Peony::ComputerViewContainer *p_this);
 static void ask_password_cb(GMountOperation *op, const char *message, const char *default_user, const char *default_domain, GAskPasswordFlags flags, Peony::ComputerViewContainer *p_this);
-
 
 static GAsyncReadyCallback mount_enclosing_volume_callback(GFile *volume, GAsyncResult *res, Peony::ComputerViewContainer *p_this)
 {
@@ -74,6 +75,26 @@ void aborted_cb(GMountOperation *op, Peony::ComputerViewContainer *p_this)
 {
     g_mount_operation_reply(op, G_MOUNT_OPERATION_ABORTED);
     p_this->disconnect();
+}
+
+#include "peony-qt/file-enumerator.h"
+static QString getComputerUriFromUri(const QString &uri){
+    /* volume item,遍历方式获取uri */
+    FileEnumerator e;
+    e.setEnumerateDirectory("computer:///");
+    e.enumerateSync();
+    QString computerUri;
+    for (auto fileInfo : e.getChildren()) {
+        FileInfoJob infoJob(fileInfo);
+        infoJob.querySync();
+        /* 由item的uri获取computer uir */
+        auto info = infoJob.getInfo();
+        if(fileInfo.get()->targetUri() == uri){
+            computerUri = fileInfo.get()->uri();
+            break;
+        }
+    }
+    return computerUri;
 }
 
 Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : DirectoryViewWidget(parent)
@@ -122,18 +143,26 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 g_file_mount_enclosing_volume(m_volume, G_MOUNT_MOUNT_NONE, m_op, nullptr, GAsyncReadyCallback(mount_enclosing_volume_callback), this);
             });
         } else if (items.count() == 1 && items.first()->uri() != "" && items.first()->uri() != "network:///") {
+            bool isWayland = qApp->property("isWayland").toBool(); // related to #105070
             auto item = items.first();
             bool unmountable = item->canUnmount();
-            menu.addAction(tr("Unmount"), [=](){
-                item->unmount(G_MOUNT_UNMOUNT_NONE);
-            });
-            menu.actions().first()->setEnabled(unmountable);
-
+            if(!item->canEject()){
+                menu.addAction(tr("Unmount"), [=](){
+                    item->unmount(G_MOUNT_UNMOUNT_NONE);
+                });
+                menu.actions().first()->setEnabled(unmountable);
+            } else if (isWayland) {
+                menu.addAction(tr("Unmount"), [=](){
+                    item->unmount(G_MOUNT_UNMOUNT_NONE);
+                });
+                menu.actions().first()->setEnabled(unmountable);
+            }
             /*eject function for volume. fix #18216*/
-            auto ejectAction = menu.addAction(tr("Eject"), [=](){
-                item->eject(G_MOUNT_UNMOUNT_NONE);
-            });
-            ejectAction->setEnabled(item->canEject());
+            if(item->canEject()){
+                auto ejectAction = menu.addAction(tr("Eject"), [=](){
+                    item->eject(G_MOUNT_UNMOUNT_NONE);
+                });
+            }
 
             auto uri = item->uri();
             auto realUri = m_view->tryGetVolumeRealUriFromUri(uri);
@@ -141,6 +170,8 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                 uri = realUri;
             }
 
+            if(uri.startsWith("file://"))
+                uri = getComputerUriFromUri(uri);
             auto info = FileInfo::fromUri(uri);
             if (info->displayName().isEmpty() || info->targetUri().isEmpty()) {
                 FileInfoJob j(info);
@@ -152,9 +183,10 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
             if (nullptr != mount) {
                 QString unixDevice = FileUtils::getUnixDevice(info->uri());
                 if (! unixDevice.isNull() && ! unixDevice.contains("/dev/sr")
-                    && info->isVolume() && info->canUnmount()) {
+                        &&!unixDevice.startsWith("/dev/bus/usb")
+                        && info->isVolume() && info->canUnmount()/* && info->targetUri() != "file:///data"*/) {
                     auto fdMenu = menu.addAction(tr("format"), [=] () {
-                        auto fd = new Format_Dialog(info->uri(), nullptr, m_view);
+                        auto fd = new Format_Dialog(uri, nullptr, m_view);
                         fd->show();
                     });
                     if (! mount) {
@@ -162,6 +194,13 @@ Peony::ComputerViewContainer::ComputerViewContainer(QWidget *parent) : Directory
                     }
                 }
             }
+
+            // add drive rename action, link to: #105070
+            auto driveRenamePlugin = new DriveRename(this);
+            QStringList fakeUrls;
+            fakeUrls<<uri;
+
+            menu.addActions(driveRenamePlugin->menuActions(Peony::MenuPluginInterface::Type::SideBar, "computer:///", fakeUrls));
 
             if (!item->uri().startsWith("network://")) {
                 auto a = menu.addAction(tr("Property"), [=]() {
@@ -296,8 +335,11 @@ void Peony::ComputerViewContainer::bindModel(Peony::FileItemModel *model, Peony:
     connect(selectionModel, &QItemSelectionModel::selectionChanged, this, &DirectoryViewWidget::viewSelectionChanged);;
 
     connect(m_view, &QAbstractItemView::doubleClicked, this, [=](const QModelIndex &index){
-        if (!index.parent().isValid())
+        if (!index.parent().isValid() || m_view->getRightDoubleClickState()){
+            //qDebug() << "doubleClicked state" << m_view->getRightDoubleClickState();
+            m_view->setRightDoubleClickState(false);
             return;
+        }
 
         auto model = static_cast<ComputerProxyModel *>(m_view->model());
         auto item = model->itemFromIndex(index);

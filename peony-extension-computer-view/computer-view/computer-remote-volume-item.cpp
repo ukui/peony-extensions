@@ -36,6 +36,12 @@ ComputerRemoteVolumeItem::ComputerRemoteVolumeItem(const QString &uri, ComputerM
     m_model->m_volumeTargetMap.insert(Peony::FileUtils::getTargetUri(uri), uri);
     m_model->addRealUri(uri);
 
+    //fix dock show in remote item issue, link to bug#82398
+    if(uri.startsWith("ftp://") || uri.startsWith("sftp://") || uri.startsWith("smb://"))
+        m_isHidden = false;
+    else
+        m_isHidden = true;
+
     qDebug()<<"create remote volume item:"<<uri;
 }
 
@@ -100,7 +106,9 @@ QModelIndex ComputerRemoteVolumeItem::itemIndex()
 
 bool ComputerRemoteVolumeItem::isHidden()
 {
-    return m_isUnixDevice || m_uri == "computer:///root.link";
+//  return m_isUnixDevice || m_uri == "computer:///root.link";
+    //fix bug#82398, hide unknow devices
+    return m_isHidden;
 }
 
 void ComputerRemoteVolumeItem::onFileAdded(const QString &uri)
@@ -244,7 +252,7 @@ void ComputerRemoteVolumeItem::query_info_async_callback(GFile *file, GAsyncResu
         }
 
         p_this->m_model->dataChanged(p_this->itemIndex(), p_this->itemIndex());
-        qDebug()<<p_this->m_uri<<p_this->m_isUnixDevice;
+        qDebug()<<"query_info_async_callback:"<<p_this->m_uri<<p_this->m_isUnixDevice;
 
         g_object_unref(info);
     }

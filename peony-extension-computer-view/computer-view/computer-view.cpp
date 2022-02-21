@@ -135,8 +135,9 @@ QModelIndex ComputerView::indexAt(const QPoint &point) const
     auto pos = point + QPoint(horizontalOffset(), verticalOffset());
     for (auto index : m_rect_cache.keys()) {
         auto rect = m_rect_cache.value(index);
-        if (rect.contains(pos))
+        if (rect.contains(pos) && index.parent().isValid()){
             return index;
+        }
     }
     return QModelIndex();
 }
@@ -172,7 +173,8 @@ void ComputerView::setSelection(const QRect &rect, QItemSelectionModel::Selectio
 
         for (auto index : m_rect_cache.keys()) {
             auto indexRect = m_rect_cache.value(index);
-            if (realRect.contains(indexRect.center())) {
+            if (realRect.contains(indexRect.center())
+                    && index.parent().isValid()) {
                 selectionModel()->select(index, QItemSelectionModel::Select);
             } else {
                 selectionModel()->select(index, QItemSelectionModel::Deselect);
@@ -185,8 +187,9 @@ void ComputerView::setSelection(const QRect &rect, QItemSelectionModel::Selectio
             clearSelection();
             return;
         }
-        if (!selectedIndexes().contains(index))
-            selectionModel()->select(index, QItemSelectionModel::SelectCurrent);
+//        if (!selectedIndexes().contains(index))
+//            selectionModel()->select(index, QItemSelectionModel::SelectCurrent);
+            setCurrentIndex(index);
     }
 }
 
@@ -208,6 +211,16 @@ QString ComputerView::tryGetVolumeRealUriFromUri(const QString &uri)
 void ComputerView::refresh()
 {
     m_model->refresh();
+}
+
+bool ComputerView::getRightDoubleClickState()
+{
+    return m_isRightButonDClick;
+}
+
+void ComputerView::setRightDoubleClickState(bool flag)
+{
+    m_isRightButonDClick = flag;
 }
 
 void ComputerView::updateEditorGeometries()
@@ -339,6 +352,16 @@ void ComputerView::mouseReleaseEvent(QMouseEvent *event)
     QAbstractItemView::mouseReleaseEvent(event);
 }
 
+void ComputerView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::RightButton){
+        m_isRightButonDClick = true;
+    }else{
+        m_isRightButonDClick = false;
+    }
+    QAbstractItemView::mouseDoubleClickEvent(event);
+}
+
 void ComputerView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
 {
     QAbstractItemView::dataChanged(topLeft, bottomRight, roles);
@@ -376,8 +399,8 @@ void ComputerView::layoutVolumeIndexes(const QModelIndex &volumeParentIndex)
         return;
 
     //add tab
-    m_rect_cache.insert(volumeParentIndex, QRect(QPoint(0, m_totalHeight), QSize(this->viewport()->width(), m_tabPadding)));
-    m_totalHeight += m_tabPadding + 10;
+//    m_rect_cache.insert(volumeParentIndex, QRect(QPoint(0, m_totalHeight), QSize(this->viewport()->width(), m_tabPadding)));
+    m_totalHeight += m_tabPadding;
 
     //layout indexes
     int tmpX = 0;

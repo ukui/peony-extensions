@@ -67,8 +67,10 @@ ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, Ab
 
     updateInfoAsync();
 
-    g_signal_connect(volume, "changed", G_CALLBACK(volume_changed_callback), this);
-    g_signal_connect(volume, "removed", G_CALLBACK(volume_removed_callback), this);
+    m_volumeChangedHandle = g_signal_connect(volume, "changed", G_CALLBACK(volume_changed_callback), this);
+    m_volumeRemovedHandle = g_signal_connect(volume, "removed", G_CALLBACK(volume_removed_callback), this);
+    m_mountChangedHandle = g_signal_connect(g_volume_monitor_get(), "mount_changed", G_CALLBACK(mount_changed_callback), this);
+
     m_model->endInsterItem();
 }
 
@@ -81,6 +83,11 @@ ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, Ab
 
 ComputerVolumeItem::~ComputerVolumeItem()
 {
+    g_signal_handler_disconnect(g_volume_monitor_get(), m_mountChangedHandle);
+    if(m_volume){
+        g_signal_handler_disconnect(m_volume->getGVolume(), m_volumeChangedHandle);
+        g_signal_handler_disconnect(m_volume->getGVolume(), m_volumeRemovedHandle);
+    }
     g_cancellable_cancel(m_cancellable);
     g_object_unref(m_cancellable);
 
@@ -153,6 +160,9 @@ void ComputerVolumeItem::updateInfoAsync()
 
 const QString ComputerVolumeItem::displayName()
 {
+    if(m_uri == "file:///data"){
+        return tr("Data");
+    }
     return m_displayName;
 }
 
@@ -279,10 +289,12 @@ void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
     GVolume *g_volume;
     GMount *g_mount;
 
+    g_autoptr(GMountOperation) mount_op = g_mount_operation_new();
+
     /*If udisk device is mounted,eject it from here*/
     if (m_mount && (g_mount = m_mount->getGMount())) {
         if (g_mount_can_eject(g_mount)) {
-            g_mount_eject_with_operation(g_mount, ejectFlag, nullptr, m_cancellable,
+            g_mount_eject_with_operation(g_mount, ejectFlag, mount_op, m_cancellable,
                                          GAsyncReadyCallback(eject_async_callback), this);
         } else {
             auto g_drive = g_mount_get_drive(g_mount);
@@ -290,7 +302,7 @@ void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
                 return;
 
             if (g_drive_can_stop(g_drive) || g_drive_is_removable(g_drive))
-                g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, nullptr, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
+                g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, mount_op, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
 
             g_object_unref(g_drive);
         }
@@ -301,7 +313,7 @@ void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
     /*If udisk device is unmounted,eject it from here*/
     if (m_volume && (g_volume = m_volume->getGVolume())) {
         if (g_volume_can_eject(g_volume)) {
-            g_volume_eject_with_operation(g_volume, ejectFlag, nullptr, m_cancellable,
+            g_volume_eject_with_operation(g_volume, ejectFlag, mount_op, m_cancellable,
                                          GAsyncReadyCallback(eject_async_callback), this);
         } else {
             auto g_drive = g_mount_get_drive(g_mount);
@@ -309,7 +321,7 @@ void ComputerVolumeItem::eject(GMountUnmountFlags ejectFlag)
                 return;
 
             if (g_drive_can_stop(g_drive))
-                g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, nullptr, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
+                g_drive_stop(g_mount_get_drive(g_mount), ejectFlag, mount_op, m_cancellable, GAsyncReadyCallback(stop_async_callback), this);
 
             g_object_unref(g_drive);
         }
@@ -328,24 +340,26 @@ void ComputerVolumeItem::unmount(GMountUnmountFlags unmountFlag)
     GMount *g_mount = nullptr;
     GFile *file = nullptr;
 
+    g_autoptr(GMountOperation) mount_op = g_mount_operation_new();
+
     m_vfs_uri = m_model->m_volumeTargetMap.key(m_uri);
     if (!m_vfs_uri.isEmpty()) {
         file = g_file_new_for_uri(m_vfs_uri.toUtf8().constData());
         if(file)
             g_file_unmount_mountable_with_operation(file,unmountFlag,
-                                                    nullptr,nullptr,
+                                                    mount_op,nullptr,
                                                     GAsyncReadyCallback(unmount_async_callback),
                                                     this);
         g_object_unref(file);
     } else if (m_mount) {
         if (g_mount = m_mount->getGMount())
-            g_mount_unmount_with_operation(g_mount, unmountFlag, nullptr, m_cancellable,
+            g_mount_unmount_with_operation(g_mount, unmountFlag, mount_op, m_cancellable,
                                        GAsyncReadyCallback(unmount_async_callback), this);
     } else if (!m_uri.isEmpty()) {
         file = g_file_new_for_uri(m_uri.toUtf8().constData());
         if(file)
             g_file_unmount_mountable_with_operation(file,unmountFlag,
-                                                    nullptr,nullptr,
+                                                    mount_op,nullptr,
                                                     GAsyncReadyCallback(unmount_async_callback),
                                                     this);
         g_object_unref(file);
@@ -397,6 +411,8 @@ bool ComputerVolumeItem::isHidden()
 void ComputerVolumeItem::volume_changed_callback(GVolume *volume, ComputerVolumeItem *p_this)
 {
     //QMessageBox::information(0, 0, tr("Volume Changed"));
+    if(!p_this)
+        return;
     p_this->m_mount = nullptr;
     p_this->m_uri = nullptr;
     p_this->m_icon = QIcon();
@@ -417,6 +433,16 @@ void ComputerVolumeItem::volume_removed_callback(GVolume *volume, ComputerVolume
     parentNode->m_children.removeAt(row);
     p_this->deleteLater();
     parentNode->m_model->endRemoveItem();
+}
+
+void ComputerVolumeItem::mount_changed_callback(GVolumeMonitor *volumeMonitor, GMount *gmount, ComputerVolumeItem *p_this)
+{
+    if (p_this){
+        p_this->m_usedSpace = 0;
+        p_this->m_totalSpace = 0;
+        p_this->updateInfo();
+        qDebug()<<"mount changed uri: "<<p_this->uri();
+    }
 }
 
 QString iconFileFromMountpoint(const QString& mountpoint){
@@ -645,8 +671,20 @@ void ComputerVolumeItem::updateBlockIcons()
     }
 
     //用设备容量区分U盘和移动硬盘，大于128GiB为移动硬盘
-    //FIXME with a better solution, fix bug#57660, #70014
-    if (m_totalSpace/(1024 * 1024 *1024) > 128)
+    //FIXME with a better solution, fix bug#57660, #70014 #96652
+    GDrive* gdrive = g_volume_get_drive(m_volume->getGVolume());
+    QString tmpDevice;
+    double size = 0.0;
+    if(gdrive){
+        g_autofree char* gdevice = g_drive_get_identifier(gdrive, G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
+        tmpDevice = gdevice;
+        g_object_unref(gdrive);
+    }
+
+    if(!tmpDevice.isEmpty()){
+        size = Peony::FileUtils::getDeviceSize(tmpDevice.toUtf8().constData());
+    }
+    if (m_totalSpace/(1024 * 1024 *1024) > 128 || size > 128)
         m_icon = QIcon::fromTheme("drive-harddisk-usb");
     else
         m_icon = QIcon::fromTheme("drive-removable-media-usb");

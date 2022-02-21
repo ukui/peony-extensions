@@ -23,6 +23,8 @@
 #ifndef SHAREPAGE_H
 #define SHAREPAGE_H
 
+#include "SwitchButton/switchbutton.h"
+
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -33,8 +35,13 @@
 #include <file-info.h>
 #include <QCheckBox>
 #include <QFuture>
+
+#if LIBPEONY_USERSHARE_MANAGER
 #include <peony-qt/usershare-manager.h>
-//#include "libpeony-qt/usershare-manager.h"
+#else
+#include "net-usershare-helper.h"
+#endif
+
 using namespace Peony;
 
 class SharePage : public Peony::PropertiesWindowTabIface
@@ -47,7 +54,9 @@ public:
     {
         QFrame * separate = new QFrame(this);
         separate->setFrameShape(QFrame::HLine);
-
+        QPalette palette = separate->palette();
+        palette.setColor(QPalette::WindowText,QColor("#F0F0F0FF"));
+        separate->setPalette(palette);
         m_layout->addWidget(separate);
     }
 
@@ -68,7 +77,11 @@ public:
 private:
     QFutureWatcher<void> *m_theFutureWatcher = nullptr;
 
+#if LIBPEONY_USERSHARE_MANAGER
     Peony::ShareInfo       m_shareInfo;
+#else
+    ShareInfo              m_shareInfo;
+#endif
     QVBoxLayout*    m_layout = nullptr;
 
     std::shared_ptr<Peony::FileInfo> m_fileInfo = nullptr;
@@ -79,13 +92,13 @@ private:
     QLabel      *m_sharedState = nullptr;
 
     //floor2
-    QCheckBox *m_shareCheckBox = nullptr;
+    SwitchButton *m_switchButton = nullptr;
     //floor3
     QFrame    *m_floor3        = nullptr;
     QLineEdit *m_shareNameEdit = nullptr;
     QLineEdit *m_commentEdit   = nullptr;
 
-    QCheckBox *m_shareReadOnlyCheckBox   = nullptr;
+    QCheckBox *m_allowGuestModify   = nullptr;
     QCheckBox *m_shareAllowGuestCheckBox = nullptr;
 
 };

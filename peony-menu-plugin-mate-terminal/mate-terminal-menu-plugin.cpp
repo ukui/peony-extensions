@@ -37,6 +37,12 @@
 
 #include <QDebug>
 
+#ifdef KYLIN_COMMON
+#include <ukuisdk/kylin-com4cxx.h>
+#endif
+
+#define V10_SP1_EDU "V10SP1-edu"
+
 using namespace Peony;
 
 static QString terminal_cmd = nullptr;
@@ -124,6 +130,12 @@ void MateTerminalMenuPlugin::tryOpenAgain()
 
 QList<QAction *> MateTerminalMenuPlugin::menuActions(Types types, const QString &uri, const QStringList &selectionUris)
 {
+#ifdef KYLIN_COMMON
+    if (QString::fromStdString(KDKGetPrjCodeName()) == V10_SP1_EDU) {
+        return QList<QAction*>();
+    }
+#endif
+
     QList<QAction *> actions;
     qDebug() << "terminal_cmd:" <<terminal_cmd <<uri;
     if (uri.startsWith("trash://") || uri.startsWith("recent://"))
