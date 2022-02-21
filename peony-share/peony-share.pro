@@ -7,6 +7,11 @@ DEFINES += PEONYSHARE_LIBRARY
 
 include(../common.pri)
 
+exists(/usr/include/peony-qt/usershare-manager.h) {
+    message("usershare-manager.h for find.")
+    DEFINES += LIBPEONY_USERSHARE_MANAGER=true
+}
+
 PKGCONFIG += peony
 CONFIG += link_pkgconfig \
           c++11 \
@@ -16,10 +21,12 @@ CONFIG += link_pkgconfig \
 #DESTDIR += ../testdir
 
 SOURCES += share-page.cpp \
+	   net-usershare-helper.cpp \
 	   share-properties-page-plugin.cpp \
 	   SwitchButton/switchbutton.cpp
 
 HEADERS += share-page.h \
+	   net-usershare-helper.h \
 	   share-properties-page-plugin.h \
 	   SwitchButton/switchbutton.h
 

@@ -35,8 +35,13 @@
 #include <file-info.h>
 #include <QCheckBox>
 #include <QFuture>
+
+#if LIBPEONY_USERSHARE_MANAGER
 #include <peony-qt/usershare-manager.h>
-//#include "libpeony-qt/usershare-manager.h"
+#else
+#include "net-usershare-helper.h"
+#endif
+
 using namespace Peony;
 
 class SharePage : public Peony::PropertiesWindowTabIface
@@ -72,7 +77,11 @@ public:
 private:
     QFutureWatcher<void> *m_theFutureWatcher = nullptr;
 
+#if LIBPEONY_USERSHARE_MANAGER
     Peony::ShareInfo       m_shareInfo;
+#else
+    ShareInfo              m_shareInfo;
+#endif
     QVBoxLayout*    m_layout = nullptr;
 
     std::shared_ptr<Peony::FileInfo> m_fileInfo = nullptr;
