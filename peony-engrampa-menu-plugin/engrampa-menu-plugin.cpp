@@ -112,6 +112,12 @@ bool EngrampaMenuPlugin::is_compressed_file(QString file_name)
             return true;
     }
 
+    //process big package take apart to many small package has no uncompress issue
+    //修改大的7z压缩包文件，分成很多小的压缩包，但是压缩包右键没有解压缩选项问题
+    QFileInfo info(file_name.replace("file://", ""));
+    if (info.completeSuffix().contains("7z."))
+        return true;
+
     return false;
 }
 
