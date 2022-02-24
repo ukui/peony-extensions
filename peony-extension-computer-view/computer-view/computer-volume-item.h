@@ -62,6 +62,8 @@ public:
 
     bool isHidden() override;
 
+    QString getDeviceUUID(const char *device);
+
 protected:
     //monitor
     static void volume_changed_callback(GVolume *volume, ComputerVolumeItem *p_this);
