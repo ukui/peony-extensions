@@ -22,6 +22,9 @@
 #include "computer-volume-item.h"
 #include <peony-qt/file-utils.h>
 #include <peony-qt/datacdrom.h>
+#include <udisks/udisks.h>
+#include <sys/stat.h>
+#include <peony-qt/global-fstabdata.h>
 #include "computer-model.h"
 #include "computer-user-share-item.h"
 #include <QMessageBox>
@@ -153,6 +156,22 @@ void ComputerVolumeItem::updateInfoAsync()
 //        this->mount();
     }
 
+    bool isData = false;
+    Peony::GlobalFstabData *globalFstabData = Peony::GlobalFstabData::getInstance();
+    if(!globalFstabData->getUuidState()){
+        if(globalFstabData->isMountPoints(m_unixDeviceName.toUtf8(), "/data")){
+            isData = true;
+        }
+    }else{
+        if(globalFstabData->isMountPoints(getDeviceUUID(m_unixDeviceName.toUtf8()), "/data")){
+            isData = true;
+        }
+    }
+
+    if(m_uri == "file:///data" || isData){
+        m_displayName = tr("Data");
+    }
+
     auto index = this->itemIndex();
     m_model->dataChanged(index, index);
     m_model->invalidateRequest();
@@ -160,9 +179,6 @@ void ComputerVolumeItem::updateInfoAsync()
 
 const QString ComputerVolumeItem::displayName()
 {
-    if(m_uri == "file:///data"){
-        return tr("Data");
-    }
     return m_displayName;
 }
 
@@ -406,6 +422,23 @@ QModelIndex ComputerVolumeItem::itemIndex()
 bool ComputerVolumeItem::isHidden()
 {
     return m_isHidden;
+}
+
+QString ComputerVolumeItem::getDeviceUUID(const char *device)
+{
+    struct stat statbuf;
+    if (stat (device, &statbuf) != 0)
+    {
+        return nullptr;
+    }
+
+    g_autoptr(UDisksClient) client = udisks_client_new_sync (NULL,NULL);
+    g_autoptr(UDisksBlock) block = udisks_client_get_block_for_dev(client, statbuf.st_rdev);
+    if (!block)
+        return nullptr;
+
+    const gchar *uuid = udisks_block_get_id_uuid(block);
+    return uuid;
 }
 
 void ComputerVolumeItem::volume_changed_callback(GVolume *volume, ComputerVolumeItem *p_this)
