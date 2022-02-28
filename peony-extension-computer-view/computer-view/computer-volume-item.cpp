@@ -27,6 +27,8 @@
 #include <peony-qt/global-fstabdata.h>
 #include "computer-model.h"
 #include "computer-user-share-item.h"
+#include "sync-thread.h"
+#include <QThread>
 #include <QMessageBox>
 #include <QDebug>
 #include <QApplication>
@@ -359,25 +361,32 @@ void ComputerVolumeItem::unmount(GMountUnmountFlags unmountFlag)
     g_autoptr(GMountOperation) mount_op = g_mount_operation_new();
 
     m_vfs_uri = m_model->m_volumeTargetMap.key(m_uri);
+    QString unmountNotify = QObject::tr("It need to synchronize before operating the device,place wait!");
     if (!m_vfs_uri.isEmpty()) {
         file = g_file_new_for_uri(m_vfs_uri.toUtf8().constData());
-        if(file)
+        if(file){
+            Peony::SyncThread::notifyUser(unmountNotify);
             g_file_unmount_mountable_with_operation(file,unmountFlag,
                                                     mount_op,nullptr,
                                                     GAsyncReadyCallback(unmount_async_callback),
                                                     this);
+        }
         g_object_unref(file);
     } else if (m_mount) {
-        if (g_mount = m_mount->getGMount())
-            g_mount_unmount_with_operation(g_mount, unmountFlag, mount_op, m_cancellable,
-                                       GAsyncReadyCallback(unmount_async_callback), this);
+        if (g_mount = m_mount->getGMount()){
+            Peony::SyncThread::notifyUser(unmountNotify);
+                g_mount_unmount_with_operation(g_mount, unmountFlag, mount_op, m_cancellable,
+                                           GAsyncReadyCallback(unmount_async_callback), this);
+        }
     } else if (!m_uri.isEmpty()) {
         file = g_file_new_for_uri(m_uri.toUtf8().constData());
-        if(file)
+        if(file){
+            Peony::SyncThread::notifyUser(unmountNotify);
             g_file_unmount_mountable_with_operation(file,unmountFlag,
                                                     mount_op,nullptr,
                                                     GAsyncReadyCallback(unmount_async_callback),
                                                     this);
+        }
         g_object_unref(file);
     }
 }
@@ -614,6 +623,8 @@ void ComputerVolumeItem::mount_async_callback(GVolume *volume, GAsyncResult *res
     }
 
     if (successed) {
+        QString unmountNotify = QObject::tr("The device has been mount successfully!");
+        Peony::SyncThread::notifyUser(unmountNotify);
         p_this->updateInfoAsync();
     }
 }
@@ -625,11 +636,16 @@ void ComputerVolumeItem::unmount_async_callback(GObject* object,GAsyncResult *re
     bool successed;
 
     if(G_IS_MOUNT(object)){
-        successed = g_mount_unmount_with_operation_finish(G_MOUNT(object),res,&err);
         if(successed)
-            p_this->m_mount = nullptr;
+             p_this->m_mount = nullptr;
+        successed = g_mount_unmount_with_operation_finish(G_MOUNT(object),res,&err);
     }else if(G_IS_FILE(object)){
-        g_file_unmount_mountable_with_operation_finish(G_FILE(object),res,&err);
+        successed = g_file_unmount_mountable_with_operation_finish(G_FILE(object),res,&err);
+    }
+
+    if(successed){
+        QString unmountNotify = QObject::tr("Data synchronization is complete,the device has been unmount successfully!");
+        Peony::SyncThread::notifyUser(unmountNotify);
     }
 
     if(err){
