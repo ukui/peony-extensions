@@ -25,10 +25,9 @@
 #include <udisks/udisks.h>
 #include <sys/stat.h>
 #include <peony-qt/global-fstabdata.h>
+#include <peony-qt/sync-thread.h>
 #include "computer-model.h"
 #include "computer-user-share-item.h"
-#include "sync-thread.h"
-#include <QThread>
 #include <QMessageBox>
 #include <QDebug>
 #include <QApplication>
