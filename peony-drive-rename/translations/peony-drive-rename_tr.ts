@@ -4,41 +4,41 @@
 <context>
     <name>Peony::DriveRename</name>
     <message>
-        <location filename="../drive-rename.cpp" line="155"/>
-        <location filename="../drive-rename.cpp" line="167"/>
+        <location filename="../drive-rename.cpp" line="163"/>
+        <location filename="../drive-rename.cpp" line="175"/>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="167"/>
+        <location filename="../drive-rename.cpp" line="175"/>
         <source>Device name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="171"/>
         <location filename="../drive-rename.cpp" line="179"/>
-        <location filename="../drive-rename.cpp" line="185"/>
-        <location filename="../drive-rename.cpp" line="198"/>
+        <location filename="../drive-rename.cpp" line="187"/>
+        <location filename="../drive-rename.cpp" line="193"/>
+        <location filename="../drive-rename.cpp" line="206"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="171"/>
+        <location filename="../drive-rename.cpp" line="179"/>
         <source>Renaming cannot start with a decimal point, Please re-enter!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="179"/>
+        <location filename="../drive-rename.cpp" line="187"/>
         <source>The device name exceeds the character limit, rename failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="185"/>
+        <location filename="../drive-rename.cpp" line="193"/>
         <source>Renaming will unmount the device. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../drive-rename.cpp" line="198"/>
+        <location filename="../drive-rename.cpp" line="206"/>
         <source>The device may not support the rename operation, rename failed!</source>
         <translation type="unfinished"></translation>
     </message>

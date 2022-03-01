@@ -36,18 +36,18 @@
 <context>
     <name>ComputerVolumeItem</name>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="49"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="54"/>
         <source>Volume</source>
         <translation>Svazek</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="58"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="105"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="63"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="110"/>
         <source>File System</source>
         <translation>Souborový systém</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="164"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="174"/>
         <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -202,41 +202,41 @@
 <context>
     <name>Peony::DriveRename</name>
     <message>
-        <location filename="../peony-drive-rename/drive-rename.cpp" line="155"/>
-        <location filename="../peony-drive-rename/drive-rename.cpp" line="167"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="163"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="175"/>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peony-drive-rename/drive-rename.cpp" line="167"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="175"/>
         <source>Device name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peony-drive-rename/drive-rename.cpp" line="171"/>
         <location filename="../peony-drive-rename/drive-rename.cpp" line="179"/>
-        <location filename="../peony-drive-rename/drive-rename.cpp" line="185"/>
-        <location filename="../peony-drive-rename/drive-rename.cpp" line="198"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="187"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="193"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="206"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peony-drive-rename/drive-rename.cpp" line="171"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="179"/>
         <source>Renaming cannot start with a decimal point, Please re-enter!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peony-drive-rename/drive-rename.cpp" line="179"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="187"/>
         <source>The device name exceeds the character limit, rename failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peony-drive-rename/drive-rename.cpp" line="185"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="193"/>
         <source>Renaming will unmount the device. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peony-drive-rename/drive-rename.cpp" line="198"/>
+        <location filename="../peony-drive-rename/drive-rename.cpp" line="206"/>
         <source>The device may not support the rename operation, rename failed!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -254,37 +254,52 @@
         <translation>Zobrazit disky, síť a osobní složky.</translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="605"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="364"/>
+        <source>It need to synchronize before operating the device,place wait!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="626"/>
+        <source>The device has been mount successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="648"/>
+        <source>Data synchronization is complete,the device has been unmount successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="computer-view/computer-volume-item.cpp" line="656"/>
         <source>One or more programs prevented the unmount operation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="606"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="610"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="614"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="657"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="661"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="665"/>
         <source>Unmount failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="606"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="614"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="657"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="665"/>
         <source>Error: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="609"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="660"/>
         <source>Unable to unmount it, you may need to close some programs, such as: GParted etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="610"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="661"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="computer-view/computer-volume-item.cpp" line="637"/>
-        <location filename="computer-view/computer-volume-item.cpp" line="652"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="688"/>
+        <location filename="computer-view/computer-volume-item.cpp" line="703"/>
         <source>Eject failed</source>
         <translation type="unfinished"></translation>
     </message>
