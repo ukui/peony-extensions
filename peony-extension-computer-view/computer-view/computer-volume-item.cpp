@@ -68,12 +68,14 @@ ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, Ab
     }
 
     m_volume = std::make_shared<Peony::Volume>(volume, true);
-
-    updateInfoAsync();
-
     m_volumeChangedHandle = g_signal_connect(volume, "changed", G_CALLBACK(volume_changed_callback), this);
     m_volumeRemovedHandle = g_signal_connect(volume, "removed", G_CALLBACK(volume_removed_callback), this);
-    m_mountChangedHandle = g_signal_connect(g_volume_monitor_get(), "mount_changed", G_CALLBACK(mount_changed_callback), this);
+
+    m_volumeMonitor = g_volume_monitor_get();
+    m_mountChangedHandle = g_signal_connect(m_volumeMonitor, "mount_changed", G_CALLBACK(mount_changed_callback), this);
+    m_mountAddedHandle = g_signal_connect(m_volumeMonitor, "mount_added", G_CALLBACK(mount_added_callback), this);
+
+    updateInfoAsync();
 
     m_model->endInsterItem();
 }
@@ -87,7 +89,10 @@ ComputerVolumeItem::ComputerVolumeItem(GVolume *volume, ComputerModel *model, Ab
 
 ComputerVolumeItem::~ComputerVolumeItem()
 {
-    g_signal_handler_disconnect(g_volume_monitor_get(), m_mountChangedHandle);
+    if(m_volumeMonitor){
+        g_signal_handler_disconnect(g_volume_monitor_get(), m_mountChangedHandle);
+        g_signal_handler_disconnect(g_volume_monitor_get(), m_mountAddedHandle);
+    }
     if(m_volume){
         g_signal_handler_disconnect(m_volume->getGVolume(), m_volumeChangedHandle);
         g_signal_handler_disconnect(m_volume->getGVolume(), m_volumeRemovedHandle);
@@ -483,6 +488,14 @@ void ComputerVolumeItem::mount_changed_callback(GVolumeMonitor *volumeMonitor, G
         p_this->m_totalSpace = 0;
         p_this->updateInfo();
         qDebug()<<"mount changed uri: "<<p_this->uri();
+    }
+}
+
+void ComputerVolumeItem::mount_added_callback(GVolumeMonitor *volumeMonitor, GMount *gmount, ComputerVolumeItem *p_this)
+{
+    if (p_this){
+        p_this->updateInfo();
+        qDebug()<<"mount added uri: "<<p_this->uri();
     }
 }
 
