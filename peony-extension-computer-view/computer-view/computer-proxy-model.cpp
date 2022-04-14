@@ -30,8 +30,8 @@ ComputerProxyModel::ComputerProxyModel(QObject *parent) : QSortFilterProxyModel(
 {
     setDynamicSortFilter(true);
     auto computerModel = new ComputerModel(this);
-    setSourceModel(computerModel);
     m_model = computerModel;
+    setSourceModel(computerModel);
 
     connect(m_model, &ComputerModel::updateLocationRequest, this, &ComputerProxyModel::updateLocationRequest);
     connect(m_model, &ComputerModel::invalidateRequest, this, &ComputerProxyModel::invalidateFilter);
