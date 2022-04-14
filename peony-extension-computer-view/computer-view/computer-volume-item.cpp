@@ -354,6 +354,8 @@ bool ComputerVolumeItem::canUnmount()
 {
     if(m_uri.endsWith(".mount") || m_uri.endsWith(".volume"))
         return true;
+    if("file:///data" == m_uri)
+        return false;
     return m_mount != nullptr;
 }
 
