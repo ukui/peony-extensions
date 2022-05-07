@@ -22,6 +22,8 @@
 
 #include "share-page.h"
 #include "share-properties-page-plugin.h"
+#include "emblem-provider.h"
+#include "share-emblem-provider.h"
 
 #include <PeonyFileInfoJob>
 #include <QUrl>
@@ -92,8 +94,19 @@ void SharePage::saveAllChange()
         m_shareInfo.allowGuest = m_shareAllowGuestCheckBox->isChecked();
         m_shareInfo.isShared = true;
 
+        auto fileInfo = Peony::FileXattrInfo::fromUri(m_fileInfo->uri());
+        if(fileInfo){
+            fileInfo->setXattrInfoString(SHARE_EMBLEMS,"emblem-shared", true);
+            EmblemProviderManager::getInstance()->queryAsync(m_fileInfo->uri());
+        }
+
         UserShareInfoManager::getInstance()->updateShareInfo(m_shareInfo);
     } else {
+        auto fileInfo = Peony::FileXattrInfo::fromUri(m_fileInfo->uri());
+        if(fileInfo && !fileInfo->getXattrInfoString(SHARE_EMBLEMS).isEmpty()){
+            fileInfo->removeXattrInfo(SHARE_EMBLEMS);
+            EmblemProviderManager::getInstance()->queryAsync(m_fileInfo->uri());
+        }
         //FIXME:需要先判断存在共享吗 - Need to determine whether there is sharing first
         UserShareInfoManager::getInstance()->removeShareInfo(m_shareInfo.name);
     }

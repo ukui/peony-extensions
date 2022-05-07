@@ -23,6 +23,8 @@
 
 #include "share-properties-page-plugin.h"
 #include "share-page.h"
+#include "emblem-provider.h"
+#include "share-emblem-provider.h"
 
 #include <PeonyFileInfo>
 #include <PeonyFileInfoJob>
@@ -53,6 +55,7 @@ SharePropertiesPagePlugin::SharePropertiesPagePlugin(QObject *parent) : QObject(
     QApplication::installTranslator(t);
 
     UserShareInfoManager::getInstance();
+    EmblemProviderManager::getInstance()->registerProvider(ShareEmblemProvider::getInstance());
 
     global_instance = this;
 }
