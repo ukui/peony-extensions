@@ -16,9 +16,11 @@ CONFIG += link_pkgconfig \
 #DESTDIR += ../testdir
 
 SOURCES += share-page.cpp \
+	   share-emblem-provider.cpp \
 	   share-properties-page-plugin.cpp
 
 HEADERS += share-page.h \
+	   share-emblem-provider.h \
 	   share-properties-page-plugin.h
 
 TRANSLATIONS += translations/peony-share-extension_cs.ts \
