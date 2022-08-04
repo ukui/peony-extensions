@@ -6,7 +6,7 @@
     <message>
         <location filename="../send-to-device-plugin.cpp" line="235"/>
         <source>Send to a removable device</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkarılabilir bir cihaza gönder</translation>
     </message>
 </context>
 <context>
@@ -14,7 +14,7 @@
     <message>
         <location filename="../send-to-device-plugin.h" line="48"/>
         <source>Send to a removable device</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkarılabilir bir cihaza gönder</translation>
     </message>
 </context>
 </TS>
